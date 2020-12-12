@@ -13,6 +13,21 @@ export class RequestsComponent implements OnInit {
 	constructor(private adminService: AdminService) {}
 
 	ngOnInit(): void {
+		this.refreshTable();
+	}
+
+	approve(user: IUserRequest) {
+		this.adminService.approveRequest(user.id).subscribe(() => alert('success'));
+		this.refreshTable();
+		location.reload();
+	}
+
+	delete(user: IUserRequest) {
+		this.adminService.deleteRequest(user.id).subscribe(() => alert('success'));
+		this.refreshTable();
+	}
+
+	refreshTable() {
 		this.adminService.getRequests().subscribe((data: IUserRequest[]) => (this.users = data));
 	}
 }
