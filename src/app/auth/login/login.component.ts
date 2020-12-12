@@ -32,11 +32,7 @@ export class LoginComponent implements OnInit {
 				localStorage.setItem('Id', data.id);
 				this.loginForm.reset();
 
-				// if(data.role == 'ROLE_ADMIN'){
-				// this.router.navigate(['adminHomepage']);
-				// }else if(data.role != ''){
-				// this.router.navigate(['usersHomepage']);
-				alert('Success!');
+				if (data.role == 'ROLE_ADMIN') this.router.navigate(['admin']);
 			},
 			(error) => {
 				alert('Error');
