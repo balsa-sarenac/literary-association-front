@@ -1,0 +1,49 @@
+<div class="container">
+	<div class="justify-content-center">
+		<div class="col">
+			<h1 class="h1">Registration reqeusts</h1>
+		</div>
+		<div class="col" *ngIf="users == undefined">
+			<h3 class="h3">There are no active registration requests</h3>
+		</div>
+		<div class="col">
+			<table class="table table-hover">
+				<thead *ngIf="users != undefined">
+					<tr>
+						<th scope="col">#</th>
+						<th scope="col">First name</th>
+						<th scope="col">Last name</th>
+						<th scope="col">Email</th>
+						<th scope="col">City</th>
+						<th scope="col">Country</th>
+						<th scope="col">Role</th>
+
+						<th scope="col">Approve</th>
+						<th scope="col">Delete</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr *ngFor="let user of users; let i = index">
+						<th scope="row">{{ i + 1 }}</th>
+						<td>{{ user.firstName }}</td>
+						<td>{{ user.lastName }}</td>
+						<td>{{ user.email }}</td>
+						<td>{{ user.city }}</td>
+						<td>{{ user.country }}</td>
+						<td>{{ user.role }}</td>
+						<td>
+							<button type="button" class="btn btn-outline-success btn-sm" (click)="approve(user)">
+								Approve
+							</button>
+						</td>
+						<td>
+							<button type="button" class="btn btn-outline-danger btn-sm" (click)="delete(user)">
+								Delete
+							</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
