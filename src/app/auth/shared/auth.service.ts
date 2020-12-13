@@ -16,4 +16,8 @@ export class AuthService {
 	login(data: any) {
 		return this.http.post<any>(environment.api + '/auth/login', data);
 	}
+
+	getAuthorRegistrationForm(){
+		return this.http.get<any>(environment.api+'/auth/author-reg-form');
+	}
 }
