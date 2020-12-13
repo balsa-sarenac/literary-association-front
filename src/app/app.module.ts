@@ -10,9 +10,10 @@ import { AuthInterceptor } from './http-interceptors/auth-interceptor';
 import { HomepageComponent } from './homepage/homepage.component';
 import { HomeAdminComponent } from './admin/home-admin/home-admin.component';
 import { RequestsComponent } from './admin/requests/requests.component';
+import { AuthorHomepageComponent } from './author-homepage/author-homepage.component';
 
 @NgModule({
-	declarations: [AppComponent, LoginComponent, HomepageComponent, HomeAdminComponent, RequestsComponent],
+	declarations: [AppComponent, LoginComponent, HomepageComponent, HomeAdminComponent, RequestsComponent, AuthorHomepageComponent],
 	imports: [BrowserModule, AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule],
 	providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
 	bootstrap: [AppComponent],
