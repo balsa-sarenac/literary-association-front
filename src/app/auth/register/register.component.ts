@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { element } from 'protractor';
 import { AuthService } from '../shared/auth.service';
 
 @Component({
@@ -15,6 +17,7 @@ export class RegisterComponent implements OnInit {
    formFieldsDto = null;
    formFields = [];
    taskId='';
+  authorRegForm:FormGroup=new FormGroup({});
 
   constructor(private authService:AuthService, private router:Router) { }
 
@@ -35,7 +38,29 @@ export class RegisterComponent implements OnInit {
       this.formFields = res.formFieldList;
       this.taskId = res.taskId;
       console.log(this.formFields);
-    })
+      
+  this.formFields.forEach((element:any)=>{
+      let fc = new FormControl('');
+
+      let validators:any[]=[];
+      element.validationConstraints.map((validator:any)=>{
+          if(validator.name == 'required'){
+            validators.push(Validators.required);
+          }
+          else if(validator.name == 'minlength'){
+            validators.push(Validators.minLength(<number>validator.configuration));
+          }
+      })
+
+      fc.setValidators(validators);
+
+      this.authorRegForm.addControl(element.id, fc);
+     })
+
+    
+  })
+console.log(this.authorRegForm);
+
   }
 
   onSubmit(value:any , form:any){
@@ -71,4 +96,6 @@ export class RegisterComponent implements OnInit {
 
     
   }
+
+  
 }
