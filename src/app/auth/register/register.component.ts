@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from '../shared/auth.service';
 
 @Component({
@@ -13,8 +14,9 @@ export class RegisterComponent implements OnInit {
 
    formFieldsDto = null;
    formFields = [];
+   taskId='';
 
-  constructor(private authService:AuthService) { }
+  constructor(private authService:AuthService, private router:Router) { }
 
   ngOnInit(): void {
   }
@@ -31,12 +33,42 @@ export class RegisterComponent implements OnInit {
       console.log(res);
       this.formFieldsDto = res;
       this.formFields = res.formFieldList;
-
+      this.taskId = res.taskId;
       console.log(this.formFields);
     })
   }
 
-  onSubmit(){
-    console.log('form submitted: ' );
+  onSubmit(value:any , form:any){
+    let formFields = new Array();
+    for (var property in value) {
+      console.log(property);
+      console.log(value[property]);
+      formFields.push({id : property, value : value[property]});
+    }
+
+    console.log(formFields);
+    var author = {
+      formFields:formFields
+    };
+
+    if(this.formFieldsDto !== null){
+      let x = this.authService.registerAuthor(author, this.taskId);
+
+      x.subscribe(
+        res => {
+          console.log(res);
+          
+          alert("You registered successfully!")
+
+          this.router.navigate(['welcome'])
+
+        },
+        err => {
+          console.log(err);
+        }
+      );
+    }
+
+    
   }
 }
