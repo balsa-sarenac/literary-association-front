@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthorService } from '../shared/author.service';
 
 @Component({
   selector: 'app-author-homepage',
@@ -7,7 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AuthorHomepageComponent implements OnInit {
 
-  constructor() { }
+  constructor(private authorService:AuthorService) { 
+    this.authorService.loadForm().subscribe(res=>{
+      console.log(res);
+    })
+  }
 
   ngOnInit(): void {
   }
