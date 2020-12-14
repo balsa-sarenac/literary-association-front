@@ -10,6 +10,6 @@ export class AuthorService {
   constructor(private http: HttpClient) { }
 
   loadForm(){
-    return this.http.get(environment.api + '/membership/app-form');
+    return this.http.get<any>(environment.api + '/membership/app-form');
   }
 }

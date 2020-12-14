@@ -1,1 +1,23 @@
-<p>author-homepage works!</p>
+<br><h6 style="text-align: center;">Upload documents to submit your application:</h6>
+
+<br>
+
+<div style="text-align: center; vertical-align: middle;">
+<form (ngSubmit)="onSubmit(uploadForm.value, uploadForm)" style="width: 40%; display: inline-block;" [formGroup]="uploadForm">
+
+    <div *ngFor="let field of formFields" class="form-group" style="text-align: left;" >
+        
+        <label  for={{field.id}}>{{field.label}}</label>
+        
+        <input class="form-control" type="file" formControlName={{field.id}}   *ngIf="field.id=='files'" >
+        
+        <div *ngFor="let validator of field.validationConstraints" >
+            <div *ngIf="validator.name=='required' && uploadForm.controls[field.id].errors?.required && uploadForm.controls[field.id].touched">{{field.id}} are required!</div>
+            
+        </div>
+        
+    </div>
+    
+    <input class="btn btn-primary" type="submit" [disabled]="uploadForm.invalid">
+  </form>
+</div>

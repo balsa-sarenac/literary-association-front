@@ -53,7 +53,7 @@ export class RegisterComponent implements OnInit {
       })
 
       fc.setValidators(validators);
-
+      
       this.authorRegForm.addControl(element.id, fc);
      })
 
