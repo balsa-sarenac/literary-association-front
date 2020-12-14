@@ -1,0 +1,31 @@
+<div style="margin: auto; text-align: center;" *ngIf="show">
+    <button type="button" class="btn btn-primary" (click)="onReader()">Register as a reader</button>&nbsp;
+    or &nbsp;
+    <button type="button" class="btn btn-primary" (click)="onAuthor()">Register as an author</button>
+</div>
+
+<div *ngIf = "!show && choice==='author'" style="text-align: center; vertical-align: middle;">
+    <br>
+    <h6>Author registration</h6>
+    <br>
+    <form (ngSubmit)="onSubmit(authorRegForm.value, authorRegForm)" style="width: 40%; display: inline-block;" [formGroup]="authorRegForm">
+
+        <div *ngFor="let field of formFields" class="form-group" style="text-align: left;" >
+            
+            <label  for={{field.id}}>{{field.label}}</label>
+            
+            <input class="form-control" type="password" formControlName={{field.id}}   *ngIf="field.id=='password' && field.type.name=='string'" >
+            <input class="form-control" type="text" formControlName={{field.id}}   *ngIf="field.type.name=='string' && field.id!='password'"  >
+            <input class="form-control" type="checkbox" formControlName={{field.id}}   *ngIf="field.type.name=='boolean'" >
+            <input class="form-control" type="number" formControlName={{field.id}}   *ngIf="field.type.name=='long'" >
+            
+            <div *ngFor="let validator of field.validationConstraints" >
+                <div *ngIf="validator.name=='required' && authorRegForm.controls[field.id].errors?.required && authorRegForm.controls[field.id].touched">{{field.id}} is required!</div>
+                <div *ngIf="validator.name=='minlength' && authorRegForm.controls[field.id].errors?.minlength && authorRegForm.controls[field.id].touched">Minimun length  is {{validator.configuration}}</div>
+            </div>
+            
+        </div>
+        
+        <input class="btn btn-primary" type="submit" [disabled]="authorRegForm.invalid">
+      </form>
+</div> 
