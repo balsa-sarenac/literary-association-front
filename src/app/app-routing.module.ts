@@ -6,6 +6,7 @@ import { HomepageComponent } from './homepage/homepage.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { RequestsComponent } from './admin/requests/requests.component';
 import { HomeReaderComponent } from './homepage/home-reader/home-reader.component';
+import { HomeAuthorComponent } from './homepage/home-author/home-author.component';
 
 const routes: Routes = [
 	{ path: '', redirectTo: 'welcome', pathMatch: 'full' },
@@ -25,6 +26,11 @@ const routes: Routes = [
 	{
 		path: 'reader',
 		component: HomeReaderComponent,
+		children: [],
+	},
+	{
+		path: 'author',
+		component: HomeAuthorComponent,
 		children: [],
 	},
 ];
