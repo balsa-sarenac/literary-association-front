@@ -58,7 +58,7 @@ export class RegisterComponent implements OnInit {
 		console.log(this.authorRegForm);
 	}
 
-	onSubmit(value: IFormField[], form: any) {
+	onSubmit(value: any, form: any) {
 		let formFields = new Array();
 		for (var property in value) {
 			console.log(property);
