@@ -3,99 +3,89 @@ import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/fo
 import { Router } from '@angular/router';
 import { element } from 'protractor';
 import { AuthService } from '../shared/auth.service';
+import { IFormField } from '../shared/iformfield.register';
 
 @Component({
-  selector: 'app-register',
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+	selector: 'app-register',
+	templateUrl: './register.component.html',
+	styleUrls: ['./register.component.css'],
 })
 export class RegisterComponent implements OnInit {
+	choice: string = '';
+	show: boolean = true;
 
-  choice: string = '';
-  show: boolean = true;
+	formFieldsDto = null;
+	formFields: IFormField[] = [];
+	taskId = '';
+	authorRegForm: FormGroup = new FormGroup({});
 
-   formFieldsDto = null;
-   formFields = [];
-   taskId='';
-  authorRegForm:FormGroup=new FormGroup({});
+	constructor(private authService: AuthService, private router: Router) {}
 
-  constructor(private authService:AuthService, private router:Router) { }
+	ngOnInit(): void {}
 
-  ngOnInit(): void {
-  }
+	onReader() {
+		this.choice = 'reader';
+		this.show = false;
+	}
 
-  onReader(){
-    this.choice = "reader";
-    this.show = false;
-  }
+	onAuthor() {
+		this.choice = 'author';
+		this.show = false;
+		this.authService.getAuthorRegistrationForm().subscribe((res) => {
+			console.log(res);
+			this.formFieldsDto = res;
+			this.formFields = res.formFieldList;
+			this.taskId = res.taskId;
+			console.log(this.formFields);
 
-  onAuthor(){
-    this.choice="author";
-    this.show = false;
-    this.authService.getAuthorRegistrationForm().subscribe(res=>{
-      console.log(res);
-      this.formFieldsDto = res;
-      this.formFields = res.formFieldList;
-      this.taskId = res.taskId;
-      console.log(this.formFields);
-      
-  this.formFields.forEach((element:any)=>{
-      let fc = new FormControl('');
+			this.formFields.forEach((element: any) => {
+				let fc = new FormControl('');
 
-      let validators:any[]=[];
-      element.validationConstraints.map((validator:any)=>{
-          if(validator.name == 'required'){
-            validators.push(Validators.required);
-          }
-          else if(validator.name == 'minlength'){
-            validators.push(Validators.minLength(<number>validator.configuration));
-          }
-      })
+				let validators: any[] = [];
+				element.validationConstraints.map((validator: any) => {
+					if (validator.name == 'required') {
+						validators.push(Validators.required);
+					} else if (validator.name == 'minlength') {
+						validators.push(Validators.minLength(<number>validator.configuration));
+					}
+				});
 
-      fc.setValidators(validators);
+				fc.setValidators(validators);
 
-      this.authorRegForm.addControl(element.id, fc);
-     })
+				this.authorRegForm.addControl(element.id, fc);
+			});
+		});
+		console.log(this.authorRegForm);
+	}
 
-    
-  })
-console.log(this.authorRegForm);
+	onSubmit(value: IFormField[], form: any) {
+		let formFields = new Array();
+		for (var property in value) {
+			console.log(property);
+			console.log(value[property]);
+			formFields.push({ id: property, value: value[property] });
+		}
 
-  }
+		console.log(formFields);
+		var author = {
+			formFields: formFields,
+		};
 
-  onSubmit(value:any , form:any){
-    let formFields = new Array();
-    for (var property in value) {
-      console.log(property);
-      console.log(value[property]);
-      formFields.push({id : property, value : value[property]});
-    }
+		if (this.formFieldsDto !== null) {
+			let x = this.authService.registerAuthor(author, this.taskId);
 
-    console.log(formFields);
-    var author = {
-      formFields:formFields
-    };
+			x.subscribe(
+				(res) => {
+					console.log(res);
 
-    if(this.formFieldsDto !== null){
-      let x = this.authService.registerAuthor(author, this.taskId);
+					alert('You registered successfully!');
 
-      x.subscribe(
-        res => {
-          console.log(res);
-          
-          alert("You registered successfully!")
-
-          this.router.navigate(['welcome'])
-
-        },
-        err => {
-          console.log(err);
-        }
-      );
-    }
-
-    
-  }
-
-  
+					this.router.navigate(['welcome']);
+				},
+				(err) => {
+					console.log(err);
+				}
+			);
+		}
+	}
 }
