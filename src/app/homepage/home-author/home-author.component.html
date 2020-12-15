@@ -1,1 +1,13 @@
-<p>home-author works!</p>
+<div>
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<ul class="navbar-nav mr-auto">
+			<li class="nav-item">
+				<a class="nav-link" [routerLink]="['books']">Books</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" [routerLink]="['publish']">Publish a book</a>
+			</li>
+		</ul>
+	</nav>
+	<router-outlet></router-outlet>
+</div>
