@@ -4,6 +4,9 @@
 			<li class="nav-item">
 				<a class="nav-link" [routerLink]="['books']">Books</a>
 			</li>
+			<li class="nav-item">
+				<button class="btn btn-outline-danger my-2 my-sm-0 m-2" (click)="logOut()" type="submit">Logout</button>
+			</li>
 		</ul>
 	</nav>
 	<router-outlet></router-outlet>
