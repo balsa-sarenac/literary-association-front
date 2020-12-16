@@ -33,6 +33,8 @@ export class LoginComponent implements OnInit {
 				this.loginForm.reset();
 
 				if (data.role == 'ROLE_ADMIN') this.router.navigate(['admin']);
+				else if (data.role == 'ROLE_READER') this.router.navigate(['reader']);
+				else if (data.role == 'ROLE_AUTHOR') this.router.navigate(['author']);
 			},
 			(error) => {
 				alert('Error');
