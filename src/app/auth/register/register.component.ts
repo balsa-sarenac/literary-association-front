@@ -12,6 +12,7 @@ import { IFormField } from '../shared/iformfield.register';
 })
 export class RegisterComponent implements OnInit {
 
+
 	choice: string = '';
 	show: boolean = true;
 

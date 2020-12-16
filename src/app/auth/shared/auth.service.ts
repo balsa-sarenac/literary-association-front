@@ -22,8 +22,27 @@ export class AuthService {
 		return this.http.get<any>(environment.api+'/auth/author-reg-form');
 	}
 
+	getReaderRegistrationForm() {
+		var res = this.http.get(environment.api+'/auth/form-registration');
+		return res;
+	}
+
 	registerAuthor(author:{}, taskId:string) {
 		console.log(author);
 		return this.http.post("http://localhost:8080/auth/register-author/"+taskId, author) as Observable<any>;
-	  }
+	}
+
+	registerReader(reader:{}, taskId:string) {
+		console.log(reader);
+		return this.http.post("http://localhost:8080/auth/submitRegForm/" + taskId, reader) as Observable<any>;
+	}
+
+	getAdditionalGenreForm(processId: string) {
+		var res = this.http.get(environment.api+'/auth/form-genres/' + processId);
+		return res;
+	}
+
+	addAdditionalGenres(reader:{}, processId:string) {
+		return this.http.post("http://localhost:8080/auth/submitAdditionalGenres/" + processId, reader) as Observable<any>;
+	}
 }
