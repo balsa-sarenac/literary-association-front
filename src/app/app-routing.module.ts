@@ -12,16 +12,16 @@ import { AuthorHomepageComponent } from './author/author-homepage/author-homepag
 import { HomeReaderComponent } from './homepage/home-reader/home-reader.component';
 import { HomeAuthorComponent } from './homepage/home-author/home-author.component';
 
-
 const routes: Routes = [
 	{ path: '', redirectTo: 'welcome', pathMatch: 'full' },
 	{
 		path: 'welcome',
 		component: HomepageComponent,
-		children: [{ path: 'login', component: LoginComponent },
-				   {path: 'register', component: RegisterComponent},
-				   {path: 'register-reader', component: RegisterReaderComponent}
-				],
+		children: [
+			{ path: 'login', component: LoginComponent },
+			{ path: 'register', component: RegisterComponent },
+			{ path: 'register-reader', component: RegisterReaderComponent },
+		],
 	},
 	{
 		path: 'admin',
@@ -30,9 +30,9 @@ const routes: Routes = [
 	},
 	{
 		path: 'author-homepage',
-		component: AuthorHomepageComponent
-		 
+		component: AuthorHomepageComponent,
 	},
+	{
 		path: 'reader',
 		component: HomeReaderComponent,
 		children: [],
