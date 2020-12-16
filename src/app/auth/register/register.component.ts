@@ -15,7 +15,8 @@ export class RegisterComponent implements OnInit {
   show: boolean = true;
 
    formFieldsDto = null;
-   formFields = [];
+   formFields:any[]=[];
+
    taskId='';
   authorRegForm:FormGroup=new FormGroup({});
 

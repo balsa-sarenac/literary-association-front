@@ -10,11 +10,14 @@ import { AuthorService } from '../shared/author.service';
 export class AuthorHomepageComponent implements OnInit {
 
   formFieldsDto = null;
-  formFields = [];
+  formFields:any[] = [];
   taskId='';
- uploadForm:FormGroup=new FormGroup({});
+  fileToUpload: File ;
+  uploadForm:FormGroup=new FormGroup({});
 
   constructor(private authorService:AuthorService) { 
+    this.fileToUpload = null;
+
     this.authorService.loadForm().subscribe(res=>{
       this.formFieldsDto = res;
       this.formFields = res.formFieldList;
@@ -43,4 +46,50 @@ export class AuthorHomepageComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  handleFileInput(event) {
+    if (event.target.files.length > 0) {
+
+      this.fileToUpload = event.target.files[0];
+
+      if (this.fileToUpload.type.match('pdf\/*') == null) {
+      console.log("Not supported");
+        return;
+      }
+
+    console.log(this.fileToUpload);
+  }}
+
+  onSubmit(value:any){
+
+    var author:{id:string, value:File}=null;
+
+    for (var property in value) {
+      console.log(property);
+      console.log(value[property]);
+      author= {id:property, value:this.fileToUpload};
+    }
+
+    console.log(author);
+
+      if(this.formFieldsDto !== null){
+        let x = this.authorService.submitDocuments(author, this.taskId);
+
+        x.subscribe(
+          res => {
+            console.log(res);
+            
+            alert("You have successfully uploaded documents!")
+
+            //this.router.navigate(['welcome'])
+
+          },
+          err => {
+            console.log(err.message);
+          }
+        );
+      }
+
+      
+    }
+  
 }
