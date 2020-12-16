@@ -7,6 +7,12 @@ import { RegisterComponent } from './auth/register/register.component';
 import { RegisterReaderComponent } from './auth/registerReader/registerReader.component';
 import { RequestsComponent } from './admin/requests/requests.component';
 
+import { AuthorHomepageComponent } from './author/author-homepage/author-homepage.component';
+
+import { HomeReaderComponent } from './homepage/home-reader/home-reader.component';
+import { HomeAuthorComponent } from './homepage/home-author/home-author.component';
+
+
 const routes: Routes = [
 	{ path: '', redirectTo: 'welcome', pathMatch: 'full' },
 	{
@@ -21,6 +27,20 @@ const routes: Routes = [
 		path: 'admin',
 		component: HomeAdminComponent,
 		children: [{ path: 'requests', component: RequestsComponent }],
+	},
+	{
+		path: 'author-homepage',
+		component: AuthorHomepageComponent
+		 
+	},
+		path: 'reader',
+		component: HomeReaderComponent,
+		children: [],
+	},
+	{
+		path: 'author',
+		component: HomeAuthorComponent,
+		children: [],
 	},
 ];
 

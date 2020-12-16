@@ -13,10 +13,13 @@ import { RegisterComponent } from './auth/register/register.component';
 import { RegisterReaderComponent } from './auth/registerReader/registerReader.component';
 import { RequestsComponent } from './admin/requests/requests.component';
 
+import { HomeReaderComponent } from './homepage/home-reader/home-reader.component';
+import { HomeAuthorComponent } from './homepage/home-author/home-author.component';
+import { AuthorHomepageComponent } from './author/author-homepage/author-homepage.component';
 
 
 @NgModule({
-	declarations: [AppComponent, LoginComponent, HomepageComponent, HomeAdminComponent, RequestsComponent, RegisterComponent, RegisterReaderComponent],
+	declarations: [AppComponent, LoginComponent, HomepageComponent, HomeAdminComponent, RequestsComponent, RegisterComponent, HomeReaderComponent, HomeAuthorComponent, AuthorHomepageComponent, RegisterReaderComponent],
 	imports: [BrowserModule, AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule],
 	providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
 	bootstrap: [AppComponent],

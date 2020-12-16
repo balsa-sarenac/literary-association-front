@@ -3,160 +3,91 @@ import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/fo
 import { Router } from '@angular/router';
 import { element } from 'protractor';
 import { AuthService } from '../shared/auth.service';
+import { IFormField } from '../shared/iformfield.register';
 
 @Component({
-  selector: 'app-register',
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+	selector: 'app-register',
+	templateUrl: './register.component.html',
+	styleUrls: ['./register.component.css'],
 })
 export class RegisterComponent implements OnInit {
 
-  choice: string = '';
-  show: boolean = true;
-  formFieldsDto = null;
-  formFields = new Array<object>();
-  taskId='';
-  authorRegForm:FormGroup=new FormGroup({});
-  readerRegForm:FormGroup=new FormGroup({});
 
-  constructor(private authService:AuthService, private router:Router) { }
+	choice: string = '';
+	show: boolean = true;
 
-  ngOnInit(): void {
-  }
+	formFieldsDto = null;
+	formFields: IFormField[] = [];
+	taskId = '';
+	authorRegForm: FormGroup = new FormGroup({});
 
-  onAuthor(){
-    this.choice="author";
-    this.show = false;
-    this.authService.getAuthorRegistrationForm().subscribe(res=>{
-      console.log(res);
-      this.formFieldsDto = res;
-      this.formFields = res.formFieldList;
-      this.taskId = res.taskId;
-      console.log(this.formFields);
-      
-  this.formFields.forEach((element:any)=>{
-      let fc = new FormControl('');
+	constructor(private authService: AuthService, private router: Router) {}
 
-      let validators:any[]=[];
-      element.validationConstraints.map((validator:any)=>{
-          if(validator.name == 'required'){
-            validators.push(Validators.required);
-          }
-          else if(validator.name == 'minlength'){
-            validators.push(Validators.minLength(<number>validator.configuration));
-          }
-      })
+	ngOnInit(): void {}
 
-      fc.setValidators(validators);
+	onReader() {
+		this.choice = 'reader';
+		this.show = false;
+	}
 
-      this.authorRegForm.addControl(element.id, fc);
-     })
+	onAuthor() {
+		this.choice = 'author';
+		this.show = false;
+		this.authService.getAuthorRegistrationForm().subscribe((res) => {
+			console.log(res);
+			this.formFieldsDto = res;
+			this.formFields = res.formFieldList;
+			this.taskId = res.taskId;
+			console.log(this.formFields);
 
-    
-  })
-console.log(this.authorRegForm);
+			this.formFields.forEach((element: any) => {
+				let fc = new FormControl('');
 
-  }
+				let validators: any[] = [];
+				element.validationConstraints.map((validator: any) => {
+					if (validator.name == 'required') {
+						validators.push(Validators.required);
+					} else if (validator.name == 'minlength') {
+						validators.push(Validators.minLength(<number>validator.configuration));
+					}
+				});
 
-  onSubmit(value:any , form:any){
-    let formFields = new Array();
-    for (var property in value) {
-      console.log(property);
-      console.log(value[property]);
-      formFields.push({id : property, value : value[property]});
-    }
+				fc.setValidators(validators);
 
-    console.log(formFields);
-    var author = {
-      formFields:formFields
-    };
+				this.authorRegForm.addControl(element.id, fc);
+			});
+		});
+		console.log(this.authorRegForm);
+	}
 
-    if(this.formFieldsDto !== null){
-      let x = this.authService.registerAuthor(author, this.taskId);
+	onSubmit(value: any, form: any) {
+		let formFields = new Array();
+		for (var property in value) {
+			console.log(property);
+			console.log(value[property]);
+			formFields.push({ id: property, value: value[property] });
+		}
 
-      x.subscribe(
-        res => {
-          console.log(res);
-          
-          alert("You registered successfully!")
+		console.log(formFields);
+		var author = {
+			formFields: formFields,
+		};
 
-          this.router.navigate(['welcome'])
+		if (this.formFieldsDto !== null) {
+			let x = this.authService.registerAuthor(author, this.taskId);
 
-        },
-        err => {
-          console.log(err);
-        }
-      );
-    }
+			x.subscribe(
+				(res) => {
+					console.log(res);
 
-    
-  }
+					alert('You registered successfully!');
 
-  onReader(){
-    this.choice="reader";
-    this.show = false;
-
-    this.authService.getAuthorRegistrationForm().subscribe(res=>{
-      console.log(res);
-      this.formFieldsDto = res;
-      this.formFields = res.formFieldList;
-      this.taskId = res.taskId;
-      console.log(this.formFields);
-      
-      this.formFields.forEach((element:any)=>{
-        let fc = new FormControl('');
-
-        let validators:any[]=[];
-        element.validationConstraints.map((validator:any)=>{
-            if(validator.name == 'required'){
-              validators.push(Validators.required);
-            }
-            else if(validator.name == 'minlength'){
-              validators.push(Validators.minLength(<number>validator.configuration));
-            }
-        })
-
-        fc.setValidators(validators);
-
-        this.readerRegForm.addControl(element.id, fc);
-      })
-
-    
-    })
-    console.log(this.authorRegForm);
-  }
-
-  onSubmitR(value:any , form:any){
-    let formFields = new Array();
-    for (var property in value) {
-      console.log(property);
-      console.log(value[property]);
-      formFields.push({id : property, value : value[property]});
-    }
-
-    console.log(formFields);
-    var author = {
-      formFields:formFields
-    };
-
-    if(this.formFieldsDto !== null){
-      let x = this.authService.registerReader(author, this.taskId);
-
-      x.subscribe(
-        res => {
-          console.log(res);
-          
-          alert("You registered successfully!")
-
-          this.router.navigate(['welcome'])
-
-        },
-        err => {
-          console.log(err);
-        }
-      );
-    }
-  }
-
-  
+					this.router.navigate(['welcome']);
+				},
+				(err) => {
+					console.log(err);
+				}
+			);
+		}
+	}
 }
