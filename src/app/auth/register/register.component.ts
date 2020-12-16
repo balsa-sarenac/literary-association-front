@@ -11,6 +11,7 @@ import { IFormField } from '../shared/iformfield.register';
 	styleUrls: ['./register.component.css'],
 })
 export class RegisterComponent implements OnInit {
+
 	choice: string = '';
 	show: boolean = true;
 
