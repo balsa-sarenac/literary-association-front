@@ -1,0 +1,65 @@
+<form *ngIf="dataLoaded"
+		(ngSubmit)="onSubmit(form.value, form)"
+		style="width: 40%; display: inline-block"
+		[formGroup]="form"
+	>
+		<div *ngFor="let field of formFields" class="form-group" style="text-align: left">
+			<label for="{{ field.id }}">{{ field.label }}</label>
+
+			<input class="form-control" type="password" formControlName={{field.id}}
+                    *ngIf="(field.id=='password' || field.id=='confirmPassword') && field.type.name=='string'">
+                <input class="form-control" type="text" formControlName={{field.id}}
+                    *ngIf="field.type.name=='string' && field.id!='password' && field.id!='confirmPassword'">
+                <input class="form-control" type="checkbox" formControlName={{field.id}}
+                    *ngIf="field.type.name=='boolean'">
+                <input class="form-control" type="number" formControlName={{field.id}} *ngIf="field.type.name=='long'">
+                <div *ngIf="field.type.name=='enum'">
+                    <hr>
+                    <table>
+                        <tr *ngFor="let value of values">
+                            <td><label>{{value.value}}</label></td>
+                            <td style="width: 2cm;">
+                                <input class="form-control" type="checkbox" formControlName={{value.id}}>
+                            </td>
+                        </tr>
+                    </table>
+                    <hr>
+                </div>
+
+			<div *ngIf="field.type.name=='enum'">
+				<hr>
+				<table>
+					<tr *ngFor="let value of values">
+						<td><label>{{value.value}}</label></td>
+						<td style="width: 2cm;">
+							<input class="form-control" type="checkbox" formControlName={{value.id}}>
+						</td>
+					</tr>
+				</table>
+				<hr>
+			</div>
+
+			<div *ngFor="let validator of field.validationConstraints">
+				<div
+					*ngIf="
+						validator.name == 'required' &&
+						form.controls[field.id].errors?.validator &&
+						form.controls[field.id].touched
+					"
+				>
+					{{ field.id }} is required!
+				</div>
+				<div
+					*ngIf="
+						validator.name == 'minlength' &&
+						form.controls[field.id].errors?.minlength &&
+						form.controls[field.id].touched
+					"
+				>
+					Minimun length is {{ validator.configuration }}
+				</div>
+			</div>
+		</div>
+
+		<input class="btn btn-primary" type="submit" [disabled]="form.invalid" />
+	</form>
