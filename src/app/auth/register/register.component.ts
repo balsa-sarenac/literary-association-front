@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { element } from 'protractor';
@@ -12,12 +12,12 @@ import { IFormField } from '../shared/iformfield.register';
 })
 export class RegisterComponent implements OnInit {
 
-
-	choice: string = '';
+	public choice: string;
 	show: boolean = true;
 
 	formFieldsDto = null;
 	formFields: IFormField[] = [];
+	processInstanceId:string = "";
 	taskId = '';
 	authorRegForm: FormGroup = new FormGroup({});
 
@@ -26,38 +26,55 @@ export class RegisterComponent implements OnInit {
 	ngOnInit(): void {}
 
 	onReader() {
-		this.choice = 'reader';
-		this.show = false;
+		this.authService.startReaderRegistrationProcess().subscribe((res:any) => {
+			console.log(res);
+			this.processInstanceId = res.processId;
+			console.log(this.processInstanceId);
+			
+			this.show = false;
+			this.choice="reader";
+			
+		},
+		(err)=>{
+			console.log(err);
+		});
 	}
 
 	onAuthor() {
-		this.choice = 'author';
-		this.show = false;
-		this.authService.getAuthorRegistrationForm().subscribe((res) => {
+		this.authService.startAuthorRegistrationProcess().subscribe((res:any) => {
 			console.log(res);
-			this.formFieldsDto = res;
-			this.formFields = res.formFieldList;
-			this.taskId = res.taskId;
-			console.log(this.formFields);
-
-			this.formFields.forEach((element: any) => {
-				let fc = new FormControl('');
-
-				let validators: any[] = [];
-				element.validationConstraints.map((validator: any) => {
-					if (validator.name == 'required') {
-						validators.push(Validators.required);
-					} else if (validator.name == 'minlength') {
-						validators.push(Validators.minLength(<number>validator.configuration));
-					}
-				});
-
-				fc.setValidators(validators);
-
-				this.authorRegForm.addControl(element.id, fc);
-			});
+			this.processInstanceId = res.processId;
+			console.log(this.processInstanceId);
+			
+			this.show = false;
+			this.choice="author";
+		},
+		(err)=>{
+			console.log(err);
 		});
-		console.log(this.authorRegForm);
+		// 	this.formFieldsDto = res;
+		// 	this.formFields = res.formFieldList;
+		// 	this.taskId = res.taskId;
+		// 	console.log(this.formFields);
+
+		// 	this.formFields.forEach((element: any) => {
+		// 		let fc = new FormControl('');
+
+		// 		let validators: any[] = [];
+		// 		element.validationConstraints.map((validator: any) => {
+		// 			if (validator.name == 'required') {
+		// 				validators.push(Validators.required);
+		// 			} else if (validator.name == 'minlength') {
+		// 				validators.push(Validators.minLength(<number>validator.configuration));
+		// 			}
+		// 		});
+
+		// 		fc.setValidators(validators);
+
+		// 		this.authorRegForm.addControl(element.id, fc);
+		// 	});
+		// });
+		// console.log(this.authorRegForm);
 	}
 
 	onSubmit(value: any, form: any) {
