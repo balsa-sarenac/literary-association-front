@@ -3,21 +3,5 @@
 <br>
 
 <div style="text-align: center; vertical-align: middle;">
-<form (ngSubmit)="onSubmit(uploadForm.value)" style="width: 40%; display: inline-block;" [formGroup]="uploadForm">
-
-    <div *ngFor="let field of formFields" class="form-group" style="text-align: left;" >
-        
-        <label  for={{field.id}}>{{field.label}}</label>
-        
-        <input class="form-control-file" type="file" formControlName={{field.id}}   *ngIf="field.id=='files'" (change)="handleFileInput($event)" >
-        
-        <div *ngFor="let validator of field.validationConstraints" >
-            <div *ngIf="validator.name=='required' && uploadForm.controls[field.id].errors?.required && uploadForm.controls[field.id].touched">{{field.id}} are required!</div>
-            
-        </div>
-        
-    </div>
-    
-    <input class="btn btn-primary" type="submit" [disabled]="uploadForm.invalid">
-  </form>
+<app-form [processId]="processId"></app-form>
 </div>
