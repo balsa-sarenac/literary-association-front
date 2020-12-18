@@ -96,8 +96,8 @@ export class FormComponent implements OnInit {
 				console.log(res);
 
 					alert('You registered successfully!');
-
-					this.router.navigate(['login']);
+					console.log(this.router.url);
+					this.router.navigateByUrl('/welcome/login');
 			},
 			(err)=>{
 				console.log(err);
