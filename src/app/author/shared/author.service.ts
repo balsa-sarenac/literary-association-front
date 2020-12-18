@@ -10,8 +10,12 @@ export class AuthorService {
 
   constructor(private http: HttpClient) { }
 
-  loadForm(){
-    return this.http.get<any>(environment.api + '/membership/app-form');
+  startProcess():string{
+    return '';
+  }
+
+  loadForm(processId:string){
+    return this.http.get<any>(environment.api + '/form/get/'+processId);
   }
 
   submitDocuments(file:{id:string, value:File}, taskId:string ){

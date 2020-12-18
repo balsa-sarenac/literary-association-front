@@ -18,9 +18,14 @@ export class AuthService {
 		return this.http.post<any>(environment.api + '/auth/login', data);
 	}
 
-	getAuthorRegistrationForm(){
-		return this.http.get<any>(environment.api+'/auth/author-reg-form');
+	startAuthorRegistrationProcess(){
+		return this.http.get<string>(environment.api+'/auth/start-author-reg');
 	}
+
+	startReaderRegistrationProcess(){
+		return this.http.get<string>(environment.api+"/auth/start-reader-reg")
+	}
+
 
 	getReaderRegistrationForm() {
 		var res = this.http.get(environment.api+'/auth/form-registration');
