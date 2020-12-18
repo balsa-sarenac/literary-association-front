@@ -13,4 +13,8 @@ export class FormService {
     console.log('http get');
       return this.http.get<any>(environment.api+'/form/get/'+processId);
   }
+
+  submitForm(processId:string, data:any){
+    return this.http.post<any>(environment.api+'/form/submit/'+processId, data);
+  }
 }

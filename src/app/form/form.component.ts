@@ -76,8 +76,32 @@ export class FormComponent implements OnInit {
 			  });
 	}
 
-  onSubmit(value: any, form:any){
+	onSubmit(value: any, form: any) {
+		let formFields = new Array();
+		for (var property in value) {
+			console.log(property);
+			console.log(value[property]);
+			formFields.push({ id: property, value: value[property] });
+		}
 
-  }
+		console.log(formFields);
+		var data = {
+			formFields: formFields,
+		};
 
+		console.log(data);
+
+		if (this.formFieldsDto !== null) {
+			this.formService.submitForm(this.processId, data).subscribe((res)=>{
+				console.log(res);
+
+					alert('You registered successfully!');
+
+					this.router.navigate(['welcome']);
+			},
+			(err)=>{
+				console.log(err);
+			});
+		}
+	}
 }

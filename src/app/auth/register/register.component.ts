@@ -52,59 +52,7 @@ export class RegisterComponent implements OnInit {
 		(err)=>{
 			console.log(err);
 		});
-		// 	this.formFieldsDto = res;
-		// 	this.formFields = res.formFieldList;
-		// 	this.taskId = res.taskId;
-		// 	console.log(this.formFields);
-
-		// 	this.formFields.forEach((element: any) => {
-		// 		let fc = new FormControl('');
-
-		// 		let validators: any[] = [];
-		// 		element.validationConstraints.map((validator: any) => {
-		// 			if (validator.name == 'required') {
-		// 				validators.push(Validators.required);
-		// 			} else if (validator.name == 'minlength') {
-		// 				validators.push(Validators.minLength(<number>validator.configuration));
-		// 			}
-		// 		});
-
-		// 		fc.setValidators(validators);
-
-		// 		this.authorRegForm.addControl(element.id, fc);
-		// 	});
-		// });
-		// console.log(this.authorRegForm);
 	}
 
-	onSubmit(value: any, form: any) {
-		let formFields = new Array();
-		for (var property in value) {
-			console.log(property);
-			console.log(value[property]);
-			formFields.push({ id: property, value: value[property] });
-		}
-
-		console.log(formFields);
-		var author = {
-			formFields: formFields,
-		};
-
-		if (this.formFieldsDto !== null) {
-			let x = this.authService.registerAuthor(author, this.taskId);
-
-			x.subscribe(
-				(res) => {
-					console.log(res);
-
-					alert('You registered successfully!');
-
-					this.router.navigate(['welcome']);
-				},
-				(err) => {
-					console.log(err);
-				}
-			);
-		}
-	}
+	
 }
