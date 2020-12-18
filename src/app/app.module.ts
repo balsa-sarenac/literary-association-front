@@ -15,12 +15,12 @@ import { RequestsComponent } from './admin/requests/requests.component';
 
 import { HomeReaderComponent } from './homepage/home-reader/home-reader.component';
 import { HomeAuthorComponent } from './homepage/home-author/home-author.component';
-import { AuthorHomepageComponent } from './author/author-homepage/author-homepage.component';
 import { FormComponent } from './form/form.component';
+import { UploadDocumentsComponent } from './author/upload-documents/upload-documents.component';
 
 
 @NgModule({
-	declarations: [AppComponent, LoginComponent, HomepageComponent, HomeAdminComponent, RequestsComponent, RegisterComponent, HomeReaderComponent, HomeAuthorComponent, AuthorHomepageComponent, RegisterReaderComponent, FormComponent],
+	declarations: [AppComponent, LoginComponent, HomepageComponent, HomeAdminComponent, RequestsComponent, RegisterComponent, HomeReaderComponent, HomeAuthorComponent, RegisterReaderComponent, FormComponent, UploadDocumentsComponent],
 	imports: [BrowserModule, AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule],
 	providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
 	bootstrap: [AppComponent],

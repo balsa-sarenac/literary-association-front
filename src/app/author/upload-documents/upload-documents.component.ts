@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { AuthorService } from '../shared/author.service';
 
 @Component({
-  selector: 'app-author-homepage',
-  templateUrl: './author-homepage.component.html',
-  styleUrls: ['./author-homepage.component.css']
+  selector: 'app-upload-documents',
+  templateUrl: './upload-documents.component.html',
+  styleUrls: ['./upload-documents.component.css']
 })
-export class AuthorHomepageComponent implements OnInit {
-
+export class UploadDocumentsComponent implements OnInit {
   formFieldsDto = null;
   formFields:any[] = [];
   processId:string;
@@ -72,5 +71,5 @@ export class AuthorHomepageComponent implements OnInit {
 
       
     }
-  
+
 }
