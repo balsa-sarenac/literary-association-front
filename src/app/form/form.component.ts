@@ -49,7 +49,15 @@ export class FormComponent implements OnInit {
 			this.formService.getProcessId(loggedUser).subscribe((res:any)=>{
 				this.processId = res.processId;
 				console.log('get id: ', this.processId);
-	
+				this.formService.getForm(this.processId).subscribe((res)=>{
+					console.log('init form');
+					this.setForm(res);
+					this.dataLoaded=true;
+			  },
+			  (err)=>{
+				  console.log(err.message);
+			  });
+		  
 				
 			})
 		}

@@ -10,7 +10,7 @@ export class AuthService {
 	constructor(private http: HttpClient) {}
 
 	getLoggedUser(){
-		return localStorage.getItem('Username');
+		return localStorage.getItem('Id');
 	}
 
 	getToken() {
