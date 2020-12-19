@@ -9,6 +9,10 @@ import { environment } from 'src/environments/environment';
 export class AuthService {
 	constructor(private http: HttpClient) {}
 
+	getLoggedUser(){
+		return localStorage.getItem('Username');
+	}
+
 	getToken() {
 		let token = localStorage.getItem('User-token');
 		return token == null ? '' : 'Bearer ' + token;

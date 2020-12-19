@@ -1,5 +1,5 @@
+
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { stringify } from '@angular/compiler/src/util';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 
@@ -10,10 +10,6 @@ export class AuthorService {
 
   constructor(private http: HttpClient) { }
 
-  startProcess():string{
-    return '';
-  }
-
   loadForm(processId:string){
     return this.http.get<any>(environment.api + '/form/get/'+processId);
   }
@@ -23,9 +19,7 @@ export class AuthorService {
     let formData:FormData = new FormData();
     console.log();
     
-    const headers = new HttpHeaders();
-    headers.set('Content-Type', 'application/pdf');
     
-    return this.http.post<any>(environment.api + '/membership/submitForm/'+taskId, file, {headers:headers});
+    return this.http.post<any>(environment.api + '/membership/submitForm/'+taskId, file);
   }
 }
