@@ -17,27 +17,25 @@ export class UploadDocumentsComponent implements OnInit {
   constructor(private authorService:AuthorService) { 
     this.fileToUpload = null;
 
-    this.processId = this.authorService.startProcess();
+    //this.processId = this.authorService.startProcess();
   }
 
   ngOnInit(): void {
-    this.authorService.loadForm(this.processId).subscribe((res)=>{
-
-    });
+   
   }
 
-  handleFileInput(event) {
-    if (event.target.files.length > 0) {
+  // handleFileInput(event) {
+  //   if (event.target.files.length > 0) {
 
-      this.fileToUpload = event.target.files[0];
+  //     this.fileToUpload = event.target.files[0];
 
-      if (this.fileToUpload.type.match('pdf\/*') == null) {
-      console.log("Not supported");
-        return;
-      }
+  //     if (this.fileToUpload.type.match('pdf\/*') == null) {
+  //     console.log("Not supported");
+  //       return;
+  //     }
 
-    console.log(this.fileToUpload);
-  }}
+  //   console.log(this.fileToUpload);
+  // }}
 
   onSubmit(value:any){
 
