@@ -23,12 +23,39 @@ export class FormComponent implements OnInit {
   
   values = new Array<Value>();
 
-  constructor(private formService:FormService, private router: Router) { 
-	  
+  fileToUpload: File ;
+
+  constructor(private formService:FormService, private authService:AuthService, private router: Router) { 
+	
   }
+
+  handleFileInput(event) {
+    if (event.target.files.length > 0) {
+
+      this.fileToUpload = event.target.files[0];
+
+      if (this.fileToUpload.type.match('pdf\/*') == null) {
+      console.log("Not supported");
+        return;
+      }
+
+    console.log(this.fileToUpload);
+  }}
+
 	ngOnInit(): void {
-		this.formService.getForm(this.processId).subscribe((res)=>{
-		
+		if(this.processId === '' || this.processId===undefined || this.processId===null){
+			console.log('getting process id');
+			let loggedUser:string = this.authService.getLoggedUser();
+			this.formService.getProcessId(loggedUser).subscribe((res:any)=>{
+				this.processId = res.processId;
+				console.log('get id: ', this.processId);
+	
+				
+			})
+		}
+		else{
+			this.formService.getForm(this.processId).subscribe((res)=>{
+				console.log('init form');
 				this.setForm(res);
 				this.dataLoaded=true;
 		  },
@@ -36,6 +63,8 @@ export class FormComponent implements OnInit {
 			  console.log(err.message);
 		  });
 	  
+		}
+			
 	}
 
 
