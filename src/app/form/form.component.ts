@@ -27,7 +27,6 @@ export class FormComponent implements OnInit {
   values = new Array<Value>();
 
   selectedFiles: FileList;
-  progressInfos = [];
   message = '';
 
   fileInfos: Observable<any>;
@@ -37,7 +36,6 @@ export class FormComponent implements OnInit {
   }
 
   handleFileInput(event) {
-	this.progressInfos = [];
   	this.selectedFiles = event.target.files;
   }
 
@@ -162,19 +160,17 @@ export class FormComponent implements OnInit {
 	  }
 
 	  upload(idx, file) {
-		this.progressInfos[idx] = { value: 0, fileName: file.name };
 	  
 		this.formService.upload(this.processId, file).subscribe(
 		  event => {
 			if (event.type === HttpEventType.UploadProgress) {
-			  this.progressInfos[idx].value = Math.round(100 * event.loaded / event.total);
+				// add logic if progress bar is required
 			} else if (event instanceof HttpResponse) {
-			  //this.fileInfos = this.uploadService.getFiles();
+			  alert("Documents uploaded successfully!");
 			}
 		  },
 		  err => {
-			this.progressInfos[idx].value = 0;
-			this.message = 'Could not upload the file:' + file.name;
+			alert('Could not upload the file:' + file.name);
 		  });
 	  }
 }
