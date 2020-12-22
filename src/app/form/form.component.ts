@@ -1,6 +1,9 @@
+import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { element } from 'protractor';
+import { Observable } from 'rxjs';
 import { AuthService } from '../auth/shared/auth.service';
 import { IFormField } from '../auth/shared/iformfield.register';
 import { Value } from '../DTO/value';
@@ -23,24 +26,20 @@ export class FormComponent implements OnInit {
   
   values = new Array<Value>();
 
-  fileToUpload: File ;
+  selectedFiles: FileList;
+  progressInfos = [];
+  message = '';
+
+  fileInfos: Observable<any>;
 
   constructor(private formService:FormService, private authService:AuthService, private router: Router) { 
 	
   }
 
   handleFileInput(event) {
-    if (event.target.files.length > 0) {
-
-      this.fileToUpload = event.target.files[0];
-
-      if (this.fileToUpload.type.match('pdf\/*') == null) {
-      console.log("Not supported");
-        return;
-      }
-
-    console.log(this.fileToUpload);
-  }}
+	this.progressInfos = [];
+  	this.selectedFiles = event.target.files;
+  }
 
 	ngOnInit(): void {
 		if(this.processId === '' || this.processId===undefined || this.processId===null){
@@ -116,9 +115,8 @@ export class FormComponent implements OnInit {
 	onSubmit(value: any, form: any) {
 		let formFields = new Array();
 		for (var property in value) {
-			console.log(property);
-			console.log(value[property]);
-			formFields.push({ id: property, value: value[property] });
+				console.log(value[property]);
+				formFields.push({ id: property, value: value[property] });
 		}
 
 		console.log(formFields);
@@ -129,16 +127,54 @@ export class FormComponent implements OnInit {
 		console.log(data);
 
 		if (this.formFieldsDto !== null) {
-			this.formService.submitForm(this.processId, data).subscribe((res)=>{
-				console.log(res);
-
-					alert('You registered successfully!');
-					console.log(this.router.url);
-					this.router.navigateByUrl('/welcome/login');
-			},
-			(err)=>{
-				console.log(err);
-			});
+			console.log('entered 1');
+			if(formFields.find(element=>element.id=="files")!==undefined){
+				console.log('entered 2');
+				console.log(formFields.includes(element=>element.id=="files"));
+				console.log(formFields.length);
+				if(formFields.find(element=>element.id=="files")){
+					console.log('entered 3');
+					this.uploadFiles();
+				}	
+			}
+			else{
+				this.formService.submitForm(this.processId, data).subscribe((res)=>{
+					console.log(res);
+	
+						alert('You registered successfully!');
+						console.log(this.router.url);
+						this.router.navigateByUrl('/welcome/login');
+				},
+				(err)=>{
+					console.log(err);
+				});
+			}
+			
 		}
 	}
+
+	uploadFiles() {
+		this.message = '';
+	  
+		for (let i = 0; i < this.selectedFiles.length; i++) {
+		  this.upload(i, this.selectedFiles[i]);
+		}
+	  }
+
+	  upload(idx, file) {
+		this.progressInfos[idx] = { value: 0, fileName: file.name };
+	  
+		this.formService.upload(this.processId, file).subscribe(
+		  event => {
+			if (event.type === HttpEventType.UploadProgress) {
+			  this.progressInfos[idx].value = Math.round(100 * event.loaded / event.total);
+			} else if (event instanceof HttpResponse) {
+			  //this.fileInfos = this.uploadService.getFiles();
+			}
+		  },
+		  err => {
+			this.progressInfos[idx].value = 0;
+			this.message = 'Could not upload the file:' + file.name;
+		  });
+	  }
 }

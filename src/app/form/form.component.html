@@ -7,14 +7,18 @@
 			<label for="{{ field.id }}">{{ field.label }}</label>
 
 				<input class="form-control" type="password" formControlName={{field.id}}
-                    *ngIf="(field.id=='password' || field.id=='confirmPassword') && field.type.name=='string'">
+					*ngIf="(field.id=='password' || field.id=='confirmPassword') && field.type.name=='string'">
+					
                 <input class="form-control" type="text" formControlName={{field.id}}
-                    *ngIf="field.type.name=='string' && field.id!='password' && field.id!='confirmPassword'">
+					*ngIf="field.type.name=='string' && field.id!='password' && field.id!='confirmPassword'">
+					
                 <input class="form-control" type="checkbox" formControlName={{field.id}}
-                    *ngIf="field.type.name=='boolean'">
+					*ngIf="field.type.name=='boolean'">
+					
 				<input class="form-control" type="number" formControlName={{field.id}} 
 					*ngIf="field.type.name=='long'">
-				<input class="form-control-file" type="file" formControlName={{field.id}} accept="pdf/"
+
+				<input class="form-control-file" type="file" formControlName={{field.id}} accept="pdf/*"
 					  *ngIf="field.id=='files'" (change)="handleFileInput($event)" multiple>
 
                 <div *ngIf="field.type.name=='enum'">

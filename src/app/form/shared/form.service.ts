@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 
@@ -7,8 +7,24 @@ import { environment } from 'src/environments/environment';
 })
 export class FormService {
   
+  
 
   constructor(private http:HttpClient) { }
+
+  upload(processId:string, file: File) {
+    console.log('upload in');
+    const formData: FormData = new FormData();
+
+    formData.append('file', file);
+
+    const req = new HttpRequest('POST', `${environment.api}/file/upload/`+processId, formData, {
+      reportProgress: true,
+      responseType: 'json'
+    });
+
+    return this.http.request(req);
+    //return this.http.post<any>(environment.api+'/file/upload/'+processId, formData);
+  }
 
   getForm(processId:string){
     console.log('http get');
