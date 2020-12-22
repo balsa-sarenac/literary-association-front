@@ -11,7 +11,7 @@ export class FormService {
 
   getForm(processId:string){
     console.log('http get');
-      return this.http.get<any>(environment.api+'/form/get/'+processId);
+    return this.http.get(environment.api+'/form/get/'+processId);
   }
 
   submitForm(processId:string, data:any){
