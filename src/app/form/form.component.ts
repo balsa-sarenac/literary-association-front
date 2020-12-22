@@ -27,7 +27,6 @@ export class FormComponent implements OnInit {
   values = new Array<Value>();
 
   selectedFiles: FileList;
-  message = '';
 
   fileInfos: Observable<any>;
 
@@ -36,7 +35,8 @@ export class FormComponent implements OnInit {
   }
 
   handleFileInput(event) {
-  	this.selectedFiles = event.target.files;
+	  this.selectedFiles=event.target.files;
+	  console.log(this.selectedFiles);
   }
 
 	ngOnInit(): void {
@@ -122,7 +122,7 @@ export class FormComponent implements OnInit {
 		if (this.formFieldsDto !== null) {
 			if(formFields.find(element=>element.id=="files")!==undefined){
 				if(formFields.find(element=>element.id=="files")){
-					this.uploadFiles();
+					this.upload(this.processId, this.selectedFiles);
 				}	
 			}
 			else{
@@ -141,7 +141,6 @@ export class FormComponent implements OnInit {
 	}
 
 	uploadFiles() {
-		this.message = '';
 	  
 		for (let i = 0; i < this.selectedFiles.length; i++) {
 		  this.upload(i, this.selectedFiles[i]);
@@ -149,8 +148,7 @@ export class FormComponent implements OnInit {
 	  }
 
 	  upload(idx, file) {
-	  
-		this.formService.upload(this.processId, file).subscribe(
+		this.formService.upload(this.processId, this.selectedFiles).subscribe(
 		  event => {
 			if (event.type === HttpEventType.UploadProgress) {
 				// add logic if progress bar is required

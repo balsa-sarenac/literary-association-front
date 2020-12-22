@@ -11,11 +11,15 @@ export class FormService {
 
   constructor(private http:HttpClient) { }
 
-  upload(processId:string, file: File) {
+  upload(processId:string, file) {
     console.log('upload in');
     const formData: FormData = new FormData();
 
-    formData.append('file', file);
+    var files:File[] =[]; 
+    for(var i=0; i<file.length; i++){
+      formData.append('file', file[i]);
+    }
+      //formData.append('file', file);
 
     const req = new HttpRequest('POST', `${environment.api}/file/upload/`+processId, formData, {
       reportProgress: true,
