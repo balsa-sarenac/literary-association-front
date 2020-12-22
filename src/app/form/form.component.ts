@@ -87,7 +87,6 @@ export class FormComponent implements OnInit {
 						this.form.addControl(key, fc);
 						this.values.push(new Value(key, value));
 					}
-					console.log(this.values);
 				}else{
 
 				
@@ -113,31 +112,21 @@ export class FormComponent implements OnInit {
 	onSubmit(value: any, form: any) {
 		let formFields = new Array();
 		for (var property in value) {
-				console.log(value[property]);
 				formFields.push({ id: property, value: value[property] });
 		}
 
-		console.log(formFields);
 		var data = {
 			formFields: formFields,
 		};
 
-		console.log(data);
-
 		if (this.formFieldsDto !== null) {
-			console.log('entered 1');
 			if(formFields.find(element=>element.id=="files")!==undefined){
-				console.log('entered 2');
-				console.log(formFields.includes(element=>element.id=="files"));
-				console.log(formFields.length);
 				if(formFields.find(element=>element.id=="files")){
-					console.log('entered 3');
 					this.uploadFiles();
 				}	
 			}
 			else{
 				this.formService.submitForm(this.processId, data).subscribe((res)=>{
-					console.log(res);
 	
 						alert('You registered successfully!');
 						console.log(this.router.url);
