@@ -14,9 +14,8 @@ import { RequestsComponent } from './admin/requests/requests.component';
 
 import { HomeReaderComponent } from './homepage/home-reader/home-reader.component';
 import { HomeAuthorComponent } from './homepage/home-author/home-author.component';
+import { UploadDocumentsComponent } from './author/upload-documents/upload-documents.component';
 import { FormComponent } from './form/form.component';
-import { UploadDocumentsComponent } from './author/upload-documents/upload-documents.component'; 
-
 import { VerifiedAccountComponent } from './verifiedAccount/verifiedAccount.component'
 
 

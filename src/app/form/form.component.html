@@ -9,6 +9,8 @@
 			*ngIf="field.type.name=='string' && field.id!='password'">
 		<input class="form-control" type="checkbox" formControlName={{field.id}} *ngIf="field.type.name=='boolean'">
 		<input class="form-control" type="number" formControlName={{field.id}} *ngIf="field.type.name=='long'">
+		<input class="form-control-file" type="file" formControlName={{field.id}} accept="pdf/*"
+		*ngIf="field.id=='files'" (change)="handleFileInput($event)" multiple>
 		<div *ngIf="field.type.name=='multiselect'" class="form-group">
 			<select multiple class="form-control" formControlName={{field.id}} multiple aria-label="multiple select example">
 				<option *ngFor="let value of field.type.values" [value]="value">
