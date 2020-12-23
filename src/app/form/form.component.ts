@@ -72,41 +72,38 @@ export class FormComponent implements OnInit {
 			
 	}
 
-
 	setForm(res:any){
 		console.log(this.values);
 		console.log(res);
+
+		res.formFieldList.forEach((element:any) => {
+			if(element.type.name == "multiselect"){
+				element.type.values = Object.values(element.type.values);
+			}
+		});
+
 		this.formFieldsDto = res;
-			  this.formFields = res.formFieldList;
-  
-			  this.formFields.forEach((element: any) => {
-				if(element.type.name == "enum"){
-					for (let key in element.type.values) {
-						let value = element.type.values[key];
-						let fc = new FormControl('');
-						this.form.addControl(key, fc);
-						this.values.push(new Value(key, value));
-					}
-				}else{
+		this.formFields = res.formFieldList;
 
-				
-				  let fc = new FormControl('');
-  
-				  let validators: any[] = [];
-				  element.validationConstraints.map((validator: any) => {
+		this.form = new FormGroup({});
 
-					  if (validator.name == 'required') {
-						  validators.push(Validators.required);
-					  } else if (validator.name == 'minlength') {
-						  validators.push(Validators.minLength(<number>validator.configuration));
-					  }
-				  });
-  
-				  fc.setValidators(validators);
-  
-				  this.form.addControl(element.id, fc);
+		this.formFields.forEach((element: any) => {
+			let fc = new FormControl('');
+
+			let validators: any[] = [];
+			element.validationConstraints.map((validator: any) => {
+				if (validator.name == 'required') {
+					validators.push(Validators.required);
+				} else if (validator.name == 'minlength') {
+					validators.push(Validators.minLength(<number>validator.configuration));
 				}
-			  });
+			});
+
+			fc.setValidators(validators);
+
+			this.form.addControl(element.id, fc);
+			
+		});
 	}
 
 	onSubmit(value: any, form: any) {
@@ -128,15 +125,28 @@ export class FormComponent implements OnInit {
 			else{
 				this.formService.submitForm(this.processId, data).subscribe((res)=>{
 	
-						alert('You registered successfully!');
-						console.log(this.router.url);
-						this.router.navigateByUrl('/welcome/login');
+						
+				if(value["isBetaReader"] == true) {
+					this.formService.getForm(this.processId).subscribe((res:any)=>{
+						this.setForm(res);
+						this.dataLoaded=true;
+					},
+					(err)=>{
+						console.log(err.message);
+					});
+				}
+				else {
+					console.log(res);
+					alert('You registered successfully!');
+					console.log(this.router.url);
+					this.router.navigateByUrl('/welcome/login');
+				}
 				},
 				(err)=>{
 					console.log(err);
 				});
 			}
-			
+		
 		}
 	}
 
