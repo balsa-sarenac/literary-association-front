@@ -1,0 +1,11 @@
+<div style="margin: auto; text-align: center" *ngIf="show">
+	<button type="button" class="btn btn-primary" (click)="onReader()">Register as a reader</button>&nbsp; or &nbsp;
+	<button type="button" class="btn btn-primary" (click)="onAuthor()">Register as an author</button>
+</div>
+
+
+
+<div style="text-align: center; vertical-align: middle" *ngIf="!show">
+	<app-form [processId]="processInstanceId" *ngIf="choice!=undefined">
+	</app-form>
+</div>
