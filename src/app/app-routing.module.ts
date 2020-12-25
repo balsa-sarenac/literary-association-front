@@ -31,10 +31,6 @@ const routes: Routes = [
 		component: UploadDocumentsComponent,
 	},
 	{
-		path: 'publish-book',
-		component: PublishBookComponent,
-	},
-	{
 		path: 'reader',
 		component: HomeReaderComponent,
 		children: [],
@@ -42,7 +38,12 @@ const routes: Routes = [
 	{
 		path: 'author',
 		component: HomeAuthorComponent,
-		children: [],
+		children: [
+			{
+				path: 'publish-book',
+				component: PublishBookComponent,
+			}
+		],
 	},
 	{
 		path: 'verified',

@@ -22,4 +22,8 @@ export class AuthorService {
     
     return this.http.post<any>(environment.api + '/membership/submitForm/'+taskId, file);
   }
+
+  startBookPublishingProcess(){
+		return this.http.get<string>(environment.api+'/publish/start-book-publishing');
+	}
 }
