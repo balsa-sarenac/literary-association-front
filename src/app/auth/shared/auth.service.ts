@@ -7,7 +7,19 @@ import { environment } from 'src/environments/environment';
 	providedIn: 'root',
 })
 export class AuthService {
-	constructor(private http: HttpClient) {}
+
+	constructor(private http: HttpClient) {
+		console.log('new instance of service');
+	}
+
+
+	setProcessId(processId:string){
+		localStorage.setItem('processId', processId);
+	}
+
+	getProcessId(){
+		return localStorage.getItem('processId');
+	}
 
 	getLoggedUser(){
 		return localStorage.getItem('Id');
