@@ -17,7 +17,8 @@ import { HomeAuthorComponent } from './homepage/home-author/home-author.componen
 import { UploadDocumentsComponent } from './author/upload-documents/upload-documents.component';
 import { FormComponent } from './form/form.component';
 import { VerifiedAccountComponent } from './verifiedAccount/verifiedAccount.component';
-import { HomeCommitteeComponent } from './homepage/home-committee/home-committee.component'
+import { HomeCommitteeComponent } from './homepage/home-committee/home-committee.component';
+import { MembershipRequestsComponent } from './committee/membership-requests/membership-requests.component'
 
 
 @NgModule({
@@ -33,7 +34,8 @@ import { HomeCommitteeComponent } from './homepage/home-committee/home-committee
 		FormComponent,
 		UploadDocumentsComponent,
 		VerifiedAccountComponent,
-		HomeCommitteeComponent
+		HomeCommitteeComponent,
+		MembershipRequestsComponent
 	],
 	imports: [BrowserModule, AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule],
 	providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],

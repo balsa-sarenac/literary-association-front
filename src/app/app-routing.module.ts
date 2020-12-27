@@ -10,6 +10,7 @@ import { HomeAuthorComponent } from './homepage/home-author/home-author.componen
 import { UploadDocumentsComponent } from './author/upload-documents/upload-documents.component';
 import { VerifiedAccountComponent } from './verifiedAccount/verifiedAccount.component';
 import { HomeCommitteeComponent } from './homepage/home-committee/home-committee.component';
+import { MembershipRequestsComponent } from './committee/membership-requests/membership-requests.component';
 
 const routes: Routes = [
 	{ path: '', redirectTo: 'welcome', pathMatch: 'full' },
@@ -48,7 +49,7 @@ const routes: Routes = [
 	{
 		path: 'committee',
 		component: HomeCommitteeComponent,
-		children: [],
+		children: [{ path: 'requests', component: MembershipRequestsComponent }],
 	},
 ];
 
