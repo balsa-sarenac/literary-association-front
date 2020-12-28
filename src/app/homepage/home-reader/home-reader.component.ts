@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/auth/shared/auth.service';
 
 @Component({
 	selector: 'app-home-reader',
@@ -7,18 +8,11 @@ import { Router } from '@angular/router';
 	styleUrls: ['./home-reader.component.css'],
 })
 export class HomeReaderComponent implements OnInit {
-	constructor(private router: Router) {}
+	constructor(private authService: AuthService) {}
 
 	ngOnInit(): void {}
 
 	logOut() {
-		localStorage.removeItem('User-token');
-		localStorage.removeItem('Expires-in');
-		localStorage.removeItem('Username');
-		localStorage.removeItem('User-role');
-		localStorage.removeItem('Refresh-token');
-		localStorage.removeItem('Cart');
-		localStorage.removeItem('Id');
-		this.router.navigate(['welcome']);
+		this.authService.logOut();
 	}
 }
