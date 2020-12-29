@@ -11,6 +11,7 @@ import { UploadDocumentsComponent } from './author/upload-documents/upload-docum
 import { VerifiedAccountComponent } from './verifiedAccount/verifiedAccount.component';
 import { HomeCommitteeComponent } from './homepage/home-committee/home-committee.component';
 import { MembershipRequestsComponent } from './committee/membership-requests/membership-requests.component';
+import { MembershipRequestComponent } from './committee/membership-request/membership-request.component';
 
 const routes: Routes = [
 	{ path: '', redirectTo: 'welcome', pathMatch: 'full' },
@@ -49,7 +50,10 @@ const routes: Routes = [
 	{
 		path: 'committee',
 		component: HomeCommitteeComponent,
-		children: [{ path: 'requests', component: MembershipRequestsComponent }],
+		children: [
+			{ path: 'requests', component: MembershipRequestsComponent },
+			{ path: 'requests/:id', component: MembershipRequestComponent },
+		],
 	},
 ];
 

@@ -18,7 +18,8 @@ import { UploadDocumentsComponent } from './author/upload-documents/upload-docum
 import { FormComponent } from './form/form.component';
 import { VerifiedAccountComponent } from './verifiedAccount/verifiedAccount.component';
 import { HomeCommitteeComponent } from './homepage/home-committee/home-committee.component';
-import { MembershipRequestsComponent } from './committee/membership-requests/membership-requests.component'
+import { MembershipRequestsComponent } from './committee/membership-requests/membership-requests.component';
+import { MembershipRequestComponent } from './committee/membership-request/membership-request.component'
 
 
 @NgModule({
@@ -35,7 +36,8 @@ import { MembershipRequestsComponent } from './committee/membership-requests/mem
 		UploadDocumentsComponent,
 		VerifiedAccountComponent,
 		HomeCommitteeComponent,
-		MembershipRequestsComponent
+		MembershipRequestsComponent,
+		MembershipRequestComponent
 	],
 	imports: [BrowserModule, AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule],
 	providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],

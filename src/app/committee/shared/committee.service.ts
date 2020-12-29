@@ -12,4 +12,12 @@ export class CommitteeService {
 	getRequests() {
 		return this.http.get<IMembershipRequest[]>(environment.api + '/membership-requests');
 	}
+
+	getRequest(id: number) {
+		return this.http.get<IMembershipRequest>(environment.api + '/membership-requests/' + id);
+	}
+
+	getDocument(id: number) {
+		return this.http.get<any>(environment.api + '/membership-requests/documents/' + id);
+	}
 }

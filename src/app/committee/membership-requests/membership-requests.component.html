@@ -19,7 +19,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr *ngFor="let request of requests; let i = index">
+					<tr *ngFor="let request of requests; let i = index" [routerLink]="['/Product', request.id]">
 						<th scope="row">{{ i + 1 }}</th>
 						<td>{{ request.user.firstName }}</td>
 						<td>{{ request.user.lastName }}</td>

@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
 				else if (data.role == 'ROLE_COMMITTEE_MEMBER') this.router.navigate(['committee']);
 			},
 			(error) => {
-				alert('Error');
+				alert(error.error);
 			}
 		);
 	}
