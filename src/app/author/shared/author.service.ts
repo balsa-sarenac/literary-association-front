@@ -7,6 +7,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class AuthorService {
+  
 
   constructor(private http: HttpClient) { }
 
@@ -21,5 +22,9 @@ export class AuthorService {
     
     
     return this.http.post<any>(environment.api + '/membership/submitForm/'+taskId, file);
+  }
+
+  getRequests(authorId:string) {
+    return this.http.get<any>(environment.api + '/publish/author-requests/'+authorId);
   }
 }
