@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/auth/shared/auth.service';
 
 @Component({
 	selector: 'app-home-author',
@@ -7,7 +8,10 @@ import { Router } from '@angular/router';
 	styleUrls: ['./home-author.component.css'],
 })
 export class HomeAuthorComponent implements OnInit {
-	constructor(private router: Router) {}
+	authorId:string = '';
+	constructor(private router: Router, private authService:AuthService) {
+		this.authorId = authService.getLoggedUser();
+	}
 
 	ngOnInit(): void {}
 
