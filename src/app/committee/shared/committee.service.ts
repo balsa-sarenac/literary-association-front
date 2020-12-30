@@ -13,11 +13,19 @@ export class CommitteeService {
 		return this.http.get<IMembershipRequest[]>(environment.api + '/membership-requests');
 	}
 
-	getRequest(id: number) {
+	getRequest(id: string) {
 		return this.http.get<IMembershipRequest>(environment.api + '/membership-requests/' + id);
 	}
 
-	getDocument(id: number) {
-		return this.http.get<any>(environment.api + '/membership-requests/documents/' + id);
+	getDocument(url: string) {
+		return this.http.get<any>(url);
 	}
+
+	acceptRequest(id: number) {
+		// return this.http.post
+	}
+
+	refuseRequest(id: number) {}
+
+	requestMore(id: number) {}
 }
