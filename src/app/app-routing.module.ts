@@ -9,6 +9,8 @@ import { HomeReaderComponent } from './homepage/home-reader/home-reader.componen
 import { HomeAuthorComponent } from './homepage/home-author/home-author.component';
 import { UploadDocumentsComponent } from './author/upload-documents/upload-documents.component';
 import { VerifiedAccountComponent } from './verifiedAccount/verifiedAccount.component';
+import { PublishingRequestsListComponent } from './author/publishing-requests-list/publishing-requests-list.component';
+import { PublishBookComponent } from './author/publish-book/publish-book.component';
 
 const routes: Routes = [
 	{ path: '', redirectTo: 'welcome', pathMatch: 'full' },
@@ -37,7 +39,16 @@ const routes: Routes = [
 	{
 		path: 'author',
 		component: HomeAuthorComponent,
-		children: [],
+		children: [
+			{
+				path: 'publishing-requests',
+				component: PublishingRequestsListComponent
+			},
+      {
+				path: 'publish-book',
+				component: PublishBookComponent,
+			}
+    ]
 	},
 	{
 		path: 'verified',
