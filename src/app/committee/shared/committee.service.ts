@@ -21,11 +21,7 @@ export class CommitteeService {
 		return this.http.get<any>(url);
 	}
 
-	acceptRequest(id: number) {
-		// return this.http.post
+	vote(body: any) {
+		return this.http.post(environment.api + '/vote', body);
 	}
-
-	refuseRequest(id: number) {}
-
-	requestMore(id: number) {}
 }

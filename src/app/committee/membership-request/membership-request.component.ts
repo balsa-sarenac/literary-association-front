@@ -36,14 +36,35 @@ export class MembershipRequestComponent implements OnInit {
 	}
 
 	accept() {
-		this.committeeService.acceptRequest(this.request.id);
+		let body = {
+			requestId: this.request.id,
+			option: 'approve',
+		};
+		this.committeeService.vote(body).subscribe(
+			() => alert('Accepted'),
+			(error) => alert(error.error)
+		);
 	}
 
 	refuse() {
-		this.committeeService.refuseRequest(this.request.id);
+		let body = {
+			requestId: this.request.id,
+			option: 'refuse',
+		};
+		this.committeeService.vote(body).subscribe(
+			() => alert('Refused'),
+			(error) => alert(error.error)
+		);
 	}
 
 	requestMore() {
-		this.committeeService.requestMore(this.request.id);
+		let body = {
+			requestId: this.request.id,
+			option: 'request_more',
+		};
+		this.committeeService.vote(body).subscribe(
+			() => alert('Requested'),
+			(error) => alert(error.error)
+		);
 	}
 }
