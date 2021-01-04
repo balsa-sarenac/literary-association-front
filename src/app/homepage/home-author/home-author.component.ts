@@ -25,4 +25,6 @@ export class HomeAuthorComponent implements OnInit {
 		localStorage.removeItem('Id');
 		this.router.navigate(['welcome']);
 	}
+
+	
 }

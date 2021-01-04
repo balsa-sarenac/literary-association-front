@@ -23,8 +23,13 @@ export class AuthorService {
     
     return this.http.post<any>(environment.api + '/membership/submitForm/'+taskId, file);
   }
-
+  
   getRequests(authorId:string) {
     return this.http.get<any>(environment.api + '/publish/author-requests/'+authorId);
   }
+  
+  startBookPublishingProcess(){
+		return this.http.get<string>(environment.api+'/publish/start-book-publishing');
+	}
+  
 }

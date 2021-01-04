@@ -18,6 +18,8 @@ import { UploadDocumentsComponent } from './author/upload-documents/upload-docum
 import { FormComponent } from './form/form.component';
 import { VerifiedAccountComponent } from './verifiedAccount/verifiedAccount.component';
 import { PublishingRequestsListComponent } from './author/publishing-requests-list/publishing-requests-list.component'
+import { PublishBookComponent} from './author/publish-book/publish-book.component'
+
 
 
 @NgModule({
@@ -33,7 +35,8 @@ import { PublishingRequestsListComponent } from './author/publishing-requests-li
 		FormComponent,
 		UploadDocumentsComponent,
 		VerifiedAccountComponent,
-		PublishingRequestsListComponent
+		PublishingRequestsListComponent,
+		PublishBookComponent,
 	],
 	imports: [BrowserModule, AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule],
 	providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
