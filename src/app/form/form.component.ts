@@ -63,7 +63,7 @@ export class FormComponent implements OnInit {
 		console.log(res);
 
 		res.formFieldList.forEach((element:any) => {
-			if(element.type.name == "multiselect"){
+			if(element.type.name == "multiselect" || element.type.name == "enum"){
 				element.type.values = Object.values(element.type.values);
 			}
 		});
@@ -123,7 +123,7 @@ export class FormComponent implements OnInit {
 				}
 				else {
 					console.log(res);
-					alert('You registered successfully!');
+					alert('Success!');
 					console.log(this.router.url);
 					this.router.navigateByUrl('/welcome/login');
 				}

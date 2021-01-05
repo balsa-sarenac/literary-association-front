@@ -12,6 +12,8 @@ import { VerifiedAccountComponent } from './verifiedAccount/verifiedAccount.comp
 import { HomeCommitteeComponent } from './homepage/home-committee/home-committee.component';
 import { MembershipRequestsComponent } from './committee/membership-requests/membership-requests.component';
 import { MembershipRequestComponent } from './committee/membership-request/membership-request.component';
+import { PublishingRequestsListComponent } from './author/publishing-requests-list/publishing-requests-list.component';
+import { PublishBookComponent } from './author/publish-book/publish-book.component';
 
 const routes: Routes = [
 	{ path: '', redirectTo: 'welcome', pathMatch: 'full' },
@@ -40,7 +42,16 @@ const routes: Routes = [
 	{
 		path: 'author',
 		component: HomeAuthorComponent,
-		children: [],
+		children: [
+			{
+				path: 'publishing-requests',
+				component: PublishingRequestsListComponent,
+			},
+			{
+				path: 'publish-book',
+				component: PublishBookComponent,
+			},
+		],
 	},
 	{
 		path: 'verified',

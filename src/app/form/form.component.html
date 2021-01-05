@@ -18,6 +18,13 @@
 				</option>
 			</select>
 		</div>
+		<div *ngIf="field.type.name=='enum'" class="form-group">
+			<select class="form-control" formControlName={{field.id}} >
+				<option *ngFor="let value of field.type.values" [value]="value">
+					{{value}}
+				</option>
+			</select>
+		</div>
 
 		<div *ngFor="let validator of field.validationConstraints">
 			<div *ngIf="

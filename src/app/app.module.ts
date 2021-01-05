@@ -20,6 +20,9 @@ import { VerifiedAccountComponent } from './verifiedAccount/verifiedAccount.comp
 import { HomeCommitteeComponent } from './homepage/home-committee/home-committee.component';
 import { MembershipRequestsComponent } from './committee/membership-requests/membership-requests.component';
 import { MembershipRequestComponent } from './committee/membership-request/membership-request.component'
+import { PublishingRequestsListComponent } from './author/publishing-requests-list/publishing-requests-list.component'
+import { PublishBookComponent} from './author/publish-book/publish-book.component'
+
 
 
 @NgModule({
@@ -37,7 +40,9 @@ import { MembershipRequestComponent } from './committee/membership-request/membe
 		VerifiedAccountComponent,
 		HomeCommitteeComponent,
 		MembershipRequestsComponent,
-		MembershipRequestComponent
+		MembershipRequestComponent,
+		PublishingRequestsListComponent,
+		PublishBookComponent,
 	],
 	imports: [BrowserModule, AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule],
 	providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
