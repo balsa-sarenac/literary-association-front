@@ -1,9 +1,10 @@
-import { HttpEventType, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpEventType, HttpRequest, HttpResponse } from '@angular/common/http';
 import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { element } from 'protractor';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { AuthService } from '../auth/shared/auth.service';
 import { IFormField } from '../auth/shared/iformfield.register';
 import { Value } from '../DTO/value';
@@ -30,7 +31,8 @@ export class FormComponent implements OnInit {
 
   fileInfos: Observable<any>;
 
-  constructor(private formService:FormService, private authService:AuthService, private router: Router) { 
+  constructor(private formService:FormService, private authService:AuthService, private router: Router)
+  {
 	
   }
 
@@ -40,26 +42,10 @@ export class FormComponent implements OnInit {
   }
 
 	ngOnInit(): void {
-		if(this.processId === '' || this.processId===undefined || this.processId===null){
-			console.log('getting process id');
-			let loggedUser:string = this.authService.getLoggedUser();
-			this.formService.getProcessId(loggedUser).subscribe((res:any)=>{
-				this.processId = res.processId;
-				console.log('get id: ', this.processId);
-				this.formService.getForm(this.processId).subscribe((res)=>{
-					console.log('init form');
-					this.setForm(res);
-					this.dataLoaded=true;
-			  },
-			  (err)=>{
-				  console.log(err.message);
-			  });
-		  
-				
-			})
-		}
-		else{
-			this.formService.getForm(this.processId).subscribe((res)=>{
+		
+			this.processId = this.authService.getProcessId();
+			console.log(this.processId);
+			this.formService.getForm(this.authService.getProcessId()).subscribe((res)=>{
 				console.log('init form');
 				this.setForm(res);
 				this.dataLoaded=true;
@@ -68,7 +54,7 @@ export class FormComponent implements OnInit {
 			  console.log(err.message);
 		  });
 	  
-		}
+	
 			
 	}
 
@@ -150,12 +136,6 @@ export class FormComponent implements OnInit {
 		}
 	}
 
-	uploadFiles() {
-	  
-		for (let i = 0; i < this.selectedFiles.length; i++) {
-		  this.upload(i, this.selectedFiles[i]);
-		}
-	  }
 
 	  upload(idx, file) {
 		this.formService.upload(this.processId, this.selectedFiles).subscribe(
@@ -164,6 +144,7 @@ export class FormComponent implements OnInit {
 				// add logic if progress bar is required
 			} else if (event instanceof HttpResponse) {
 			  alert("Documents uploaded successfully!");
+			  this.router.navigateByUrl('/welcome');
 			}
 		  },
 		  err => {
