@@ -44,6 +44,7 @@ export class MembershipRequestComponent implements OnInit {
 			() => alert('Accepted'),
 			(error) => alert(error.error)
 		);
+		this.router.navigate(['/committee/requests']);
 	}
 
 	refuse() {
@@ -55,6 +56,7 @@ export class MembershipRequestComponent implements OnInit {
 			() => alert('Refused'),
 			(error) => alert(error.error)
 		);
+		this.router.navigate(['/committee/requests']);
 	}
 
 	requestMore() {
@@ -66,5 +68,6 @@ export class MembershipRequestComponent implements OnInit {
 			() => alert('Requested'),
 			(error) => alert(error.error)
 		);
+		this.router.navigate(['/committee/requests']);
 	}
 }
