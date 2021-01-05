@@ -31,7 +31,7 @@ export class FormComponent implements OnInit {
 
   fileInfos: Observable<any>;
 
-  constructor(private formService:FormService, private authService:AuthService, private router: Router)
+  constructor(private formService:FormService, private authService:AuthService, private router: Router, private activatedRoute:ActivatedRoute)
   {
 	
   }
@@ -43,9 +43,24 @@ export class FormComponent implements OnInit {
 
 	ngOnInit(): void {
 		
-			this.processId = this.authService.getProcessId();
-			console.log(this.processId);
-			this.formService.getForm(this.authService.getProcessId()).subscribe((res)=>{
+		if(this.activatedRoute.snapshot.routeConfig.path.includes('upload-documents')){
+			this.formService.getProcessId(this.authService.getLoggedUser()).subscribe((res)=>{
+				this.processId = res.processId;
+				console.log(this.processId);
+				
+				this.formService.getForm(this.processId).subscribe((res)=>{
+					console.log('init form');
+					this.setForm(res);
+					this.dataLoaded=true;
+			  },
+			  (err)=>{
+				  console.log(err.message);
+			  });
+			});
+			
+		}
+		else{
+			this.formService.getForm(this.processId).subscribe((res)=>{
 				console.log('init form');
 				this.setForm(res);
 				this.dataLoaded=true;
@@ -53,6 +68,8 @@ export class FormComponent implements OnInit {
 		  (err)=>{
 			  console.log(err.message);
 		  });
+		}
+			
 	  
 	
 			
