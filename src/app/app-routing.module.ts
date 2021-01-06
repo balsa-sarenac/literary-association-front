@@ -14,6 +14,7 @@ import { MembershipRequestsComponent } from './committee/membership-requests/mem
 import { MembershipRequestComponent } from './committee/membership-request/membership-request.component';
 import { PublishingRequestsListComponent } from './author/publishing-requests-list/publishing-requests-list.component';
 import { PublishBookComponent } from './author/publish-book/publish-book.component';
+import { MembershipPaymentComponent } from './author/membership-payment/membership-payment.component';
 
 const routes: Routes = [
 	{ path: '', redirectTo: 'welcome', pathMatch: 'full' },
@@ -33,6 +34,10 @@ const routes: Routes = [
 	{
 		path: 'upload-documents',
 		component: UploadDocumentsComponent,
+	},
+	{
+		path: 'membership-payment',
+		component: MembershipPaymentComponent,
 	},
 	{
 		path: 'reader',
