@@ -47,7 +47,7 @@ export class FormComponent implements OnInit {
 			this.formService.getProcessId(this.authService.getLoggedUser()).subscribe((res)=>{
 				this.processId = res.processId;
 				console.log(this.processId);
-				
+
 				this.formService.getForm(this.processId).subscribe((res)=>{
 					console.log('init form');
 					this.setForm(res);
@@ -161,7 +161,7 @@ export class FormComponent implements OnInit {
 				// add logic if progress bar is required
 			} else if (event instanceof HttpResponse) {
 			  alert("Documents uploaded successfully!");
-			  this.router.navigateByUrl('/welcome');
+			  this.router.navigateByUrl('/review-expected');
 			}
 		  },
 		  err => {
