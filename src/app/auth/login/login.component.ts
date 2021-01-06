@@ -30,10 +30,12 @@ export class LoginComponent implements OnInit {
 				localStorage.setItem('Username', data.username);
 				localStorage.setItem('User-role', data.role);
 				localStorage.setItem('Id', data.id);
+				localStorage.setItem('Status', data.status);
 				this.loginForm.reset();
 
 				if (data.role == 'ROLE_ADMIN') this.router.navigate(['admin']);
-				else if (data.role == 'ROLE_PENDING_AUTHOR') this.router.navigate(['upload-documents']);
+				else if (data.role == 'ROLE_PENDING_AUTHOR' || (data.role == 'ROLE_PENDING_AUTHOR' && data.status=='moreDocumets')) this.router.navigate(['upload-documents']);
+				//else if (data.role == 'ROLE_PENDING_AUTHOR' && data.status == 'reviewExpected' ) this.router.navigate(['review-expected']);
 				else if (data.role == 'ROLE_READER' || data.role == 'ROLE_BETA_READER')
 					this.router.navigate(['reader']);
 				else if (data.role == 'ROLE_AUTHOR') this.router.navigate(['author']);
