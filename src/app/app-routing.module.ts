@@ -15,6 +15,7 @@ import { MembershipRequestComponent } from './committee/membership-request/membe
 import { PublishingRequestsListComponent } from './author/publishing-requests-list/publishing-requests-list.component';
 import { PublishBookComponent } from './author/publish-book/publish-book.component';
 import { MembershipPaymentComponent } from './author/membership-payment/membership-payment.component';
+import { ReviewExpectedComponent } from './author/review-expected/review-expected.component';
 
 const routes: Routes = [
 	{ path: '', redirectTo: 'welcome', pathMatch: 'full' },
@@ -57,6 +58,11 @@ const routes: Routes = [
 				component: PublishBookComponent,
 			},
 		],
+	},
+	{
+		path: 'review-expected',
+		component: ReviewExpectedComponent,
+		children: [],
 	},
 	{
 		path: 'verified',

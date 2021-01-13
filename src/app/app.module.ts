@@ -23,6 +23,7 @@ import { MembershipRequestComponent } from './committee/membership-request/membe
 import { PublishingRequestsListComponent } from './author/publishing-requests-list/publishing-requests-list.component'
 import { PublishBookComponent} from './author/publish-book/publish-book.component';
 import { MembershipPaymentComponent } from './author/membership-payment/membership-payment.component'
+import { ReviewExpectedComponent } from './author/review-expected/review-expected.component'
 
 
 
@@ -45,6 +46,7 @@ import { MembershipPaymentComponent } from './author/membership-payment/membersh
 		PublishingRequestsListComponent,
 		PublishBookComponent,
 		MembershipPaymentComponent,
+		ReviewExpectedComponent,
 	],
 	imports: [BrowserModule, AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule],
 	providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],

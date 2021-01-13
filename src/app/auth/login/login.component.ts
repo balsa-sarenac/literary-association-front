@@ -34,8 +34,11 @@ export class LoginComponent implements OnInit {
 				this.loginForm.reset();
 
 				if (data.role == 'ROLE_ADMIN') this.router.navigate(['admin']);
-				else if (data.role == 'ROLE_PENDING_AUTHOR') this.router.navigate(['upload-documents']);
 				else if (data.role=='ROLE_PENDING_AUTHOR' && data.status == 'paymentRequired') this.router.navigate(['membership-payment']);
+
+				else if (data.role == 'ROLE_PENDING_AUTHOR' || (data.role == 'ROLE_PENDING_AUTHOR' && data.status=='moreDocumets')) this.router.navigate(['upload-documents']);
+				else if (data.role == 'ROLE_PENDING_AUTHOR' && data.status == 'reviewExpected' ) this.router.navigate(['review-expected']);
+
 				else if (data.role == 'ROLE_READER' || data.role == 'ROLE_BETA_READER')
 					this.router.navigate(['reader']);
 				else if (data.role == 'ROLE_AUTHOR') this.router.navigate(['author']);

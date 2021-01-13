@@ -58,7 +58,6 @@ export class FormComponent implements OnInit {
 				  console.log(err.message);
 			  });
 			});
-
 		}
 		else{
 			this.formService.getForm(this.processId).subscribe((res)=>{
@@ -70,10 +69,6 @@ export class FormComponent implements OnInit {
 			  console.log(err.message);
 		  });
 		}
-
-	  
-	
-			
 	}
 
 	setForm(res:any){
@@ -172,7 +167,7 @@ export class FormComponent implements OnInit {
 				// add logic if progress bar is required
 			} else if (event instanceof HttpResponse) {
 			  alert("Documents uploaded successfully!");
-			  this.router.navigateByUrl('/welcome');
+			  this.router.navigateByUrl('/review-expected');
 			}
 		  },
 		  err => {
