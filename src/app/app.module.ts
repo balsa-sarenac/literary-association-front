@@ -22,7 +22,8 @@ import { MembershipRequestsComponent } from './committee/membership-requests/mem
 import { MembershipRequestComponent } from './committee/membership-request/membership-request.component'
 import { PublishingRequestsListComponent } from './author/publishing-requests-list/publishing-requests-list.component'
 import { PublishBookComponent} from './author/publish-book/publish-book.component';
-import { ReviewExpectedComponent } from './author/review-expected/review-expected.component'
+import { ReviewExpectedComponent } from './author/review-expected/review-expected.component';
+import { BetaReaderBooksComponent } from './reader/beta-reader-books/beta-reader-books.component'
 
 
 
@@ -45,6 +46,7 @@ import { ReviewExpectedComponent } from './author/review-expected/review-expecte
 		PublishingRequestsListComponent,
 		PublishBookComponent,
 		ReviewExpectedComponent,
+		BetaReaderBooksComponent,
 	],
 	imports: [BrowserModule, AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule],
 	providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],

@@ -15,6 +15,7 @@ import { MembershipRequestComponent } from './committee/membership-request/membe
 import { PublishingRequestsListComponent } from './author/publishing-requests-list/publishing-requests-list.component';
 import { PublishBookComponent } from './author/publish-book/publish-book.component';
 import { ReviewExpectedComponent } from './author/review-expected/review-expected.component';
+import {BetaReaderBooksComponent} from './reader/beta-reader-books/beta-reader-books.component';
 
 const routes: Routes = [
 	{ path: '', redirectTo: 'welcome', pathMatch: 'full' },
@@ -38,7 +39,9 @@ const routes: Routes = [
 	{
 		path: 'reader',
 		component: HomeReaderComponent,
-		children: [],
+		children: [
+      { path: 'beta-books', component: BetaReaderBooksComponent }
+    ],
 	},
 	{
 		path: 'author',
