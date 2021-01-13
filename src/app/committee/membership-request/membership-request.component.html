@@ -1,0 +1,29 @@
+<div class="container">
+	<div class="justify-content-center">
+		<div class="col">
+			<h1 class="h1">Membership request</h1>
+		</div>
+		<div class="col">
+			<p>Request no: {{ request.id }}</p>
+			<p>First name: {{ request.user.firstName }}</p>
+			<p>Last name: {{ request.user.lastName }}</p>
+			<p>City: {{ request.user.city }}</p>
+			<p>Country: {{ request.user.country }}</p>
+			<p>Email: {{ request.user.email }}</p>
+			<p>Documents:</p>
+		</div>
+		<div class="col">
+			<!--files-->
+			<ul>
+				<li *ngFor="let file of request.files">
+					<a [href]="file.url" [download]="file.name">{{ file.name }}</a>
+				</li>
+			</ul>
+		</div>
+		<div class="col">
+			<button class="btn btn-success m-2" (click)="accept()">Accept</button>
+			<button class="btn btn-danger m-2" (click)="refuse()">Refuse</button>
+			<button class="btn btn-primary m-2" (click)="requestMore()">Request more documents</button>
+		</div>
+	</div>
+</div>

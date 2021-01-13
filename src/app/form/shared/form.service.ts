@@ -40,8 +40,8 @@ export class FormService {
     return this.http.post<any>(environment.api+'/form/submit/'+processId, data);
   }
 
-  getProcessId(userId: string) {
+  getProcessId(userId:string) {
     console.log('get process id');
-    return this.http.get<any>(environment.api+'/form/getProcessId/'+userId);
+    return this.http.get<any>(environment.api+'/form/get-process-id/'+userId);
   }
 }

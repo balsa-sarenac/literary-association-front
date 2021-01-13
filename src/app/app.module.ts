@@ -17,8 +17,12 @@ import { HomeAuthorComponent } from './homepage/home-author/home-author.componen
 import { UploadDocumentsComponent } from './author/upload-documents/upload-documents.component';
 import { FormComponent } from './form/form.component';
 import { VerifiedAccountComponent } from './verifiedAccount/verifiedAccount.component';
+import { HomeCommitteeComponent } from './homepage/home-committee/home-committee.component';
+import { MembershipRequestsComponent } from './committee/membership-requests/membership-requests.component';
+import { MembershipRequestComponent } from './committee/membership-request/membership-request.component'
 import { PublishingRequestsListComponent } from './author/publishing-requests-list/publishing-requests-list.component'
-import { PublishBookComponent} from './author/publish-book/publish-book.component'
+import { PublishBookComponent} from './author/publish-book/publish-book.component';
+import { ReviewExpectedComponent } from './author/review-expected/review-expected.component'
 
 
 
@@ -35,8 +39,12 @@ import { PublishBookComponent} from './author/publish-book/publish-book.componen
 		FormComponent,
 		UploadDocumentsComponent,
 		VerifiedAccountComponent,
+		HomeCommitteeComponent,
+		MembershipRequestsComponent,
+		MembershipRequestComponent,
 		PublishingRequestsListComponent,
 		PublishBookComponent,
+		ReviewExpectedComponent,
 	],
 	imports: [BrowserModule, AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule],
 	providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
