@@ -16,10 +16,6 @@ export class AuthService {
 		localStorage.setItem('processId', processId);
 	}
 
-	getProcessId() {
-		return localStorage.getItem('processId');
-	}
-
 	getLoggedUser() {
 		return localStorage.getItem('Id');
 	}
