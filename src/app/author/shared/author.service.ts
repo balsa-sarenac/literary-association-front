@@ -16,7 +16,7 @@ export class AuthorService {
   }
 
   payMembershipFee(processId: string) {
-	  return this.http.put<any>(environment.api+'/membership-payment/pay'+processId, {});
+	  return this.http.post<any>(environment.api+'/membership-payment/pay/'+processId, {});
   }
 
   getRequests(authorId:string) {
