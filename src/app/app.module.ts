@@ -22,6 +22,7 @@ import { MembershipRequestsComponent } from './committee/membership-requests/mem
 import { MembershipRequestComponent } from './committee/membership-request/membership-request.component'
 import { PublishingRequestsListComponent } from './author/publishing-requests-list/publishing-requests-list.component'
 import { PublishBookComponent} from './author/publish-book/publish-book.component';
+import { MembershipPaymentComponent } from './author/membership-payment/membership-payment.component'
 import { ReviewExpectedComponent } from './author/review-expected/review-expected.component'
 
 
@@ -44,6 +45,7 @@ import { ReviewExpectedComponent } from './author/review-expected/review-expecte
 		MembershipRequestComponent,
 		PublishingRequestsListComponent,
 		PublishBookComponent,
+		MembershipPaymentComponent,
 		ReviewExpectedComponent,
 	],
 	imports: [BrowserModule, AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule],

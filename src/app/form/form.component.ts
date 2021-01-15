@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AuthService } from '../auth/shared/auth.service';
 import { IFormField } from '../auth/shared/iformfield.register';
+import { AuthorService } from '../author/shared/author.service';
 import { Value } from '../DTO/value';
 import { FormService } from './shared/form.service';
 
@@ -31,7 +32,7 @@ export class FormComponent implements OnInit {
 
   fileInfos: Observable<any>;
 
-  constructor(private formService:FormService, private authService:AuthService, private router: Router, private activatedRoute:ActivatedRoute)
+  constructor(private formService:FormService, private authService:AuthService, private router: Router, private activatedRoute:ActivatedRoute, private authorServicxe:AuthorService)
   {
 	
   }
@@ -43,7 +44,7 @@ export class FormComponent implements OnInit {
 
 	ngOnInit(): void {
 		
-		if(this.activatedRoute.snapshot.routeConfig.path.includes('upload-documents')){
+		if(this.activatedRoute.snapshot.routeConfig.path.includes('upload-documents') || this.activatedRoute.snapshot.routeConfig.path.includes('membership-payment')){
 			this.formService.getProcessId(this.authService.getLoggedUser()).subscribe((res)=>{
 				this.processId = res.processId;
 				console.log(this.processId);
@@ -57,7 +58,6 @@ export class FormComponent implements OnInit {
 				  console.log(err.message);
 			  });
 			});
-			
 		}
 		else{
 			this.formService.getForm(this.processId).subscribe((res)=>{
@@ -69,10 +69,6 @@ export class FormComponent implements OnInit {
 			  console.log(err.message);
 		  });
 		}
-			
-	  
-	
-			
 	}
 
 	setForm(res:any){
@@ -110,47 +106,57 @@ export class FormComponent implements OnInit {
 	}
 
 	onSubmit(value: any, form: any) {
-		let formFields = new Array();
-		for (var property in value) {
-				formFields.push({ id: property, value: value[property] });
+
+		if(this.activatedRoute.snapshot.routeConfig.path.includes('membership-payment')){
+			this.authorServicxe.payMembershipFee(this.processId).subscribe((res)=>{
+				alert('Success while paying');
+				this.router.navigate(['author']);
+			});
 		}
-
-		var data = {
-			formFields: formFields,
-		};
-
-		if (this.formFieldsDto !== null) {
-			if(formFields.find(element=>element.id=="files")!==undefined){
-				if(formFields.find(element=>element.id=="files")){
-					this.upload(this.processId, this.selectedFiles);
-				}	
+		else{
+			let formFields = new Array();
+			for (var property in value) {
+					formFields.push({ id: property, value: value[property] });
 			}
-			else{
-				this.formService.submitForm(this.processId, data).subscribe((res)=>{
-	
-						
-				if(value["isBetaReader"] == true) {
-					this.formService.getForm(this.processId).subscribe((res:any)=>{
-						this.setForm(res);
-						this.dataLoaded=true;
+
+			var data = {
+				formFields: formFields,
+			};
+
+			if (this.formFieldsDto !== null) {
+				if(formFields.find(element=>element.id=="files")!==undefined){
+					if(formFields.find(element=>element.id=="files")){
+						this.upload(this.processId, this.selectedFiles);
+					}	
+				}
+				else{
+					this.formService.submitForm(this.processId, data).subscribe((res)=>{
+		
+							
+					if(value["isBetaReader"] == true) {
+						this.formService.getForm(this.processId).subscribe((res:any)=>{
+							this.setForm(res);
+							this.dataLoaded=true;
+						},
+						(err)=>{
+							console.log(err.message);
+						});
+					}
+					else {
+						console.log(res);
+						alert('Success!');
+						console.log(this.router.url);
+						this.router.navigateByUrl('/welcome/login');
+					}
 					},
 					(err)=>{
-						console.log(err.message);
+						console.log(err);
 					});
 				}
-				else {
-					console.log(res);
-					alert('Success!');
-					console.log(this.router.url);
-					this.router.navigateByUrl('/welcome/login');
-				}
-				},
-				(err)=>{
-					console.log(err);
-				});
+			
 			}
-		
 		}
+		
 	}
 
 
