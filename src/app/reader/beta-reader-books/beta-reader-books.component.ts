@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {IPublishingRequest} from '../shared/ipublishing-request';
+import {ReaderService} from '../shared/reader.service';
 
 @Component({
   selector: 'app-beta-reader-books',
@@ -6,10 +8,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./beta-reader-books.component.css']
 })
 export class BetaReaderBooksComponent implements OnInit {
+  requests: IPublishingRequest[] = [];
 
-  constructor() { }
+  constructor(private readerService: ReaderService) { }
 
   ngOnInit(): void {
+    this.readerService.getPublishingRequests().subscribe( (data: IPublishingRequest[]) => this.requests = data);
   }
 
 }
