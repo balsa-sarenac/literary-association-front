@@ -22,6 +22,10 @@ import { MembershipRequestsComponent } from './committee/membership-requests/mem
 import { MembershipRequestComponent } from './committee/membership-request/membership-request.component'
 import { PublishingRequestsListComponent } from './author/publishing-requests-list/publishing-requests-list.component'
 import { PublishBookComponent} from './author/publish-book/publish-book.component';
+import { MembershipPaymentComponent } from './author/membership-payment/membership-payment.component'
+import { ReviewExpectedComponent } from './author/review-expected/review-expected.component';
+import { HomeChiefEditorComponent } from './homepage/home-chief-editor/home-chief-editor.component';
+import { ChiefEditorPubReqListComponent } from './chief-editor/chief-editor-pub-req-list/chief-editor-pub-req-list.component'
 import { ReviewExpectedComponent } from './author/review-expected/review-expected.component';
 import { BetaReaderBooksComponent } from './reader/beta-reader-books/beta-reader-books.component';
 import { MembershipPaymentComponent } from './author/membership-payment/membership-payment.component';
@@ -48,6 +52,8 @@ import { UnpublishedBookComponent } from './reader/unpublished-book/unpublished-
 		PublishBookComponent,
 		MembershipPaymentComponent,
 		ReviewExpectedComponent,
+		HomeChiefEditorComponent,
+		ChiefEditorPubReqListComponent,
 		BetaReaderBooksComponent,
 		UnpublishedBookComponent,
 	],
