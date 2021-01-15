@@ -17,6 +17,7 @@ import { PublishBookComponent } from './author/publish-book/publish-book.compone
 import { MembershipPaymentComponent } from './author/membership-payment/membership-payment.component';
 import { ReviewExpectedComponent } from './author/review-expected/review-expected.component';
 import {BetaReaderBooksComponent} from './reader/beta-reader-books/beta-reader-books.component';
+import {UnpublishedBookComponent} from './reader/unpublished-book/unpublished-book.component';
 
 const routes: Routes = [
 	{ path: '', redirectTo: 'welcome', pathMatch: 'full' },
@@ -45,7 +46,8 @@ const routes: Routes = [
 		path: 'reader',
 		component: HomeReaderComponent,
 		children: [
-      { path: 'beta-books', component: BetaReaderBooksComponent }
+      { path: 'beta-books', component: BetaReaderBooksComponent },
+      { path: 'beta-books/:id', component: UnpublishedBookComponent }
     ],
 	},
 	{

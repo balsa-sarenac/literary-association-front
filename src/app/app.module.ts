@@ -25,6 +25,7 @@ import { PublishBookComponent} from './author/publish-book/publish-book.componen
 import { ReviewExpectedComponent } from './author/review-expected/review-expected.component';
 import { BetaReaderBooksComponent } from './reader/beta-reader-books/beta-reader-books.component';
 import { MembershipPaymentComponent } from './author/membership-payment/membership-payment.component';
+import { UnpublishedBookComponent } from './reader/unpublished-book/unpublished-book.component';
 
 
 @NgModule({
@@ -48,6 +49,7 @@ import { MembershipPaymentComponent } from './author/membership-payment/membersh
 		MembershipPaymentComponent,
 		ReviewExpectedComponent,
 		BetaReaderBooksComponent,
+		UnpublishedBookComponent,
 	],
 	imports: [BrowserModule, AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule],
 	providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
