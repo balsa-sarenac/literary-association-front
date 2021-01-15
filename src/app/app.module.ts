@@ -23,20 +23,20 @@ import { MembershipRequestComponent } from './committee/membership-request/membe
 import { PublishingRequestsListComponent } from './author/publishing-requests-list/publishing-requests-list.component'
 import { PublishBookComponent} from './author/publish-book/publish-book.component';
 import { ReviewExpectedComponent } from './author/review-expected/review-expected.component';
-import { BetaReaderBooksComponent } from './reader/beta-reader-books/beta-reader-books.component'
-
+import { BetaReaderBooksComponent } from './reader/beta-reader-books/beta-reader-books.component';
+import { MembershipPaymentComponent } from './author/membership-payment/membership-payment.component';
 
 
 @NgModule({
 	declarations: [
-		AppComponent, 
-		LoginComponent, 
-		HomepageComponent, 
-		HomeAdminComponent, 
-		RequestsComponent, 
-		RegisterComponent, 
-		HomeReaderComponent, 
-		HomeAuthorComponent, 
+		AppComponent,
+		LoginComponent,
+		HomepageComponent,
+		HomeAdminComponent,
+		RequestsComponent,
+		RegisterComponent,
+		HomeReaderComponent,
+		HomeAuthorComponent,
 		FormComponent,
 		UploadDocumentsComponent,
 		VerifiedAccountComponent,
@@ -45,6 +45,7 @@ import { BetaReaderBooksComponent } from './reader/beta-reader-books/beta-reader
 		MembershipRequestComponent,
 		PublishingRequestsListComponent,
 		PublishBookComponent,
+		MembershipPaymentComponent,
 		ReviewExpectedComponent,
 		BetaReaderBooksComponent,
 	],
