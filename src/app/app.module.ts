@@ -23,7 +23,9 @@ import { MembershipRequestComponent } from './committee/membership-request/membe
 import { PublishingRequestsListComponent } from './author/publishing-requests-list/publishing-requests-list.component'
 import { PublishBookComponent} from './author/publish-book/publish-book.component';
 import { MembershipPaymentComponent } from './author/membership-payment/membership-payment.component'
-import { ReviewExpectedComponent } from './author/review-expected/review-expected.component'
+import { ReviewExpectedComponent } from './author/review-expected/review-expected.component';
+import { HomeChiefEditorComponent } from './homepage/home-chief-editor/home-chief-editor.component';
+import { ChiefEditorPubReqListComponent } from './chief-editor/chief-editor-pub-req-list/chief-editor-pub-req-list.component'
 
 
 
@@ -47,6 +49,8 @@ import { ReviewExpectedComponent } from './author/review-expected/review-expecte
 		PublishBookComponent,
 		MembershipPaymentComponent,
 		ReviewExpectedComponent,
+		HomeChiefEditorComponent,
+		ChiefEditorPubReqListComponent,
 	],
 	imports: [BrowserModule, AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule],
 	providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
