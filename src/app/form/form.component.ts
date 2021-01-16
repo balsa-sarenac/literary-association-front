@@ -20,6 +20,7 @@ export class FormComponent implements OnInit {
   dataLoaded: boolean=false;
 
   @Input() processId:string;
+  @Input() publishingRequestId:number;
 
   formFieldsDto = null;
   formFields: IFormField[] = [];
@@ -46,6 +47,21 @@ export class FormComponent implements OnInit {
 		
 		if(this.activatedRoute.snapshot.routeConfig.path.includes('upload-documents') || this.activatedRoute.snapshot.routeConfig.path.includes('membership-payment')){
 			this.formService.getProcessId(this.authService.getLoggedUser()).subscribe((res)=>{
+				this.processId = res.processId;
+				console.log(this.processId);
+
+				this.formService.getForm(this.processId).subscribe((res)=>{
+					console.log('init form');
+					this.setForm(res);
+					this.dataLoaded=true;
+			  },
+			  (err)=>{
+				  console.log(err.message);
+			  });
+			});
+		}
+		else if(this.activatedRoute.snapshot.routeConfig.path.includes('refusal')){
+			this.formService.getRefusalProcessId(this.publishingRequestId).subscribe((res)=>{
 				this.processId = res.processId;
 				console.log(this.processId);
 
