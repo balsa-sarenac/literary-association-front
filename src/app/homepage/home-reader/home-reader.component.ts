@@ -8,7 +8,10 @@ import { AuthService } from 'src/app/auth/shared/auth.service';
 	styleUrls: ['./home-reader.component.css'],
 })
 export class HomeReaderComponent implements OnInit {
-	constructor(private authService: AuthService) {}
+  betaReader;
+
+	constructor(private authService: AuthService) {
+    this.betaReader = localStorage.getItem("User-role") === "ROLE_BETA_READER";}
 
 	ngOnInit(): void {}
 

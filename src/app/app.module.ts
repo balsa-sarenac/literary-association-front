@@ -26,19 +26,20 @@ import { MembershipPaymentComponent } from './author/membership-payment/membersh
 import { ReviewExpectedComponent } from './author/review-expected/review-expected.component';
 import { HomeChiefEditorComponent } from './homepage/home-chief-editor/home-chief-editor.component';
 import { ChiefEditorPubReqListComponent } from './chief-editor/chief-editor-pub-req-list/chief-editor-pub-req-list.component'
-
+import { BetaReaderBooksComponent } from './reader/beta-reader-books/beta-reader-books.component';
+import { UnpublishedBookComponent } from './reader/unpublished-book/unpublished-book.component';
 
 
 @NgModule({
 	declarations: [
-		AppComponent, 
-		LoginComponent, 
-		HomepageComponent, 
-		HomeAdminComponent, 
-		RequestsComponent, 
-		RegisterComponent, 
-		HomeReaderComponent, 
-		HomeAuthorComponent, 
+		AppComponent,
+		LoginComponent,
+		HomepageComponent,
+		HomeAdminComponent,
+		RequestsComponent,
+		RegisterComponent,
+		HomeReaderComponent,
+		HomeAuthorComponent,
 		FormComponent,
 		UploadDocumentsComponent,
 		VerifiedAccountComponent,
@@ -51,6 +52,8 @@ import { ChiefEditorPubReqListComponent } from './chief-editor/chief-editor-pub-
 		ReviewExpectedComponent,
 		HomeChiefEditorComponent,
 		ChiefEditorPubReqListComponent,
+		BetaReaderBooksComponent,
+		UnpublishedBookComponent,
 	],
 	imports: [BrowserModule, AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule],
 	providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
