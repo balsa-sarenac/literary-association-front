@@ -7,6 +7,7 @@ import { environment } from 'src/environments/environment';
 })
 export class ChiefEditorService 
 {
+  
   constructor(private http:HttpClient) { }
 
   getRequests(editorId:string) {
@@ -23,5 +24,9 @@ export class ChiefEditorService
 
   getListOfPossibleSources(logged: string) {
     return this.http.get<any>(environment.api + '/publish/get-requests-plagiarism-check/' + logged);
+  }
+
+  originalBook(body: any) {
+    return this.http.post<any>(environment.api + '/publish/original-book', body);
   }
 }

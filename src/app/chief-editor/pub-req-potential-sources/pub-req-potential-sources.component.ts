@@ -29,6 +29,32 @@ export class PubReqPotentialSourcesComponent implements OnInit {
 			(error) => alert(error.error)
 		);
     }
-  
-    
+
+    original() {
+      let body={
+        publishingRequestId:this.publishingRequest.id,
+        response:true
+      };
+
+      this.sendResponse(body);
+    }
+
+    refuse() {
+      let body={
+        publishingRequestId: this.publishingRequest.id,
+        response: false
+      };
+
+      this.sendResponse(body);
+    }
+
+    sendResponse(body){
+      this.chiefEditorService.originalBook(body).subscribe(()=>
+        {
+          this,
+          this.router.navigateByUrl('editor/chief-editor-plagiarism-requests');
+        },
+        (error)=> alert(error.console.error)
+      );
+    }
 }
