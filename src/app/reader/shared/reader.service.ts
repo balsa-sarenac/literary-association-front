@@ -13,4 +13,12 @@ export class ReaderService {
   getPublishingRequests() {
     return this.http.get<IPublishingRequest[]>(environment.api + "/beta-readers/requests");
   }
+
+  getRequest(id: string) {
+    return this.http.get<IPublishingRequest>(environment.api + "/beta-readers/requests/" + id);
+  }
+
+  sendNotes(id: String, value: Object) {
+    return this.http.post(environment.api + "/beta-readers/requests/" + id + "/notes", value);
+  }
 }
