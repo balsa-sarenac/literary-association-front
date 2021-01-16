@@ -13,15 +13,13 @@
 						<th scope="col">#</th>
 						<th scope="col">Book</th>
 						<th scope="col">Author</th>
-						<th scope="col"></th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr *ngFor="let request of requests; let i = index">
+					<tr *ngFor="let request of requests; let i = index" [routerLink]="['/editor/original-request', request.id]">
 						<th scope="row">{{ i + 1 }}</th>
 						<td>{{ request.book.title }}</td>
-						<td>{{ request.book.authors[0].firstName }}</td>
-						<td>{{ request.book.authors[0].lastName }}</td>
+						<td>{{ request.book.authors[0].firstName + ' ' + request.book.authors[0].lastName}}</td>
 					</tr>
 				</tbody>
 			</table>
