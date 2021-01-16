@@ -20,6 +20,8 @@ import { HomeChiefEditorComponent } from './homepage/home-chief-editor/home-chie
 import { ChiefEditorPubReqListComponent } from './chief-editor/chief-editor-pub-req-list/chief-editor-pub-req-list.component';
 import { PubReqDetailComponent } from './chief-editor/pub-req-detail/pub-req-detail.component';
 import { RefuseReasonComponent } from './chief-editor/refuse-reason/refuse-reason.component';
+import { BetaReaderBooksComponent } from './reader/beta-reader-books/beta-reader-books.component';
+import { UnpublishedBookComponent } from './reader/unpublished-book/unpublished-book.component';
 
 const routes: Routes = [
 	{ path: '', redirectTo: 'welcome', pathMatch: 'full' },
@@ -47,7 +49,10 @@ const routes: Routes = [
 	{
 		path: 'reader',
 		component: HomeReaderComponent,
-		children: [],
+		children: [
+      { path: 'beta-books', component: BetaReaderBooksComponent },
+      { path: 'beta-books/:id', component: UnpublishedBookComponent }
+    ],
 	},
 	{
 		path: 'author',

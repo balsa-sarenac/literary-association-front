@@ -1,9 +1,12 @@
 <div>
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
 		<ul class="navbar-nav mr-auto">
-			<li class="nav-item">
-				<a class="nav-link" [routerLink]="['books']">Books</a>
-			</li>
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="['books']">Books</a>
+      </li>
+      <li class="nav-item" *ngIf="betaReader">
+        <a class="nav-link" [routerLink]="['beta-books']">Early access</a>
+      </li>
 			<li class="nav-item">
 				<button class="btn btn-outline-danger my-2 my-sm-0 m-2" (click)="logOut()" type="submit">Logout</button>
 			</li>
