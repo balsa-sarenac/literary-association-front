@@ -25,9 +25,12 @@ import { PublishBookComponent} from './author/publish-book/publish-book.componen
 import { MembershipPaymentComponent } from './author/membership-payment/membership-payment.component'
 import { ReviewExpectedComponent } from './author/review-expected/review-expected.component';
 import { HomeChiefEditorComponent } from './homepage/home-chief-editor/home-chief-editor.component';
-import { ChiefEditorPubReqListComponent } from './chief-editor/chief-editor-pub-req-list/chief-editor-pub-req-list.component'
+import { ChiefEditorPubReqListComponent } from './chief-editor/chief-editor-pub-req-list/chief-editor-pub-req-list.component';
+import { PubReqDetailComponent } from './chief-editor/pub-req-detail/pub-req-detail.component';
+import { RefuseReasonComponent } from './chief-editor/refuse-reason/refuse-reason.component'
 import { BetaReaderBooksComponent } from './reader/beta-reader-books/beta-reader-books.component';
 import { UnpublishedBookComponent } from './reader/unpublished-book/unpublished-book.component';
+
 
 
 @NgModule({
@@ -52,6 +55,8 @@ import { UnpublishedBookComponent } from './reader/unpublished-book/unpublished-
 		ReviewExpectedComponent,
 		HomeChiefEditorComponent,
 		ChiefEditorPubReqListComponent,
+		PubReqDetailComponent,
+		RefuseReasonComponent,
 		BetaReaderBooksComponent,
 		UnpublishedBookComponent,
 	],

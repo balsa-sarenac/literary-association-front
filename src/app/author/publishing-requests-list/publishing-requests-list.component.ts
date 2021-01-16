@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/auth/shared/auth.service';
 import { AuthorService } from '../shared/author.service';
-import { IPublishingRequest } from '../shared/ipublishing-request';
+import { IPublishingRequest } from '../../DTO/ipublishing-request';
 
 @Component({
   selector: 'app-publishing-requests-list',

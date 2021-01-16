@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/auth/shared/auth.service';
-import { IPublishingRequest } from 'src/app/author/shared/ipublishing-request';
+import { IPublishingRequest } from 'src/app/DTO/ipublishing-request';
 import { ChiefEditorService } from '../shared/chief-editor.service';
 
 @Component({

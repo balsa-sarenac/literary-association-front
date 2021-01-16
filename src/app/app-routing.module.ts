@@ -18,8 +18,10 @@ import { MembershipPaymentComponent } from './author/membership-payment/membersh
 import { ReviewExpectedComponent } from './author/review-expected/review-expected.component';
 import { HomeChiefEditorComponent } from './homepage/home-chief-editor/home-chief-editor.component';
 import { ChiefEditorPubReqListComponent } from './chief-editor/chief-editor-pub-req-list/chief-editor-pub-req-list.component';
-import {BetaReaderBooksComponent} from './reader/beta-reader-books/beta-reader-books.component';
-import {UnpublishedBookComponent} from './reader/unpublished-book/unpublished-book.component';
+import { PubReqDetailComponent } from './chief-editor/pub-req-detail/pub-req-detail.component';
+import { RefuseReasonComponent } from './chief-editor/refuse-reason/refuse-reason.component';
+import { BetaReaderBooksComponent } from './reader/beta-reader-books/beta-reader-books.component';
+import { UnpublishedBookComponent } from './reader/unpublished-book/unpublished-book.component';
 
 const routes: Routes = [
 	{ path: '', redirectTo: 'welcome', pathMatch: 'full' },
@@ -85,14 +87,22 @@ const routes: Routes = [
 		],
 	},
 	{
-		path:'chief-editor',
+		path:'editor',
 		component:HomeChiefEditorComponent,
 		children: [
 			{
 				path: 'chief-editor-requests',
 				component: ChiefEditorPubReqListComponent,
-			}
+			},
+			{
+				path: 'requests/:id',
+			 	component: PubReqDetailComponent
+			 },
 		],
+	},
+	{
+		path:'refusal/:id',
+		component:RefuseReasonComponent
 	}
 ];
 

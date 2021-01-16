@@ -44,7 +44,7 @@ export class LoginComponent implements OnInit {
 					this.router.navigate(['reader']);
 				else if (data.role == 'ROLE_AUTHOR') this.router.navigate(['author']);
 				else if (data.role == 'ROLE_COMMITTEE_MEMBER') this.router.navigate(['committee']);
-				else if (data.role == 'ROLE_CHIEF_EDITOR') this.router.navigate(['chief-editor']);
+				else if (data.role == 'ROLE_EDITOR') this.router.navigate(['editor']);
 			},
 			(error) => {
 				alert(error.error);
