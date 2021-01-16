@@ -6,8 +6,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class FormService {
-  
-  
+ 
 
   constructor(private http:HttpClient) { }
 
@@ -43,5 +42,9 @@ export class FormService {
   getProcessId(userId:string) {
     console.log('get process id');
     return this.http.get<any>(environment.api+'/form/get-process-id/'+userId);
+  }
+
+  getRefusalProcessId(publishingrequestId: number) {
+	  return this.http.get<any>(environment.api+'/form/get-pub-process-id/'+publishingrequestId.toString());
   }
 }

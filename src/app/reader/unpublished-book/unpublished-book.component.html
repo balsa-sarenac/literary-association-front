@@ -1,0 +1,33 @@
+<div class="container">
+  <div class="justify-content-center">
+    <div class="col">
+      <h1 class="h1">Unpublished book - early access</h1>
+    </div>
+    <div class="col">
+      <p>Request no: {{ request.id }}</p>
+      <p>Book title: {{ request.book.title }}</p>
+      <p>Synopsis: {{ request.book.synopsis }}</p>
+      <p>Authors: {{ request.book.authors[0].firstName }} {{ request.book.authors[0].lastName }}</p>
+<!--      <div *ngFor="let author of request.book.authors">{{ author.firstName }} {{ author.lastName }}; </div>-->
+    </div>
+    <div class="col" *ngIf="request.book.bookFile != null">
+      <!--files-->
+      <h3>Download link</h3>
+      <ul>
+        <li>
+          <a [href]="request.book.bookFile.url" [download]="request.book.bookFile.name">{{ request.book.bookFile.name }}</a>
+        </li>
+      </ul>
+    </div>
+    <div class="col">
+      <h2>Notes</h2>
+      <form [formGroup]="notesForm" (ngSubmit)="onSubmit(notesForm.value)">
+        <div class="form-group">
+          <label for="notes">Enter your comments</label>
+          <textarea class="form-control" id="notes" rows="4" formControlName="notes"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>

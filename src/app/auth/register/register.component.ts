@@ -29,7 +29,7 @@ export class RegisterComponent implements OnInit {
 		this.authService.startReaderRegistrationProcess().subscribe((res:any) => {
 			console.log(res);
 			this.processInstanceId = res.processId;
-			this.authService.setProcessId(this.processInstanceId);
+			
 			console.log(this.processInstanceId);
 			
 			this.show = false;
@@ -45,7 +45,7 @@ export class RegisterComponent implements OnInit {
 		this.authService.startAuthorRegistrationProcess().subscribe((res:any) => {
 			console.log(res);
 			this.processInstanceId = res.processId;
-			this.authService.setProcessId(this.processInstanceId);
+			
 			console.log(this.processInstanceId);
 			
 			this.show = false;

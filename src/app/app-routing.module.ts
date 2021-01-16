@@ -14,7 +14,14 @@ import { MembershipRequestsComponent } from './committee/membership-requests/mem
 import { MembershipRequestComponent } from './committee/membership-request/membership-request.component';
 import { PublishingRequestsListComponent } from './author/publishing-requests-list/publishing-requests-list.component';
 import { PublishBookComponent } from './author/publish-book/publish-book.component';
+import { MembershipPaymentComponent } from './author/membership-payment/membership-payment.component';
 import { ReviewExpectedComponent } from './author/review-expected/review-expected.component';
+import { HomeChiefEditorComponent } from './homepage/home-chief-editor/home-chief-editor.component';
+import { ChiefEditorPubReqListComponent } from './chief-editor/chief-editor-pub-req-list/chief-editor-pub-req-list.component';
+import { PubReqDetailComponent } from './chief-editor/pub-req-detail/pub-req-detail.component';
+import { RefuseReasonComponent } from './chief-editor/refuse-reason/refuse-reason.component';
+import { BetaReaderBooksComponent } from './reader/beta-reader-books/beta-reader-books.component';
+import { UnpublishedBookComponent } from './reader/unpublished-book/unpublished-book.component';
 
 const routes: Routes = [
 	{ path: '', redirectTo: 'welcome', pathMatch: 'full' },
@@ -36,9 +43,16 @@ const routes: Routes = [
 		component: UploadDocumentsComponent,
 	},
 	{
+		path: 'membership-payment',
+		component: MembershipPaymentComponent,
+	},
+	{
 		path: 'reader',
 		component: HomeReaderComponent,
-		children: [],
+		children: [
+      { path: 'beta-books', component: BetaReaderBooksComponent },
+      { path: 'beta-books/:id', component: UnpublishedBookComponent }
+    ],
 	},
 	{
 		path: 'author',
@@ -72,6 +86,24 @@ const routes: Routes = [
 			{ path: 'requests/:id', component: MembershipRequestComponent },
 		],
 	},
+	{
+		path:'editor',
+		component:HomeChiefEditorComponent,
+		children: [
+			{
+				path: 'chief-editor-requests',
+				component: ChiefEditorPubReqListComponent,
+			},
+			{
+				path: 'requests/:id',
+			 	component: PubReqDetailComponent
+			 },
+		],
+	},
+	{
+		path:'refusal/:id',
+		component:RefuseReasonComponent
+	}
 ];
 
 @NgModule({

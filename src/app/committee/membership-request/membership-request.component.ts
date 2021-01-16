@@ -41,10 +41,12 @@ export class MembershipRequestComponent implements OnInit {
 			option: 'approve',
 		};
 		this.committeeService.vote(body).subscribe(
-			() => alert('Accepted'),
+			() => {
+			  alert('Accepted');
+        this.router.navigate(['/committee/requests']);
+      },
 			(error) => alert(error.error)
 		);
-		this.router.navigate(['/committee/requests']);
 	}
 
 	refuse() {
@@ -53,10 +55,12 @@ export class MembershipRequestComponent implements OnInit {
 			option: 'refuse',
 		};
 		this.committeeService.vote(body).subscribe(
-			() => alert('Refused'),
+			() => {
+			  alert('Refused');
+        this.router.navigate(['/committee/requests']);
+        },
 			(error) => alert(error.error)
 		);
-		this.router.navigate(['/committee/requests']);
 	}
 
 	requestMore() {
@@ -65,9 +69,11 @@ export class MembershipRequestComponent implements OnInit {
 			option: 'request_more',
 		};
 		this.committeeService.vote(body).subscribe(
-			() => alert('Requested'),
+			() => {
+			  alert('Requested');
+        this.router.navigate(['/committee/requests']);
+      },
 			(error) => alert(error.error)
 		);
-		this.router.navigate(['/committee/requests']);
 	}
 }
