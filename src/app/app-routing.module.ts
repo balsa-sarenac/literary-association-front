@@ -23,6 +23,7 @@ import { RefuseReasonComponent } from './chief-editor/refuse-reason/refuse-reaso
 import { BetaReaderBooksComponent } from './reader/beta-reader-books/beta-reader-books.component';
 import { UnpublishedBookComponent } from './reader/unpublished-book/unpublished-book.component';
 import { CheckIfOriginalListComponent } from './chief-editor/check-if-original-list/check-if-original-list.component';
+import { PubReqPotentialSourcesComponent } from './chief-editor/pub-req-potential-sources/pub-req-potential-sources.component';
 
 const routes: Routes = [
 	{ path: '', redirectTo: 'welcome', pathMatch: 'full' },
@@ -102,6 +103,10 @@ const routes: Routes = [
 			{
 				path: 'chief-editor-plagiarism-requests',
 				component: CheckIfOriginalListComponent
+			},
+			{
+				path: 'original-request/:id',
+				component: PubReqPotentialSourcesComponent
 			}
 		],
 	},

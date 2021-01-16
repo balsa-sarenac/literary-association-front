@@ -31,6 +31,7 @@ import { RefuseReasonComponent } from './chief-editor/refuse-reason/refuse-reaso
 import { BetaReaderBooksComponent } from './reader/beta-reader-books/beta-reader-books.component';
 import { UnpublishedBookComponent } from './reader/unpublished-book/unpublished-book.component';
 import { CheckIfOriginalListComponent } from './chief-editor/check-if-original-list/check-if-original-list.component';
+import { PubReqPotentialSourcesComponent } from './chief-editor/pub-req-potential-sources/pub-req-potential-sources.component'
 
 @NgModule({
 	declarations: [
@@ -59,6 +60,7 @@ import { CheckIfOriginalListComponent } from './chief-editor/check-if-original-l
 		BetaReaderBooksComponent,
 		UnpublishedBookComponent,
 		CheckIfOriginalListComponent,
+		PubReqPotentialSourcesComponent,
 	],
 	imports: [BrowserModule, AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule],
 	providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
