@@ -5,10 +5,10 @@ import { ChiefEditorService } from '../shared/chief-editor.service';
 
 @Component({
   selector: 'app-check-if-original-list',
-  templateUrl: './check-if-original.component-list.html',
-  styleUrls: ['./check-if-original.component-list.css']
+  templateUrl: './check-if-original-list.component.html',
+  styleUrls: ['./check-if-original-list.component.css']
 })
-export class CheckIfOriginalList implements OnInit {
+export class CheckIfOriginalListComponent implements OnInit {
 
   requests: IPublishingRequest[] = [];
 
@@ -23,6 +23,6 @@ export class CheckIfOriginalList implements OnInit {
 
   refreshTable() {
     var logged=this.authService.getLoggedUser();
-		//this.editorService.getListOfPossibleSources(logged).subscribe((data: IPublishingRequest[]) =>{this.requests = data; console.log(data)} );
+		this.editorService.getListOfPossibleSources(logged).subscribe((data: IPublishingRequest[]) =>{this.requests = data; console.log(data)} );
 	}
 }
