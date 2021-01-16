@@ -22,6 +22,7 @@ import { PubReqDetailComponent } from './chief-editor/pub-req-detail/pub-req-det
 import { RefuseReasonComponent } from './chief-editor/refuse-reason/refuse-reason.component';
 import { BetaReaderBooksComponent } from './reader/beta-reader-books/beta-reader-books.component';
 import { UnpublishedBookComponent } from './reader/unpublished-book/unpublished-book.component';
+import { CheckIfOriginalListComponent } from './chief-editor/check-if-original-list/check-if-original-list.component';
 
 const routes: Routes = [
 	{ path: '', redirectTo: 'welcome', pathMatch: 'full' },
@@ -97,7 +98,11 @@ const routes: Routes = [
 			{
 				path: 'requests/:id',
 			 	component: PubReqDetailComponent
-			 },
+			},
+			{
+				path: 'chief-editor-plagiarism-requests',
+				component: CheckIfOriginalListComponent
+			}
 		],
 	},
 	{
