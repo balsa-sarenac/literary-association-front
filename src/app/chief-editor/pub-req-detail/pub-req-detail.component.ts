@@ -35,7 +35,7 @@ constructor(private router: Router, private activatedRoute: ActivatedRoute, priv
       response:true
     };
       this.chiefEditorService.read( body).subscribe(()=>{
-
+          this,this.router.navigateByUrl('editor/chief-editor-requests');
       },
       (error)=> alert(error.console.error)
       );
