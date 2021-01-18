@@ -36,7 +36,12 @@ export class PubReqPotentialSourcesComponent implements OnInit {
         response:true
       };
 
-      this.sendResponse(body);
+      this.chiefEditorService.originalBook(body).subscribe(()=>
+        {
+          this.router.navigateByUrl('editor/chief-editor-plagiarism-requests');
+        },
+        (error)=> alert(error.console.error)
+      );
     }
 
     refuse() {
@@ -45,14 +50,9 @@ export class PubReqPotentialSourcesComponent implements OnInit {
         response: false
       };
 
-      this.sendResponse(body);
-    }
-
-    sendResponse(body){
       this.chiefEditorService.originalBook(body).subscribe(()=>
         {
-          this,
-          this.router.navigateByUrl('editor/chief-editor-plagiarism-requests');
+          this.router.navigateByUrl('/refusal/'+this.publishingRequest.id)
         },
         (error)=> alert(error.console.error)
       );
