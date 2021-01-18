@@ -29,4 +29,8 @@ export class ChiefEditorService
   originalBook(body: any) {
     return this.http.post<any>(environment.api + '/publish/original-book', body);
   }
+
+  getDocument(url: string) {
+		return this.http.get<any>(url);
+	}
 }

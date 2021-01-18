@@ -8,10 +8,9 @@
             <p><b>Author:</b> {{ publishingRequest.book.authors[0].firstName + ' ' + publishingRequest.book.authors[0].lastName}}</p>
         </div>
         <div class="col">
-            <!--files-->
             <p>Potential sources:</p>
 			<ul>
-				<li *ngFor="let file of publishingRequest.sources">
+				<li *ngFor="let file of publishingRequest.potentialPlagiarismList">
 					<a [href]="file.url" [download]="file.name">{{ file.name }}</a>
 				</li>
 			</ul>

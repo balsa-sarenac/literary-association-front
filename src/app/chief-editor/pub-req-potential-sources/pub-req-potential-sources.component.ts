@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { IPublishingRequest } from 'src/app/DTO/ipublishing-request';
 import { BookDTO } from 'src/app/DTO/book-dto';
 import { ChiefEditorService } from '../shared/chief-editor.service';
+import { IFile } from 'src/app/DTO/ifile';
 
 @Component({
   selector: 'app-pub-req-potential-sources',
@@ -10,7 +11,6 @@ import { ChiefEditorService } from '../shared/chief-editor.service';
   styleUrls: ['./pub-req-potential-sources.component.css']
 })
 export class PubReqPotentialSourcesComponent implements OnInit {
-
     publishingRequest :IPublishingRequest;
 
     constructor(private router: Router, private activatedRoute: ActivatedRoute, private chiefEditorService: ChiefEditorService) { }
@@ -28,6 +28,10 @@ export class PubReqPotentialSourcesComponent implements OnInit {
 			},
 			(error) => alert(error.error)
 		);
+    }
+
+    download(file: IFile) {
+      this.chiefEditorService.getDocument(file.url).subscribe((data) => console.log(data));
     }
 
     original() {
