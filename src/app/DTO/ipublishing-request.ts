@@ -6,6 +6,7 @@ export interface IPublishingRequest{
     id : number;
     approved : boolean;
     book : BookDTO;
+    status: string;
     notes : NoteDTO[];
     sources: IFile[];
 }

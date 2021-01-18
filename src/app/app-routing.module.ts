@@ -24,6 +24,7 @@ import { BetaReaderBooksComponent } from './reader/beta-reader-books/beta-reader
 import { UnpublishedBookComponent } from './reader/unpublished-book/unpublished-book.component';
 import { CheckIfOriginalListComponent } from './chief-editor/check-if-original-list/check-if-original-list.component';
 import { PubReqPotentialSourcesComponent } from './chief-editor/pub-req-potential-sources/pub-req-potential-sources.component';
+import { UploadBookComponent } from './author/upload-book/upload-book.component';
 
 const routes: Routes = [
 	{ path: '', redirectTo: 'welcome', pathMatch: 'full' },
@@ -68,6 +69,10 @@ const routes: Routes = [
 				path: 'publish-book',
 				component: PublishBookComponent,
 			},
+			{
+				path: 'requests/:id',
+			 	component: UploadBookComponent
+			 },
 		],
 	},
 	{

@@ -60,7 +60,8 @@ export class FormComponent implements OnInit {
 			  });
 			});
 		}
-		else if(this.activatedRoute.snapshot.routeConfig.path.includes('refusal')){
+		else if(this.activatedRoute.snapshot.routeConfig.path.includes('refusal') || this.activatedRoute.snapshot.routeConfig.path.includes('requests')){
+			console.log('entered');
 			this.formService.getRefusalProcessId(this.publishingRequestId).subscribe((res)=>{
 				this.processId = res.processId;
 				console.log(this.processId);
@@ -125,7 +126,7 @@ export class FormComponent implements OnInit {
 
 		if(this.activatedRoute.snapshot.routeConfig.path.includes('membership-payment')){
 			this.authorServicxe.payMembershipFee(this.processId).subscribe((res)=>{
-				alert('Success while paying');
+				alert('Success while paying!');
 				this.router.navigate(['author']);
 			});
 		}
@@ -177,17 +178,22 @@ export class FormComponent implements OnInit {
 
 
 	  upload(idx, file) {
-		this.formService.upload(this.processId, this.selectedFiles).subscribe(
-		  event => {
-			if (event.type === HttpEventType.UploadProgress) {
-				// add logic if progress bar is required
-			} else if (event instanceof HttpResponse) {
-			  alert("Documents uploaded successfully!");
-			  this.router.navigateByUrl('/review-expected');
-			}
-		  },
-		  err => {
-			alert('Could not upload the file:' + file.name);
-		  });
-	  }
+			this.formService.upload(this.processId, this.selectedFiles).subscribe(
+				event => {
+					if (event.type === HttpEventType.UploadProgress) {
+						// add logic if progress bar is required
+					} else if (event instanceof HttpResponse) {
+					
+					  alert("Uploaded successfully!");
+					  if(this.activatedRoute.snapshot.routeConfig.path.includes('requests'))
+						this.router.navigate(['author']);
+					  else
+					  	this.router.navigateByUrl('/review-expected');
+					}
+				  },
+				  err => {
+					alert('Could not upload the file:' + file.name);
+				  });
+		}
+		
 }
