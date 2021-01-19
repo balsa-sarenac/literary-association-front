@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/auth/shared/auth.service';
 import { BookDTO } from 'src/app/DTO/book-dto';
 import { AuthorService } from '../shared/author.service';
+import { BookService } from '../shared/book.service';
 
 @Component({
   selector: 'app-book-list',
@@ -12,7 +13,7 @@ export class BookListComponent implements OnInit {
 
   books:BookDTO[]=[];
 
-  constructor(private authorService:AuthorService, private authService:AuthService) { 
+  constructor(private bookService:BookService, private authService:AuthService) { 
     this.refreshTable();
   }
 
@@ -23,7 +24,7 @@ export class BookListComponent implements OnInit {
 
   refreshTable() {
     var logged=this.authService.getLoggedUser();
-		this.authorService.getBooks(logged).subscribe((data: BookDTO[]) =>{this.books = data; console.log(this.books)} );
+		this.bookService.getBooks(logged).subscribe((data: BookDTO[]) =>{this.books = data; console.log(this.books)} );
 	}
 
 }

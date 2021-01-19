@@ -22,9 +22,7 @@ export class AuthorService {
     return this.http.get<any>(environment.api + '/publish/author-requests/'+authorId);
   }
 
-  getBooks(authorId: string) {
-    return this.http.get<any>(environment.api + '/book/get/'+authorId);
-  }
+  
   
   startBookPublishingProcess(){
 		return this.http.get<string>(environment.api+'/publish/start-book-publishing');
