@@ -33,6 +33,7 @@ import { UnpublishedBookComponent } from './reader/unpublished-book/unpublished-
 import { CheckIfOriginalListComponent } from './chief-editor/check-if-original-list/check-if-original-list.component';
 import { PubReqPotentialSourcesComponent } from './chief-editor/pub-req-potential-sources/pub-req-potential-sources.component'
 import { UploadBookComponent } from './author/upload-book/upload-book.component';
+import { BookListComponent } from './author/book-list/book-list.component';
 
 
 
@@ -65,6 +66,7 @@ import { UploadBookComponent } from './author/upload-book/upload-book.component'
 		CheckIfOriginalListComponent,
 		PubReqPotentialSourcesComponent,
 		UploadBookComponent,
+		BookListComponent,
 	],
 	imports: [BrowserModule, AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule],
 	providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
