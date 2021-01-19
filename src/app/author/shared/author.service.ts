@@ -7,8 +7,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class AuthorService {
-  
-
+ 
   constructor(private http: HttpClient) { }
 
   loadForm(processId:string){
@@ -21,6 +20,10 @@ export class AuthorService {
 
   getRequests(authorId:string) {
     return this.http.get<any>(environment.api + '/publish/author-requests/'+authorId);
+  }
+
+  getBooks(authorId: string) {
+    return this.http.get<any>(environment.api + '/book/get/'+authorId);
   }
   
   startBookPublishingProcess(){
