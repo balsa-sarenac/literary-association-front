@@ -40,13 +40,7 @@ export class FormComponent implements OnInit {
 	myBook: BookDTO;
 
 	constructor(private formService: FormService, private authService: AuthService, private router: Router, private activatedRoute: ActivatedRoute, private authorService: AuthorService, private bookService: BookService) {
-		this.bookService.getBooksFromOtherAuthors(authService.getLoggedUser()).subscribe((res: BookDTO[]) => {
-			this.options = res;
-			console.log(this.options);
-		},
-			(error) => {
-				alert(error.message);
-			})
+
 	}
 
 	handleFileInput(event) {
@@ -101,14 +95,22 @@ export class FormComponent implements OnInit {
 				console.log('init form');
 				this.setForm(res);
 				this.dataLoaded = true;
+        if (this.activatedRoute.snapshot.routeConfig.path.includes('file-a-complaint')) {
+          this.bookService.getBooksFromOtherAuthors(this.authService.getLoggedUser()).subscribe((res: BookDTO[]) => {
+              this.options = res;
+              console.log(this.options);
+            },
+            (error) => {
+              alert(error.message);
+            })
 
-				this.filteredOptions = this.form
-					.get('auto-complete')!.valueChanges.pipe(
-						startWith(''),
-						map((value) => this._filter(value))
-					);
+          this.filteredOptions = this.form
+            .get('auto-complete')!.valueChanges.pipe(
+            startWith(''),
+            map((value) => this._filter(value))
+          );
+        }
 
-				console.log(this.filteredOptions);
 			},
 				(err) => {
 					console.log(err.message);
