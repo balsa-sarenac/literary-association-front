@@ -12,14 +12,16 @@
 					<tr>
 						<th scope="col">#</th>
 						<th scope="col">Book</th>
-						<th scope="col">Approved</th>
+						<th scope="col">Status</th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr *ngFor="let request of requests; let i = index">
-						<th scope="row">{{ i + 1 }}</th>
-						<td>{{ request.book.title }}</td>
-						<td>{{ request.approved }}</td>
+					<tr *ngFor="let request of requests; let i = index" >
+						
+							<th scope="row">{{ i + 1 }}</th>
+							<td >{{ request.book.title }}</td>
+							<td *ngIf="request.status=='Book upload requested'"><button class="btn btn-success m-2" [routerLink]="['/author/requests', request.id]" >Upload book</button></td>
+							<td  *ngIf="request.status!='Book upload requested'"> {{request.status}}</td>
 					</tr>
 				</tbody>
 			</table>
