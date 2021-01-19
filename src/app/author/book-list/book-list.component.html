@@ -19,7 +19,8 @@
 					<tr *ngFor="let book of books; let i = index" >
 						<th scope="row">{{ i + 1 }}</th>
 						<td>{{ book.title }}</td>
-						<td>{{ book.synopsis }}</td>
+                        <td>{{ book.synopsis }}</td>
+                        <td> <a style="color: red;" [routerLink]="['/author/file-a-complaint', book.id]" >File a complaint</a> </td>
 					</tr>
 				</tbody>
 			</table>

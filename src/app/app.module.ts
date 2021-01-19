@@ -34,6 +34,7 @@ import { CheckIfOriginalListComponent } from './chief-editor/check-if-original-l
 import { PubReqPotentialSourcesComponent } from './chief-editor/pub-req-potential-sources/pub-req-potential-sources.component'
 import { UploadBookComponent } from './author/upload-book/upload-book.component';
 import { BookListComponent } from './author/book-list/book-list.component';
+import { FileComplaintComponent } from './author/file-complaint/file-complaint.component';
 
 
 
@@ -67,6 +68,7 @@ import { BookListComponent } from './author/book-list/book-list.component';
 		PubReqPotentialSourcesComponent,
 		UploadBookComponent,
 		BookListComponent,
+		FileComplaintComponent,
 	],
 	imports: [BrowserModule, AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule],
 	providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
