@@ -16,7 +16,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr *ngFor="let request of requests; let i = index" [routerLink]="['/editor/read-books', request.id]">
+					<tr *ngFor="let request of requests; let i = index" (click)="clickRow(request)" >
 						<th scope="row">{{ i + 1 }}</th>
 						<td>{{ request.book.title }}</td>
 						<td>{{ request.status }}</td>

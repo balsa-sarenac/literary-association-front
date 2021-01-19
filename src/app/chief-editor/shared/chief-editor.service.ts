@@ -41,5 +41,9 @@ export class ChiefEditorService
   getListOfBooksToRead(logged: string) {
     return this.http.get<any>(environment.api + '/publish/get-requests-read-books/' + logged);
   }
+
+  sendToBeta(body: { publishingRequestId: number; response: boolean; }) {
+    return this.http.post<any>(environment.api + '/publish/sent-to-beta', body);
+  }
 	
 }

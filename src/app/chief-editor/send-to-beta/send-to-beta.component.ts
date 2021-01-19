@@ -6,11 +6,11 @@ import { ChiefEditorService } from '../shared/chief-editor.service';
 import { IFile } from 'src/app/DTO/ifile';
 
 @Component({
-  selector: 'app-read-book',
-  templateUrl: './read-book.component.html',
-  styleUrls: ['./read-book.component.css']
+  selector: 'app-send-to-beta',
+  templateUrl: './send-to-beta.component.html',
+  styleUrls: ['./send-to-beta.component.css']
 })
-export class ReadBookComponent implements OnInit {
+export class SendToBetaComponent implements OnInit {
     publishingRequest :IPublishingRequest;
 
     constructor(private router: Router, private activatedRoute: ActivatedRoute, private chiefEditorService: ChiefEditorService) { }
@@ -30,33 +30,29 @@ export class ReadBookComponent implements OnInit {
 		);
     }
 
-    download(file: IFile) {
-      this.chiefEditorService.getDocument(file.url).subscribe((data) => console.log(data));
-    }
-
-    accept() {
+    yes() {
       let body={
         publishingRequestId:this.publishingRequest.id,
         response:true
       };
 
-      this.chiefEditorService.acceptBook(body).subscribe(()=>
+      this.chiefEditorService.sendToBeta(body).subscribe(()=>
         {
-          this.router.navigateByUrl('editor/send-to-beta-readers/'+ this.publishingRequest.id);
+          this.router.navigateByUrl('editor/choose-beta-readers/'+ this.publishingRequest.id);
         },
         (error)=> alert(error.console.error)
       );
     }
 
-    refuse() {
+    no() {
       let body={
         publishingRequestId: this.publishingRequest.id,
         response: false
       };
 
-      this.chiefEditorService.acceptBook(body).subscribe(()=>
+      this.chiefEditorService.sendToBeta(body).subscribe(()=>
         {
-          this.router.navigateByUrl('/refusal/'+this.publishingRequest.id)
+            this.router.navigateByUrl('editor/read-books');
         },
         (error)=> alert(error.console.error)
       );

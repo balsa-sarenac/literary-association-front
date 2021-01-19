@@ -35,7 +35,8 @@ import { ReadBookComponent} from './chief-editor/read-book/read-book.component';
 import { CheckIfOriginalListComponent } from './chief-editor/check-if-original-list/check-if-original-list.component';
 import { PubReqPotentialSourcesComponent } from './chief-editor/pub-req-potential-sources/pub-req-potential-sources.component'
 import { UploadBookComponent } from './author/upload-book/upload-book.component';
-
+import { SendToBetaComponent } from './chief-editor/send-to-beta/send-to-beta.component';
+import { ChooseBetaReadersComponent } from './chief-editor/choose-beta-readers/choose-beta-readers.component';
 
 
 @NgModule({
@@ -69,6 +70,8 @@ import { UploadBookComponent } from './author/upload-book/upload-book.component'
 		CheckIfOriginalListComponent,
 		PubReqPotentialSourcesComponent,
 		UploadBookComponent,
+		SendToBetaComponent,
+		ChooseBetaReadersComponent,
 	],
 	imports: [BrowserModule, AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule],
 	providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
