@@ -1,5 +1,6 @@
 import { BookDTO } from "src/app/DTO/book-dto";
 import { NoteDTO } from "src/app/DTO/note-dto";
+import { IFile } from "./ifile";
 
 export interface IPublishingRequest{
     id : number;
@@ -7,4 +8,5 @@ export interface IPublishingRequest{
     book : BookDTO;
     status: string;
     notes : NoteDTO[];
+    potentialPlagiarismList: IFile[];
 }
