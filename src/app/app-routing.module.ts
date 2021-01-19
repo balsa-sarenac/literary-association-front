@@ -22,9 +22,13 @@ import { PubReqDetailComponent } from './chief-editor/pub-req-detail/pub-req-det
 import { RefuseReasonComponent } from './chief-editor/refuse-reason/refuse-reason.component';
 import { BetaReaderBooksComponent } from './reader/beta-reader-books/beta-reader-books.component';
 import { UnpublishedBookComponent } from './reader/unpublished-book/unpublished-book.component';
+import { ReadBooksListComponent } from './chief-editor/read-books-list/read-books-list.component';
+import { ReadBookComponent } from './chief-editor/read-book/read-book.component';
 import { CheckIfOriginalListComponent } from './chief-editor/check-if-original-list/check-if-original-list.component';
 import { PubReqPotentialSourcesComponent } from './chief-editor/pub-req-potential-sources/pub-req-potential-sources.component';
 import { UploadBookComponent } from './author/upload-book/upload-book.component';
+import { SendToBetaComponent } from './chief-editor/send-to-beta/send-to-beta.component';
+import { ChooseBetaReadersComponent} from './chief-editor/choose-beta-readers/choose-beta-readers.component';
 import { BookListComponent } from './author/book-list/book-list.component';
 import { FileComplaintComponent } from './author/file-complaint/file-complaint.component';
 
@@ -116,13 +120,30 @@ const routes: Routes = [
 			 	component: PubReqDetailComponent
 			},
 			{
+				path: 'read-books',
+				component: ReadBooksListComponent
+			},
+			{
+				path: 'read-books/:id',
+				component: ReadBookComponent
+			},
+			{
 				path: 'chief-editor-plagiarism-requests',
 				component: CheckIfOriginalListComponent
 			},
 			{
 				path: 'original-request/:id',
 				component: PubReqPotentialSourcesComponent
-			}
+			},
+			{
+				path: 'send-to-beta-readers/:id',
+				component: SendToBetaComponent
+			},
+			{
+				path: 'choose-beta-readers/:id',
+				component: ChooseBetaReadersComponent
+			},
+
 		],
 	},
 	{

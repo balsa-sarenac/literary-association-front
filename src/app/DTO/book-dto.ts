@@ -1,3 +1,4 @@
+import { IFile } from "./ifile";
 import { UserDTO } from "./userDTO";
 
 export class BookDTO {
@@ -7,5 +8,7 @@ export class BookDTO {
 
     synopsis: string;
 
+    bookFile: IFile;
+    
     authors: Array<UserDTO>;
 }
