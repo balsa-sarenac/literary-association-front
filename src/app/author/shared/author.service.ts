@@ -1,12 +1,14 @@
 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { BookDTO } from 'src/app/DTO/book-dto';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthorService {
+  
    
   constructor(private http: HttpClient) { }
 
@@ -30,5 +32,13 @@ export class AuthorService {
   
   startPlagiarismProcess() {
     return this.http.get<string>(environment.api+'/plagiarism/start-plagiarism');
+  }
+
+  fileComplaint(myBook: BookDTO, plagiarism: BookDTO, authorId:string) {
+    let plagiarismComplaint = {
+      myBook:myBook,
+      plagiarism:plagiarism
+    }
+	  return this.http.post<any>(environment.api+'/plagiarism/file-a-complaint/'+authorId, plagiarismComplaint );
   }
 }
