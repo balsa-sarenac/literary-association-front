@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthorService } from '../shared/author.service';
 
 @Component({
   selector: 'app-file-complaint',
@@ -6,10 +7,18 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./file-complaint.component.css']
 })
 export class FileComplaintComponent implements OnInit {
+  processInstanceId:string="";
+  show=false;
+  public choice:string;
 
-  constructor() { }
+  constructor(private authorService:AuthorService) { }
 
   ngOnInit(): void {
+    this.authorService.startPlagiarismProcess().subscribe((res:any)=>{
+      this.processInstanceId=res.processId;
+      this.show =true;
+
+    })
   }
 
 }
