@@ -6,4 +6,5 @@ export interface IPublishingRequest{
     approved : boolean;
     book : BookDTO;
     notes : NoteDTO[];
+    status: String;
 }

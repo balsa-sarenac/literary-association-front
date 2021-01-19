@@ -30,6 +30,8 @@ import { PubReqDetailComponent } from './chief-editor/pub-req-detail/pub-req-det
 import { RefuseReasonComponent } from './chief-editor/refuse-reason/refuse-reason.component'
 import { BetaReaderBooksComponent } from './reader/beta-reader-books/beta-reader-books.component';
 import { UnpublishedBookComponent } from './reader/unpublished-book/unpublished-book.component';
+import { ReadBooksListComponent } from './chief-editor/read-books-list/read-books-list.component';
+import { ReadBookComponent} from './chief-editor/read-book/read-book.component';
 
 
 
@@ -59,6 +61,8 @@ import { UnpublishedBookComponent } from './reader/unpublished-book/unpublished-
 		RefuseReasonComponent,
 		BetaReaderBooksComponent,
 		UnpublishedBookComponent,
+		ReadBooksListComponent,
+		ReadBookComponent,
 	],
 	imports: [BrowserModule, AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule],
 	providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
