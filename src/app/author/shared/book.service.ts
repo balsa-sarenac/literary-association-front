@@ -7,6 +7,7 @@ import { environment } from 'src/environments/environment';
 })
 export class BookService {
   
+  
   constructor(private http:HttpClient) { }
 
   getBooks(authorId: string) {
@@ -15,6 +16,10 @@ export class BookService {
   
   getBooksFromOtherAuthors(authorId: string) {
 	  return this.http.get<any>(environment.api + '/book/get-others/'+authorId);
+  }
+
+  getBook(bookId: number) {
+    return this.http.get<any>(environment.api + '/book/get-book/'+bookId);
   }
 
 }
