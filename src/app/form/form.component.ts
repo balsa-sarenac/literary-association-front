@@ -115,14 +115,6 @@ export class FormComponent implements OnInit {
 			  console.log(err.message);
 		  });
 		}
-
-		// this.filteredOptions = this.form
-		// 			.get('auto-complete')!.valueChanges.pipe(
-		// 				startWith(''),
-		// 				map((value) => this._filter(value).map((book)=>book.title))
-		// 			);
-
-		// 			console.log(this.filteredOptions);
 		
 	}
 
@@ -165,11 +157,16 @@ export class FormComponent implements OnInit {
 			console.log(this.myBook);
 			console.log(value);
 			let plagiarism = this.options.find(x=>x.title==value["auto-complete"]);
+			console.log(plagiarism);
 			if(plagiarism!=null){
 				this.authorServicxe.fileComplaint(this.myBook, plagiarism, this.authService.getLoggedUser(), this.processId).subscribe((res)=>{
 					alert("Success");
-					this.router.navigate(['books']);
+					this.router.navigate(['author/books']);
 				})
+			}
+			else{
+				alert("Book doesn't exist!");
+				this.form.get('auto-complete').patchValue('');
 			}
 		}
 		else if(this.activatedRoute.snapshot.routeConfig.path.includes('membership-payment')){

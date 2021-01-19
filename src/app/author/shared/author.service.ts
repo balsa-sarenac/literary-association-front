@@ -36,7 +36,7 @@ export class AuthorService {
 
   fileComplaint(myBook: BookDTO, plagiarism: BookDTO, authorId:string, processId:string) {
     let plagiarismComplaint = {
-      myBook:myBook,
+      plagiated:myBook,
       plagiarism:plagiarism
     }
 	  return this.http.post<any>(environment.api+'/plagiarism/file-a-complaint/'+authorId+"/"+processId, plagiarismComplaint );
