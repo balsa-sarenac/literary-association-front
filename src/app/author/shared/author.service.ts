@@ -34,11 +34,11 @@ export class AuthorService {
     return this.http.get<string>(environment.api+'/plagiarism/start-plagiarism');
   }
 
-  fileComplaint(myBook: BookDTO, plagiarism: BookDTO, authorId:string) {
+  fileComplaint(myBook: BookDTO, plagiarism: BookDTO, authorId:string, processId:string) {
     let plagiarismComplaint = {
       myBook:myBook,
       plagiarism:plagiarism
     }
-	  return this.http.post<any>(environment.api+'/plagiarism/file-a-complaint/'+authorId, plagiarismComplaint );
+	  return this.http.post<any>(environment.api+'/plagiarism/file-a-complaint/'+authorId+"/"+processId, plagiarismComplaint );
   }
 }

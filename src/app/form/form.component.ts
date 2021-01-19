@@ -166,7 +166,7 @@ export class FormComponent implements OnInit {
 			console.log(value);
 			let plagiarism = this.options.find(x=>x.title==value["auto-complete"]);
 			if(plagiarism!=null){
-				this.authorServicxe.fileComplaint(this.myBook, plagiarism, this.authService.getLoggedUser()).subscribe((res)=>{
+				this.authorServicxe.fileComplaint(this.myBook, plagiarism, this.authService.getLoggedUser(), this.processId).subscribe((res)=>{
 					alert("Success");
 					this.router.navigate(['books']);
 				})
