@@ -1,12 +1,35 @@
 <form *ngIf="dataLoaded" (ngSubmit)="onSubmit(form.value, form)" style="width: 40%; display: inline-block"
 	[formGroup]="form">
 	<div *ngFor="let field of formFields" class="form-group" style="text-align: left">
-		<label for="{{ field.id }}">{{ field.label }}</label>
+		<label for="{{ field.id }}">{{ field.label }}</label> <br>
+
+
+		<!-- <input  formControlName={{field.id}} type="text" 
+			   type="text" matInput [matAutocomplete]="auto">
+		<mat-autocomplete #auto="matAutocomplete">
+			<mat-option style="height: fit-content;" 
+				*ngFor="let option of filteredOptions|async"
+					 [value]="option">
+				  <span>{{option}}</span>
+			</mat-option>
+		</mat-autocomplete>	    -->
+
+		<mat-form-field >
+			<input type="text" matInput formControlName={{field.id}}
+				 [matAutocomplete]="auto" *ngIf="(field.id=='auto-complete') && field.type.name=='string'">
+			   <mat-autocomplete #auto="matAutocomplete">
+				 <mat-option *ngFor="let option of filteredOptions|async" [value]="option.title">
+				  {{option.title}}
+				</mat-option>
+				
+			</mat-autocomplete>
+		 </mat-form-field>
+		
 
 		<input class="form-control" type="password" formControlName={{field.id}}
 			*ngIf="(field.id=='password') && field.type.name=='string'">
 		<input class="form-control" type="text" formControlName={{field.id}}
-			*ngIf="field.type.name=='string' && field.id!='password'">
+			*ngIf="field.type.name=='string' && field.id!='password' && field.id!='auto-complete'">
 		<input class="form-control" type="checkbox" formControlName={{field.id}} *ngIf="field.type.name=='boolean'">
 		<input class="form-control" type="number" formControlName={{field.id}} *ngIf="field.type.name=='long'">
 		<input class="form-control-file" type="file" formControlName={{field.id}} accept="pdf/*"
