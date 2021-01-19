@@ -8,5 +8,5 @@ export interface IPublishingRequest{
     book : BookDTO;
     status: string;
     notes : NoteDTO[];
-    sources: IFile[];
+    potentialPlagiarismList: IFile[];
 }
