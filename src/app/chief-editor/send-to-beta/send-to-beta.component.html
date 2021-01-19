@@ -1,0 +1,16 @@
+<div class="container" *ngIf="publishingRequest!==undefined">
+	<div class="justify-content-center">
+		<div class="col">
+			<h1 class="h1">Publishing request</h1>
+		</div>
+		<div class="col">
+            <p><b>Title:</b> {{ publishingRequest.book.title }}</p>
+            <p><b>Author:</b> {{ publishingRequest.book.authors[0].firstName + ' ' + publishingRequest.book.authors[0].lastName}}</p>
+        </div>
+        <h3>Send this book to beta-readers?</h3>
+		<div class="col">
+			<button class="btn btn-success m-2" (click)="yes()" >Yes</button>
+			<button class="btn btn-danger m-2" (click)="no()" >No</button>
+		</div>
+	</div>
+</div>
