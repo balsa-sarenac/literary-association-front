@@ -32,6 +32,9 @@ import { BetaReaderBooksComponent } from './reader/beta-reader-books/beta-reader
 import { UnpublishedBookComponent } from './reader/unpublished-book/unpublished-book.component';
 import { ReadBooksListComponent } from './chief-editor/read-books-list/read-books-list.component';
 import { ReadBookComponent} from './chief-editor/read-book/read-book.component';
+import { CheckIfOriginalListComponent } from './chief-editor/check-if-original-list/check-if-original-list.component';
+import { PubReqPotentialSourcesComponent } from './chief-editor/pub-req-potential-sources/pub-req-potential-sources.component'
+import { UploadBookComponent } from './author/upload-book/upload-book.component';
 
 
 
@@ -63,6 +66,9 @@ import { ReadBookComponent} from './chief-editor/read-book/read-book.component';
 		UnpublishedBookComponent,
 		ReadBooksListComponent,
 		ReadBookComponent,
+		CheckIfOriginalListComponent,
+		PubReqPotentialSourcesComponent,
+		UploadBookComponent,
 	],
 	imports: [BrowserModule, AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule],
 	providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],

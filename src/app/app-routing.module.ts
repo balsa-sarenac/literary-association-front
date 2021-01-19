@@ -25,6 +25,9 @@ import { UnpublishedBookComponent } from './reader/unpublished-book/unpublished-
 import { ReadBooksListComponent } from './chief-editor/read-books-list/read-books-list.component';
 import { ReadBookComponent } from './chief-editor/read-book/read-book.component';
 
+import { CheckIfOriginalListComponent } from './chief-editor/check-if-original-list/check-if-original-list.component';
+import { PubReqPotentialSourcesComponent } from './chief-editor/pub-req-potential-sources/pub-req-potential-sources.component';
+import { UploadBookComponent } from './author/upload-book/upload-book.component';
 
 const routes: Routes = [
 	{ path: '', redirectTo: 'welcome', pathMatch: 'full' },
@@ -69,6 +72,10 @@ const routes: Routes = [
 				path: 'publish-book',
 				component: PublishBookComponent,
 			},
+			{
+				path: 'requests/:id',
+			 	component: UploadBookComponent
+			 },
 		],
 	},
 	{
@@ -108,6 +115,14 @@ const routes: Routes = [
 			{
 				path: 'read-books/:id',
 				component: ReadBookComponent
+			},
+			{
+				path: 'chief-editor-plagiarism-requests',
+				component: CheckIfOriginalListComponent
+			},
+			{
+				path: 'original-request/:id',
+				component: PubReqPotentialSourcesComponent
 			}
 		],
 	},

@@ -41,4 +41,5 @@ export class ChiefEditorService
   getListOfBooksToRead(logged: string) {
     return this.http.get<any>(environment.api + '/publish/get-requests-read-books/' + logged);
   }
+	
 }
