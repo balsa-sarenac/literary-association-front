@@ -50,14 +50,7 @@ export class FormComponent implements OnInit {
 
 	ngOnInit(): void {
 
-		this.activatedRoute.paramMap.subscribe((params) => {
-			this.bookService.getBook(+params.get('id')).subscribe((res) => {
-				this.myBook = res;
-			},
-				(error) => {
-					console.log(error.message);
-				});
-		});
+		
 
 		if (this.activatedRoute.snapshot.routeConfig.path.includes('upload-documents') || this.activatedRoute.snapshot.routeConfig.path.includes('membership-payment')) {
 			this.formService.getProcessId(this.authService.getLoggedUser()).subscribe((res) => {
@@ -95,27 +88,36 @@ export class FormComponent implements OnInit {
 				console.log('init form');
 				this.setForm(res);
 				this.dataLoaded = true;
-        if (this.activatedRoute.snapshot.routeConfig.path.includes('file-a-complaint')) {
-          this.bookService.getBooksFromOtherAuthors(this.authService.getLoggedUser()).subscribe((res: BookDTO[]) => {
-              this.options = res;
-              console.log(this.options);
-            },
-            (error) => {
-              alert(error.message);
-            })
+				if (this.activatedRoute.snapshot.routeConfig.path.includes('file-a-complaint')) {
+				this.bookService.getBooksFromOtherAuthors(this.authService.getLoggedUser()).subscribe((res: BookDTO[]) => {
+					this.options = res;
+					console.log(this.options);
+					},
+					(error) => {
+					alert(error.message);
+					})
 
-          this.filteredOptions = this.form
-            .get('auto-complete')!.valueChanges.pipe(
-            startWith(''),
-            map((value) => this._filter(value))
-          );
-        }
+					this.activatedRoute.paramMap.subscribe((params) => {
+						this.bookService.getBook(+params.get('id')).subscribe((res) => {
+							this.myBook = res;
+						},
+							(error) => {
+								console.log(error.message);
+							});
+					});
+					
+					this.filteredOptions = this.form
+						.get('auto-complete')!.valueChanges.pipe(
+						startWith(''),
+						map((value) => this._filter(value))
+					);
+				}
 
-			},
-				(err) => {
-					console.log(err.message);
-				});
-		}
+					},
+						(err) => {
+							console.log(err.message);
+						});
+				}
 
 	}
 
