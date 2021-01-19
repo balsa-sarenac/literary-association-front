@@ -37,7 +37,16 @@ import { PubReqPotentialSourcesComponent } from './chief-editor/pub-req-potentia
 import { UploadBookComponent } from './author/upload-book/upload-book.component';
 import { SendToBetaComponent } from './chief-editor/send-to-beta/send-to-beta.component';
 import { ChooseBetaReadersComponent } from './chief-editor/choose-beta-readers/choose-beta-readers.component';
+import { BookListComponent } from './author/book-list/book-list.component';
+import { FileComplaintComponent } from './author/file-complaint/file-complaint.component';
 
+
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";    
+import 'hammerjs';   
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';    
+import 'hammerjs';    
 
 @NgModule({
 	declarations: [
@@ -72,8 +81,10 @@ import { ChooseBetaReadersComponent } from './chief-editor/choose-beta-readers/c
 		UploadBookComponent,
 		SendToBetaComponent,
 		ChooseBetaReadersComponent,
+		BookListComponent,
+		FileComplaintComponent,
 	],
-	imports: [BrowserModule, AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule],
+	imports: [BrowserModule, AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule, BrowserAnimationsModule,MatFormFieldModule, MatInputModule, MatAutocompleteModule, ],
 	providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
 	bootstrap: [AppComponent],
 })

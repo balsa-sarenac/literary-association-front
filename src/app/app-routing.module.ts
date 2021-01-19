@@ -29,6 +29,8 @@ import { PubReqPotentialSourcesComponent } from './chief-editor/pub-req-potentia
 import { UploadBookComponent } from './author/upload-book/upload-book.component';
 import { SendToBetaComponent } from './chief-editor/send-to-beta/send-to-beta.component';
 import { ChooseBetaReadersComponent} from './chief-editor/choose-beta-readers/choose-beta-readers.component';
+import { BookListComponent } from './author/book-list/book-list.component';
+import { FileComplaintComponent } from './author/file-complaint/file-complaint.component';
 
 const routes: Routes = [
 	{ path: '', redirectTo: 'welcome', pathMatch: 'full' },
@@ -66,6 +68,10 @@ const routes: Routes = [
 		component: HomeAuthorComponent,
 		children: [
 			{
+				path:'books',
+				component: BookListComponent
+			},
+			{
 				path: 'publishing-requests',
 				component: PublishingRequestsListComponent,
 			},
@@ -76,6 +82,10 @@ const routes: Routes = [
 			{
 				path: 'requests/:id',
 			 	component: UploadBookComponent
+			 },
+			 {
+				path: 'file-a-complaint/:id',
+			 	component: FileComplaintComponent
 			 },
 		],
 	},

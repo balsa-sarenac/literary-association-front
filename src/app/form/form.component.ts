@@ -2,14 +2,15 @@ import { HttpClient, HttpEventType, HttpRequest, HttpResponse } from '@angular/c
 import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { element } from 'protractor';
 import { Observable } from 'rxjs';
-import { environment } from 'src/environments/environment';
 import { AuthService } from '../auth/shared/auth.service';
 import { IFormField } from '../auth/shared/iformfield.register';
 import { AuthorService } from '../author/shared/author.service';
 import { Value } from '../DTO/value';
 import { FormService } from './shared/form.service';
+import { startWith, map } from 'rxjs/operators';
+import { BookService } from '../author/shared/book.service';
+import { BookDTO } from '../DTO/book-dto';
 
 @Component({
 	selector: 'app-form',
@@ -33,8 +34,19 @@ export class FormComponent implements OnInit {
 
 	fileInfos: Observable<any>;
 
-	constructor(private formService: FormService, private authService: AuthService, private router: Router, private activatedRoute: ActivatedRoute, private authorServicxe: AuthorService) {
+	options: BookDTO[] = [];
+	filteredOptions: Observable<BookDTO[]>;
 
+	myBook: BookDTO;
+
+	constructor(private formService: FormService, private authService: AuthService, private router: Router, private activatedRoute: ActivatedRoute, private authorService: AuthorService, private bookService: BookService) {
+		this.bookService.getBooksFromOtherAuthors(authService.getLoggedUser()).subscribe((res: BookDTO[]) => {
+			this.options = res;
+			console.log(this.options);
+		},
+			(error) => {
+				alert(error.message);
+			})
 	}
 
 	handleFileInput(event) {
@@ -43,6 +55,15 @@ export class FormComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
+
+		this.activatedRoute.paramMap.subscribe((params) => {
+			this.bookService.getBook(+params.get('id')).subscribe((res) => {
+				this.myBook = res;
+			},
+				(error) => {
+					console.log(error.message);
+				});
+		});
 
 		if (this.activatedRoute.snapshot.routeConfig.path.includes('upload-documents') || this.activatedRoute.snapshot.routeConfig.path.includes('membership-payment')) {
 			this.formService.getProcessId(this.authService.getLoggedUser()).subscribe((res) => {
@@ -80,11 +101,20 @@ export class FormComponent implements OnInit {
 				console.log('init form');
 				this.setForm(res);
 				this.dataLoaded = true;
+
+				this.filteredOptions = this.form
+					.get('auto-complete')!.valueChanges.pipe(
+						startWith(''),
+						map((value) => this._filter(value))
+					);
+
+				console.log(this.filteredOptions);
 			},
 				(err) => {
 					console.log(err.message);
 				});
 		}
+
 	}
 
 	setForm(res: any) {
@@ -131,9 +161,24 @@ export class FormComponent implements OnInit {
 	}
 
 	onSubmit(value: any, form: any) {
-
-		if (this.activatedRoute.snapshot.routeConfig.path.includes('membership-payment')) {
-			this.authorServicxe.payMembershipFee(this.processId).subscribe((res) => {
+		if (this.activatedRoute.snapshot.routeConfig.path.includes('file-a-complaint')) {
+			console.log(this.myBook);
+			console.log(value);
+			let plagiarism = this.options.find(x => x.title == value["auto-complete"]);
+			console.log(plagiarism);
+			if (plagiarism != null) {
+				this.authorService.fileComplaint(this.myBook, plagiarism, this.authService.getLoggedUser(), this.processId).subscribe((res) => {
+					alert("Success");
+					this.router.navigate(['author/books']);
+				})
+			}
+			else {
+				alert("Book doesn't exist!");
+				this.form.get('auto-complete').patchValue('');
+			}
+		}
+		else if (this.activatedRoute.snapshot.routeConfig.path.includes('membership-payment')) {
+			this.authorService.payMembershipFee(this.processId).subscribe((res) => {
 				alert('Success while paying!');
 				this.router.navigate(['author']);
 			});
@@ -204,4 +249,13 @@ export class FormComponent implements OnInit {
 			});
 	}
 
+	private _filter(value: string): BookDTO[] {
+		const filterValue = value.toLowerCase();
+		console.log(filterValue);
+
+		return this.options.filter((option) =>
+			option.title.toLowerCase().includes(filterValue)
+		);
+
+	}
 }
