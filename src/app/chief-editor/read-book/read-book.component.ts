@@ -42,7 +42,7 @@ export class ReadBookComponent implements OnInit {
 
       this.chiefEditorService.acceptBook(body).subscribe(()=>
         {
-          //this.router.navigateByUrl('editor/chief-editor-plagiarism-requests');
+          this.router.navigateByUrl('editor/read-books');
         },
         (error)=> alert(error.console.error)
       );
@@ -56,7 +56,7 @@ export class ReadBookComponent implements OnInit {
 
       this.chiefEditorService.acceptBook(body).subscribe(()=>
         {
-          //this.router.navigateByUrl('/refusal/'+this.publishingRequest.id)
+          this.router.navigateByUrl('/refusal/'+this.publishingRequest.id)
         },
         (error)=> alert(error.console.error)
       );

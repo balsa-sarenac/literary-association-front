@@ -8,11 +8,11 @@
             <p><b>Author:</b> {{ publishingRequest.book.authors[0].firstName + ' ' + publishingRequest.book.authors[0].lastName}}</p>
         </div>
         <div class="col">
-            <p>Download books:</p>
+            <p>Download book:</p>
             <a [href]="publishingRequest.book.bookFile.url" [download]="publishingRequest.book.bookFile.name">{{ publishingRequest.book.bookFile.name }}</a>
 		</div>
 		<div class="col">
-			<button class="btn btn-success m-2" (click)="original()" >Confirm original</button>
+			<button class="btn btn-success m-2" (click)="accept()" >Accept book</button>
 			<button class="btn btn-danger m-2" (click)="refuse()" >Refuse book</button>
 		</div>
 	</div>
