@@ -42,8 +42,8 @@
 
 		<div *ngIf="field.type.name=='multiselect' && field.id != 'betaReaders'" class="form-group">
 			<select multiple class="form-control" formControlName={{field.id}} multiple aria-label="multiple select example">
-				<option *ngFor="let value of field.type.values" [value]="value">
-					{{value}}
+				<option *ngFor="let value of field.type.values" [value]="value.id">
+					{{value.value}}
 				</option>
 			</select>
 		</div>
@@ -58,8 +58,8 @@
 
 		<div *ngIf="field.type.name=='enum'" class="form-group">
 			<select class="form-control" formControlName={{field.id}} >
-				<option *ngFor="let value of field.type.values" [value]="value">
-					{{value}}
+				<option *ngFor="let value of field.type.values" [value]="value.id">
+					{{value.value}}
 				</option>
 			</select>
 		</div>
