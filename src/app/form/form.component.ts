@@ -51,8 +51,8 @@ export class FormComponent implements OnInit {
 	ngOnInit(): void {
 
 
-
-		if (this.activatedRoute.snapshot.routeConfig.path.includes('upload-documents') || this.activatedRoute.snapshot.routeConfig.path.includes('membership-payment')) {
+    let path = this.activatedRoute.snapshot.routeConfig.path;
+    if (path.includes('upload-documents') || path.includes('membership-payment')) {
 			this.formService.getProcessId(this.authService.getLoggedUser()).subscribe((res) => {
 				this.processInstanceId = res.processId;
 				console.log(this.processInstanceId);
@@ -67,7 +67,7 @@ export class FormComponent implements OnInit {
 					});
 			});
 		}
-		else if (this.activatedRoute.snapshot.routeConfig.path.includes('refusal') || this.activatedRoute.snapshot.routeConfig.path.includes('requests') || this.activatedRoute.snapshot.routeConfig.path.includes('choose-beta-readers')) {
+		else if (path.includes('refusal') || path.includes('requests') || path.includes('choose-beta-readers') || path.includes('beat-books')) {
 			console.log('entered');
 			this.formService.getRefusalProcessId(this.publishingRequestId).subscribe((res) => {
 				this.processInstanceId = res.processId;
@@ -88,40 +88,42 @@ export class FormComponent implements OnInit {
 				console.log('init form');
 				this.setForm(res);
 				this.dataLoaded = true;
-				if (this.activatedRoute.snapshot.routeConfig.path.includes('file-a-complaint')) {
-				this.bookService.getBooksFromOtherAuthors(this.authService.getLoggedUser()).subscribe((res: BookDTO[]) => {
-					this.options = res;
-					console.log(this.options);
-					},
-					(error) => {
-					alert(error.message);
-					})
-
-					this.activatedRoute.paramMap.subscribe((params) => {
-						this.bookService.getBook(+params.get('id')).subscribe((res) => {
-							this.myBook = res;
-						},
-							(error) => {
-								console.log(error.message);
-							});
-					});
-
-					this.filteredOptions = this.form
-						.get('auto-complete')!.valueChanges.pipe(
-						startWith(''),
-						map((value) => this._filter(value))
-					);
-				}
-
-					},
-						(err) => {
+				if (path.includes('file-a-complaint')) {
+          this.getFileAComplaintForm();
+        }
+					},(err) => {
 							console.log(err.message);
-						});
+          });
 				}
 
 	}
 
-	setForm(res: any) {
+  private getFileAComplaintForm() {
+    this.bookService.getBooksFromOtherAuthors(this.authService.getLoggedUser()).subscribe((res: BookDTO[]) => {
+        this.options = res;
+        console.log(this.options);
+      },
+      (error) => {
+        alert(error.message);
+      });
+
+    this.activatedRoute.paramMap.subscribe((params) => {
+      this.bookService.getBook(+params.get('id')).subscribe((res) => {
+          this.myBook = res;
+        },
+        (error) => {
+          console.log(error.message);
+        });
+    });
+
+    this.filteredOptions = this.form
+      .get('auto-complete')!.valueChanges.pipe(
+      startWith(''),
+      map((value) => this._filter(value))
+    );
+  }
+
+  setForm(res: any) {
 		console.log(this.values);
 		console.log(res);
 
