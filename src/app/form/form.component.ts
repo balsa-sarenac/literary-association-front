@@ -1,16 +1,16 @@
-import { HttpClient, HttpEventType, HttpRequest, HttpResponse } from '@angular/common/http';
-import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { AuthService } from '../auth/shared/auth.service';
-import { IFormField } from '../auth/shared/iformfield.register';
-import { AuthorService } from '../author/shared/author.service';
-import { Value } from '../DTO/value';
-import { FormService } from './shared/form.service';
-import { startWith, map } from 'rxjs/operators';
-import { BookService } from '../author/shared/book.service';
-import { BookDTO } from '../DTO/book-dto';
+import {HttpEventType, HttpResponse} from '@angular/common/http';
+import {Component, Input, OnInit} from '@angular/core';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {ActivatedRoute, Router} from '@angular/router';
+import {Observable} from 'rxjs';
+import {AuthService} from '../auth/shared/auth.service';
+import {IFormField} from '../auth/shared/iformfield.register';
+import {AuthorService} from '../author/shared/author.service';
+import {Value} from '../DTO/value';
+import {FormService} from './shared/form.service';
+import {map, startWith} from 'rxjs/operators';
+import {BookService} from '../author/shared/book.service';
+import {BookDTO} from '../DTO/book-dto';
 
 @Component({
 	selector: 'app-form',
@@ -20,7 +20,7 @@ import { BookDTO } from '../DTO/book-dto';
 export class FormComponent implements OnInit {
 	dataLoaded: boolean = false;
 
-	@Input() processId: string;
+	@Input() processInstanceId: string;
 	@Input() publishingRequestId: number;
 
 	formFieldsDto = null;
@@ -50,14 +50,14 @@ export class FormComponent implements OnInit {
 
 	ngOnInit(): void {
 
-		
+
 
 		if (this.activatedRoute.snapshot.routeConfig.path.includes('upload-documents') || this.activatedRoute.snapshot.routeConfig.path.includes('membership-payment')) {
 			this.formService.getProcessId(this.authService.getLoggedUser()).subscribe((res) => {
-				this.processId = res.processId;
-				console.log(this.processId);
+				this.processInstanceId = res.processId;
+				console.log(this.processInstanceId);
 
-				this.formService.getForm(this.processId).subscribe((res) => {
+				this.formService.getForm(this.processInstanceId).subscribe((res) => {
 					console.log('init form');
 					this.setForm(res);
 					this.dataLoaded = true;
@@ -70,10 +70,10 @@ export class FormComponent implements OnInit {
 		else if (this.activatedRoute.snapshot.routeConfig.path.includes('refusal') || this.activatedRoute.snapshot.routeConfig.path.includes('requests') || this.activatedRoute.snapshot.routeConfig.path.includes('choose-beta-readers')) {
 			console.log('entered');
 			this.formService.getRefusalProcessId(this.publishingRequestId).subscribe((res) => {
-				this.processId = res.processId;
-				console.log(this.processId);
+				this.processInstanceId = res.processId;
+				console.log(this.processInstanceId);
 
-				this.formService.getForm(this.processId).subscribe((res) => {
+				this.formService.getForm(this.processInstanceId).subscribe((res) => {
 					console.log('init form');
 					this.setForm(res);
 					this.dataLoaded = true;
@@ -84,7 +84,7 @@ export class FormComponent implements OnInit {
 			});
 		}
 		else {
-			this.formService.getForm(this.processId).subscribe((res) => {
+			this.formService.getForm(this.processInstanceId).subscribe((res) => {
 				console.log('init form');
 				this.setForm(res);
 				this.dataLoaded = true;
@@ -105,7 +105,7 @@ export class FormComponent implements OnInit {
 								console.log(error.message);
 							});
 					});
-					
+
 					this.filteredOptions = this.form
 						.get('auto-complete')!.valueChanges.pipe(
 						startWith(''),
@@ -171,7 +171,7 @@ export class FormComponent implements OnInit {
 			let plagiarism = this.options.find(x => x.title == value["auto-complete"]);
 			console.log(plagiarism);
 			if (plagiarism != null) {
-				this.authorService.fileComplaint(this.myBook, plagiarism, this.authService.getLoggedUser(), this.processId).subscribe((res) => {
+				this.authorService.fileComplaint(this.myBook, plagiarism, this.authService.getLoggedUser(), this.processInstanceId).subscribe((res) => {
 					alert("Success");
 					this.router.navigate(['author/books']);
 				})
@@ -182,7 +182,7 @@ export class FormComponent implements OnInit {
 			}
 		}
 		else if (this.activatedRoute.snapshot.routeConfig.path.includes('membership-payment')) {
-			this.authorService.payMembershipFee(this.processId).subscribe((res) => {
+			this.authorService.payMembershipFee(this.processInstanceId).subscribe((res) => {
 				alert('Success while paying!');
 				this.router.navigate(['author']);
 			});
@@ -200,15 +200,15 @@ export class FormComponent implements OnInit {
 			if (this.formFieldsDto !== null) {
 				if (formFields.find(element => element.id == "files") !== undefined) {
 					if (formFields.find(element => element.id == "files")) {
-						this.upload(this.processId, this.selectedFiles);
+						this.upload(this.processInstanceId, this.selectedFiles);
 					}
 				}
 				else {
-					this.formService.submitForm(this.processId, data).subscribe((res) => {
+					this.formService.submitForm(this.processInstanceId, data).subscribe((res) => {
 
 
 						if (value["isBetaReader"] == true) {
-							this.formService.getForm(this.processId).subscribe((res: any) => {
+							this.formService.getForm(this.processInstanceId).subscribe((res: any) => {
 								this.setForm(res);
 								this.dataLoaded = true;
 							},
@@ -235,7 +235,7 @@ export class FormComponent implements OnInit {
 
 
 	upload(idx, file) {
-		this.formService.upload(this.processId, this.selectedFiles).subscribe(
+		this.formService.upload(this.processInstanceId, this.selectedFiles).subscribe(
 			event => {
 				if (event.type === HttpEventType.UploadProgress) {
 					// add logic if progress bar is required
