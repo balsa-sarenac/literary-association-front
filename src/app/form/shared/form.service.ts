@@ -6,7 +6,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class FormService {
- 
+
 
   constructor(private http:HttpClient) { }
 
@@ -14,7 +14,7 @@ export class FormService {
     console.log('upload in');
     const formData: FormData = new FormData();
 
-    var files:File[] =[]; 
+    var files:File[] =[];
     for(var i=0; i<file.length; i++){
       formData.append('file', file[i]);
     }
@@ -31,7 +31,7 @@ export class FormService {
 
   getForm(processId:string){
     console.log('http get');
- 
+
       return this.http.get<any>(environment.api+'/form/get/'+processId);
   }
 
@@ -46,5 +46,9 @@ export class FormService {
 
   getRefusalProcessId(publishingrequestId: number) {
 	  return this.http.get<any>(environment.api+'/form/get-pub-process-id/'+publishingrequestId.toString());
+  }
+
+  getProcessInstanceId(id: string) {
+    return this.http.get<any>(environment.api + '/processInstanceId/' + id);
   }
 }
