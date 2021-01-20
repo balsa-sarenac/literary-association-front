@@ -103,8 +103,8 @@ const routes: Routes = [
 		path: 'committee',
 		component: HomeCommitteeComponent,
 		children: [
-			{ path: 'requests', component: MembershipRequestsComponent },
-			{ path: 'requests/:id', component: MembershipRequestComponent },
+			{ path: 'membership-requests', component: MembershipRequestsComponent },
+			{ path: 'membership-requests/:id', component: MembershipRequestComponent },
 		],
 	},
 	{
