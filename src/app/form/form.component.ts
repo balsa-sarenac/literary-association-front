@@ -200,12 +200,6 @@ export class FormComponent implements OnInit {
 				this.form.get('auto-complete').patchValue('');
 			}
 		}
-		else if (this.activatedRoute.snapshot.routeConfig.path.includes('membership-payment')) {
-			this.authorService.payMembershipFee(this.processInstanceId).subscribe((res) => {
-				alert('Success while paying!');
-				this.router.navigate(['author']);
-			});
-		}
 		else {
 			let formFields = new Array();
 			for (var property in value) {
@@ -238,8 +232,7 @@ export class FormComponent implements OnInit {
 						else {
 							console.log(res);
 							alert('Success!');
-							console.log(this.router.url);
-							this.router.navigateByUrl('/welcome/login');
+							this.route();
 						}
 					},
 						(err) => {
@@ -256,15 +249,10 @@ export class FormComponent implements OnInit {
 	upload(idx, file) {
 		this.formService.upload(this.processInstanceId, this.selectedFiles).subscribe(
 			event => {
-				if (event.type === HttpEventType.UploadProgress) {
-					// add logic if progress bar is required
-				} else if (event instanceof HttpResponse) {
+				if (event instanceof HttpResponse) {
 
 					alert("Uploaded successfully!");
-					if (this.activatedRoute.snapshot.routeConfig.path.includes('requests'))
-						this.router.navigate(['author']);
-					else
-						this.router.navigateByUrl('/review-expected');
+					this.route();
 				}
 			},
 			err => {
@@ -280,5 +268,25 @@ export class FormComponent implements OnInit {
 			option.title.toLowerCase().includes(filterValue)
 		);
 
+	}
+
+	route(){
+		if(this.activatedRoute.snapshot.routeConfig.path.includes('membership-requests')){
+			console.log('cetvrti');
+			this.router.navigate(['committee']);
+		}
+		else if(this.activatedRoute.snapshot.routeConfig.path.includes('membership-payment') || this.activatedRoute.snapshot.routeConfig.path.includes('requests') || 
+		this.activatedRoute.snapshot.routeConfig.path.includes('publish-book') ){
+			console.log('prvi');
+			this.router.navigate(['author']);
+		}
+		else if(this.activatedRoute.snapshot.routeConfig.path.includes('register')){
+			console.log('drugi');
+			this.router.navigateByUrl('/welcome/login');
+		}
+		else if(this.activatedRoute.snapshot.routeConfig.path.includes('upload-documents') && this.authService.getRole()=="ROLE_PENDING_AUTHOR"){
+			console.log('treci');
+			this.router.navigateByUrl('/review-expected');
+		}
 	}
 }
