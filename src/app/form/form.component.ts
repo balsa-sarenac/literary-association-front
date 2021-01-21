@@ -1,16 +1,16 @@
-import {HttpEventType, HttpResponse} from '@angular/common/http';
-import {Component, Input, OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {ActivatedRoute, Router} from '@angular/router';
-import {Observable} from 'rxjs';
-import {AuthService} from '../auth/shared/auth.service';
-import {IFormField} from '../auth/shared/iformfield.register';
-import {AuthorService} from '../author/shared/author.service';
-import {Value} from '../DTO/value';
-import {FormService} from './shared/form.service';
-import {map, startWith} from 'rxjs/operators';
-import {BookService} from '../author/shared/book.service';
-import {BookDTO} from '../DTO/book-dto';
+import { HttpEventType, HttpResponse } from '@angular/common/http';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { AuthService } from '../auth/shared/auth.service';
+import { IFormField } from '../auth/shared/iformfield.register';
+import { AuthorService } from '../author/shared/author.service';
+import { Value } from '../DTO/value';
+import { FormService } from './shared/form.service';
+import { map, startWith } from 'rxjs/operators';
+import { BookService } from '../author/shared/book.service';
+import { BookDTO } from '../DTO/book-dto';
 
 @Component({
 	selector: 'app-form',
@@ -51,8 +51,8 @@ export class FormComponent implements OnInit {
 	ngOnInit(): void {
 
 
-    let path = this.activatedRoute.snapshot.routeConfig.path;
-    if (path.includes('upload-documents') || path.includes('membership-payment')) {
+		let path = this.activatedRoute.snapshot.routeConfig.path;
+		if (path.includes('upload-documents') || path.includes('membership-payment')) {
 			this.formService.getProcessId(this.authService.getLoggedUser()).subscribe((res) => {
 				this.processInstanceId = res.processId;
 				console.log(this.processInstanceId);
@@ -67,14 +67,14 @@ export class FormComponent implements OnInit {
 					});
 			});
 		} else if (path.includes('membership-request')) {
-      this.formService.getForm(this.processInstanceId).subscribe((res) => {
-        console.log('init form');
-        this.setForm(res);
-        this.dataLoaded = true;
-      },(err) => {
-        console.log(err.message);
-      });
-    }
+			this.formService.getForm(this.processInstanceId).subscribe((res) => {
+				console.log('init form');
+				this.setForm(res);
+				this.dataLoaded = true;
+			}, (err) => {
+				console.log(err.message);
+			});
+		}
 		else if (path.includes('refusal') || path.includes('requests') || path.includes('choose-beta-readers') || path.includes('beat-books')) {
 			console.log('entered');
 			this.formService.getRefusalProcessId(this.publishingRequestId).subscribe((res) => {
@@ -97,41 +97,41 @@ export class FormComponent implements OnInit {
 				this.setForm(res);
 				this.dataLoaded = true;
 				if (path.includes('file-a-complaint')) {
-          this.getFileAComplaintForm();
-        }
-					},(err) => {
-							console.log(err.message);
-          });
+					this.getFileAComplaintForm();
 				}
+			}, (err) => {
+				console.log(err.message);
+			});
+		}
 
 	}
 
-  private getFileAComplaintForm() {
-    this.bookService.getBooksFromOtherAuthors(this.authService.getLoggedUser()).subscribe((res: BookDTO[]) => {
-        this.options = res;
-        console.log(this.options);
-      },
-      (error) => {
-        alert(error.message);
-      });
+	private getFileAComplaintForm() {
+		this.bookService.getBooksFromOtherAuthors(this.authService.getLoggedUser()).subscribe((res: BookDTO[]) => {
+			this.options = res;
+			console.log(this.options);
+		},
+			(error) => {
+				alert(error.message);
+			});
 
-    this.activatedRoute.paramMap.subscribe((params) => {
-      this.bookService.getBook(+params.get('id')).subscribe((res) => {
-          this.myBook = res;
-        },
-        (error) => {
-          console.log(error.message);
-        });
-    });
+		this.activatedRoute.paramMap.subscribe((params) => {
+			this.bookService.getBook(+params.get('id')).subscribe((res) => {
+				this.myBook = res;
+			},
+				(error) => {
+					console.log(error.message);
+				});
+		});
 
-    this.filteredOptions = this.form
-      .get('auto-complete')!.valueChanges.pipe(
-      startWith(''),
-      map((value) => this._filter(value))
-    );
-  }
+		this.filteredOptions = this.form
+			.get('auto-complete')!.valueChanges.pipe(
+				startWith(''),
+				map((value) => this._filter(value))
+			);
+	}
 
-  setForm(res: any) {
+	setForm(res: any) {
 		console.log(this.values);
 		console.log(res);
 
@@ -148,15 +148,15 @@ export class FormComponent implements OnInit {
 			// 		element.type.values.push(value);
 			// 	}
 			// }
-      if (element.type.name == 'multiselect' || element.type.name == 'enum') {
-        let values = Object.values(element.type.values);
-        let keys = Object.keys(element.type.values);
-        element.type.values = new Array<Value>();
-        for (let i = 0; i < values.length; i++) {
-          let value = new Value(keys[i], values[i].toString());
-          element.type.values.push(value);
-        }
-      }
+			if (element.type.name == 'multiselect' || element.type.name == 'enum') {
+				let values = Object.values(element.type.values);
+				let keys = Object.keys(element.type.values);
+				element.type.values = new Array<Value>();
+				for (let i = 0; i < values.length; i++) {
+					let value = new Value(keys[i], values[i].toString());
+					element.type.values.push(value);
+				}
+			}
 		});
 
 		this.formFieldsDto = res;
