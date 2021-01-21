@@ -20,6 +20,15 @@
 				</li>
 			</ul>
 		</div>
+    <div class="col">
+      <h3>Notes:</h3>
+      <ul>
+        <li *ngFor="let note of request.notes">
+          <p>{{note.user.firstName}} {{note.user.lastName}}</p>
+          <p>{{note.content}}</p>
+        </li>
+      </ul>
+    </div>
 		<div class="col">
       <app-form [processInstanceId]="processInstanceId"></app-form>
 		</div>
