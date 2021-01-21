@@ -33,4 +33,27 @@ export class PublishingRequestComponent implements OnInit {
         this.chiefEditorService.getDocument(file.url).subscribe((data) => console.log(data));
     }
 
+    showForm() {
+        switch (this.publishingRequest.status) {
+            case 'New request':
+                return true;
+            case 'Book upload requested':
+                return false;
+            case 'Reading rejected':
+                return false;
+            case 'Book uploaded':
+                return true;
+            case 'Book is original':
+                return true;
+            case 'Book is not original':
+                return false;
+            case 'Book is approved for publishing':
+                return true;
+            case 'Book is not approved for publishing':
+                return true;
+            default:
+                return false;
+        }
+    }
+
 }
