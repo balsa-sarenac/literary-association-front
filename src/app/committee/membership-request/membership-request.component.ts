@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { IFile } from 'src/app/DTO/ifile';
 import { CommitteeService } from '../shared/committee.service';
 import { IMembershipRequest } from '../shared/imembership-request';
+import {FormService} from '../../form/shared/form.service';
 
 @Component({
 	selector: 'app-membership-request',
@@ -11,10 +12,14 @@ import { IMembershipRequest } from '../shared/imembership-request';
 })
 export class MembershipRequestComponent implements OnInit {
 	request: IMembershipRequest;
+	dataCollected: boolean = false;
+  processInstanceId: string;
+
 	constructor(
 		private router: Router,
 		private activatedRoute: ActivatedRoute,
-		private committeeService: CommitteeService
+		private committeeService: CommitteeService,
+    private formService: FormService,
 	) {}
 	ngOnInit(): void {
 		this.activatedRoute.paramMap.subscribe((params) => {
@@ -26,6 +31,11 @@ export class MembershipRequestComponent implements OnInit {
 		this.committeeService.getRequest(id).subscribe(
 			(data: IMembershipRequest) => {
 				this.request = data;
+				this.formService.getProcessInstanceId(String(this.request.id), "membershipRequestId")
+          .subscribe((data) => {
+            this.processInstanceId = data.processId;
+            this.dataCollected = true;
+          });
 			},
 			(error) => alert(error.error)
 		);
@@ -35,45 +45,4 @@ export class MembershipRequestComponent implements OnInit {
 		this.committeeService.getDocument(file.url).subscribe((data) => console.log(data));
 	}
 
-	accept() {
-		let body = {
-			requestId: this.request.id,
-			option: 'approve',
-		};
-		this.committeeService.vote(body).subscribe(
-			() => {
-			  alert('Accepted');
-        this.router.navigate(['/committee/requests']);
-      },
-			(error) => alert(error.error)
-		);
-	}
-
-	refuse() {
-		let body = {
-			requestId: this.request.id,
-			option: 'refuse',
-		};
-		this.committeeService.vote(body).subscribe(
-			() => {
-			  alert('Refused');
-        this.router.navigate(['/committee/requests']);
-        },
-			(error) => alert(error.error)
-		);
-	}
-
-	requestMore() {
-		let body = {
-			requestId: this.request.id,
-			option: 'request_more',
-		};
-		this.committeeService.vote(body).subscribe(
-			() => {
-			  alert('Requested');
-        this.router.navigate(['/committee/requests']);
-      },
-			(error) => alert(error.error)
-		);
-	}
 }

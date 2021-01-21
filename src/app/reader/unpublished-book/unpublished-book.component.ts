@@ -3,6 +3,7 @@ import {IPublishingRequest} from '../shared/ipublishing-request';
 import {ReaderService} from '../shared/reader.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {FormBuilder, FormControl} from '@angular/forms';
+import {FormService} from '../../form/shared/form.service';
 
 @Component({
   selector: 'app-unpublished-book',
@@ -13,8 +14,10 @@ export class UnpublishedBookComponent implements OnInit {
   request: IPublishingRequest;
   notesForm;
   id: string;
+  processInstanceId: string;
+  dataLoaded: boolean = false;
 
-  constructor(private readerService: ReaderService, private router: Router,
+  constructor(private readerService: ReaderService, private router: Router, private formService: FormService,
               private activatedRoute: ActivatedRoute, private formBuilder: FormBuilder) {
     this.notesForm = this.formBuilder.group({notes: ''})
   }
@@ -23,8 +26,15 @@ export class UnpublishedBookComponent implements OnInit {
     this.activatedRoute.paramMap.subscribe((params) => {
       this.getRequest(params.get('id'));
       this.id = params.get('id');
+      this.formService.getProcessInstanceId(this.id, 'publishing').subscribe((data: any) => {
+        this.processInstanceId = data.processId;
+        this.dataLoaded = true;
+      });
     });
+
   }
+
+
 
   private getRequest(id: string) {
     this.readerService.getRequest(id).subscribe((data: IPublishingRequest) => this.request = data);

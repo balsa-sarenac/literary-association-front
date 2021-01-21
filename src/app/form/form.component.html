@@ -24,12 +24,14 @@
 			</mat-autocomplete>
 		 </mat-form-field>
 
+    <textarea *ngIf="(field.id=='textarea') && field.type.name=='string'" rows="4"
+      class="form-control" formControlName={{field.id}}></textarea>
 
 		<input class="form-control" type="password" formControlName={{field.id}}
 			*ngIf="(field.id=='password') && field.type.name=='string'">
 
 		<input class="form-control" type="text" formControlName={{field.id}}
-			*ngIf="field.type.name=='string' && field.id!='password' && field.id!='auto-complete'">
+			*ngIf="field.type.name=='string' && field.id!='password' && field.id!='auto-complete' && field.id!='textarea'">
 
 		<input class="form-control" type="checkbox" formControlName={{field.id}} *ngIf="field.type.name=='boolean'">
 
@@ -40,8 +42,8 @@
 
 		<div *ngIf="field.type.name=='multiselect' && field.id != 'betaReaders'" class="form-group">
 			<select multiple class="form-control" formControlName={{field.id}} multiple aria-label="multiple select example">
-				<option *ngFor="let value of field.type.values" [value]="value">
-					{{value}}
+				<option *ngFor="let value of field.type.values" [value]="value.id">
+					{{value.value}}
 				</option>
 			</select>
 		</div>
@@ -56,8 +58,8 @@
 
 		<div *ngIf="field.type.name=='enum'" class="form-group">
 			<select class="form-control" formControlName={{field.id}} >
-				<option *ngFor="let value of field.type.values" [value]="value">
-					{{value}}
+				<option *ngFor="let value of field.type.values" [value]="value.id">
+					{{value.value}}
 				</option>
 			</select>
 		</div>
