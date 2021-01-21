@@ -75,7 +75,7 @@ export class FormComponent implements OnInit {
 				console.log(err.message);
 			});
 		}
-		else if (path.includes('refusal') || path.includes('requests') || path.includes('choose-beta-readers') || path.includes('beat-books')) {
+		else if (path.includes('refusal') || path.includes('requests') || path.includes('choose-beta-readers') || path.includes('beat-books') || path.includes('publishing-request')) {
 			console.log('entered');
 			this.formService.getRefusalProcessId(this.publishingRequestId).subscribe((res) => {
 				this.processInstanceId = res.processId;

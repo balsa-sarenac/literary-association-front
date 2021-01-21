@@ -51,6 +51,10 @@ export class PublishingRequestComponent implements OnInit {
                 return true;
             case 'Book is not approved for publishing':
                 return true;
+            case 'Sent to beta readers':
+                return false;
+            case 'Editor review':
+                return true;
             default:
                 return false;
         }
