@@ -8,7 +8,7 @@ import { ChiefEditorService } from '../shared/chief-editor.service';
   templateUrl: './publishing-requests-list.component.html',
   styleUrls: ['./publishing-requests-list.component.css']
 })
-export class PublishingRequestsListComponent implements OnInit {
+export class PublishingRequestsComponent implements OnInit {
   requests: IPublishingRequest[] = [];
 
   constructor(private authService:AuthService, private chiefEditorService:ChiefEditorService) { }
