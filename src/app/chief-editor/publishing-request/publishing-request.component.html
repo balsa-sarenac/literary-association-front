@@ -9,7 +9,7 @@
             <p><b>Synopsis:&nbsp;</b> {{ publishingRequest.book.synopsis }}</p>
             <p><b>Status:&nbsp;</b>{{ publishingRequest.status }}</p>
         </div>
-        <div class="col" *ngIf="publishingRequest.status == 'BookUploaded'">
+        <div class="col" *ngIf="publishingRequest.status == 'Book uploaded'">
             <p>Potential sources:</p>
 			<ul>
 				<li *ngFor="let file of publishingRequest.potentialPlagiarismList">
@@ -17,7 +17,7 @@
 				</li>
 			</ul>
         </div>
-        <div class="col" *ngIf="publishingRequest.status == 'Original'">
+        <div class="col" *ngIf="publishingRequest.status == 'Book is original'">
             <p>Download book:</p>
             <a [href]="publishingRequest.book.bookFile.url" [download]="publishingRequest.book.bookFile.name">{{ publishingRequest.book.bookFile.name }}</a>
         </div>
