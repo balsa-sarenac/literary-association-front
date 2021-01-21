@@ -45,10 +45,10 @@ export class FormService {
   }
 
   getRefusalProcessId(publishingrequestId: number) {
-	  return this.http.get<any>(environment.api+'/form/get-pub-process-id/'+publishingrequestId.toString());
+	  return this.http.get<any>(environment.api+'/form/get-pub-process-id/'+ String(publishingrequestId));
   }
 
-  getProcessInstanceId(id: string) {
-    return this.http.get<any>(environment.api + '/processInstanceId/' + id);
+  getProcessInstanceId(id: string, type: string) {
+    return this.http.get<any>(environment.api + '/processInstanceId/' + type + "/" + id);
   }
 }

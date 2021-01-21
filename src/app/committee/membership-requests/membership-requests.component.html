@@ -21,7 +21,7 @@
 				<tbody>
 					<tr
 						*ngFor="let request of requests; let i = index"
-						[routerLink]="['/committee/requests', request.id]"
+						[routerLink]="['/committee/membership-requests', request.id]"
 					>
 						<th scope="row">{{ i + 1 }}</th>
 						<td>{{ request.user.firstName }}</td>

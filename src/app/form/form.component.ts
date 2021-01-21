@@ -66,7 +66,15 @@ export class FormComponent implements OnInit {
 						console.log(err.message);
 					});
 			});
-		}
+		} else if (path.includes('membership-request')) {
+      this.formService.getForm(this.processInstanceId).subscribe((res) => {
+        console.log('init form');
+        this.setForm(res);
+        this.dataLoaded = true;
+      },(err) => {
+        console.log(err.message);
+      });
+    }
 		else if (path.includes('refusal') || path.includes('requests') || path.includes('choose-beta-readers') || path.includes('beat-books')) {
 			console.log('entered');
 			this.formService.getRefusalProcessId(this.publishingRequestId).subscribe((res) => {
@@ -128,18 +136,27 @@ export class FormComponent implements OnInit {
 		console.log(res);
 
 		res.formFieldList.forEach((element: any) => {
-			if ((element.type.name == "multiselect" && element.id != "betaReaders") || element.type.name == "enum") {
-				element.type.values = Object.values(element.type.values);
-			}
-			else if (element.type.name == "multiselect" && element.id == "betaReaders") {
-				var values = Object.values(element.type.values);
-				var keys = Object.keys(element.type.values);
-				element.type.values = new Array<Value>();
-				for (var i = 0; i < values.length; i++) {
-					var value = new Value(keys[i], values[i].toString());
-					element.type.values.push(value);
-				}
-			}
+			// if ((element.type.name == "multiselect" && element.id != "betaReaders") || element.type.name == "enum") {
+			// 	element.type.values = Object.values(element.type.values);
+			// }
+			// else if (element.type.name == "multiselect" && element.id == "betaReaders") {
+			// 	var values = Object.values(element.type.values);
+			// 	var keys = Object.keys(element.type.values);
+			// 	element.type.values = new Array<Value>();
+			// 	for (var i = 0; i < values.length; i++) {
+			// 		var value = new Value(keys[i], values[i].toString());
+			// 		element.type.values.push(value);
+			// 	}
+			// }
+      if (element.type.name == 'multiselect' || element.type.name == 'enum') {
+        let values = Object.values(element.type.values);
+        let keys = Object.keys(element.type.values);
+        element.type.values = new Array<Value>();
+        for (let i = 0; i < values.length; i++) {
+          let value = new Value(keys[i], values[i].toString());
+          element.type.values.push(value);
+        }
+      }
 		});
 
 		this.formFieldsDto = res;
