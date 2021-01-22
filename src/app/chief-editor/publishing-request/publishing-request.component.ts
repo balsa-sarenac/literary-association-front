@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IFile } from 'src/app/DTO/ifile';
 import { IPublishingRequest } from 'src/app/DTO/ipublishing-request';
+import { FormService } from 'src/app/form/shared/form.service';
 import { ChiefEditorService } from '../shared/chief-editor.service';
 
 @Component({
@@ -14,7 +15,10 @@ export class PublishingRequestComponent implements OnInit {
     processInstanceId: string;
     dataLoaded:boolean=false;
 
-    constructor(private router: Router, private activatedRoute: ActivatedRoute, private chiefEditorService: ChiefEditorService) { }
+    constructor(private router: Router,
+         private activatedRoute: ActivatedRoute,
+          private chiefEditorService: ChiefEditorService,
+          private formService:FormService) { }
 
     ngOnInit(): void {
         this.activatedRoute.paramMap.subscribe((params) => {
@@ -29,7 +33,7 @@ export class PublishingRequestComponent implements OnInit {
             },
             (error) => alert(error.error)
         );
-        this.chiefEditorService.getProcessId(parseInt(id)).subscribe(
+        this.formService.getProcessInstanceId(id, "publishingRequestId").subscribe(
             (data) => {
                 this.processInstanceId = String(data.processId);
                 this.dataLoaded= true;
