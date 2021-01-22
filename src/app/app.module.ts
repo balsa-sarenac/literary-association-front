@@ -39,7 +39,8 @@ import { SendToBetaComponent } from './chief-editor/send-to-beta/send-to-beta.co
 import { ChooseBetaReadersComponent } from './chief-editor/choose-beta-readers/choose-beta-readers.component';
 import { BookListComponent } from './author/book-list/book-list.component';
 import { FileComplaintComponent } from './author/file-complaint/file-complaint.component';
-
+import { PublishingRequestComponent } from './chief-editor/publishing-request/publishing-request.component';
+import { PublishingRequestsComponent } from './chief-editor/publishing-requests-list/publishing-requests-list.component';
 
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";    
 import 'hammerjs';   
@@ -83,6 +84,8 @@ import 'hammerjs';
 		ChooseBetaReadersComponent,
 		BookListComponent,
 		FileComplaintComponent,
+		PublishingRequestsComponent,
+		PublishingRequestComponent,
 	],
 	imports: [BrowserModule, AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule, BrowserAnimationsModule,MatFormFieldModule, MatInputModule, MatAutocompleteModule, ],
 	providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
