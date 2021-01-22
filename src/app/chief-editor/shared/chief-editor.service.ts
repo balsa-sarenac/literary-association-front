@@ -45,5 +45,9 @@ export class ChiefEditorService
   sendToBeta(body: { publishingRequestId: number; response: boolean; }) {
     return this.http.post<any>(environment.api + '/publish/sent-to-beta', body);
   }
+
+  getProcessId(pubReq: number) {
+    return this.http.get<any>(environment.api+'/form/get-pub-process-id/'+ String(pubReq));
+  }
 	
 }
