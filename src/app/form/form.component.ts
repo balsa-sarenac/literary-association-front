@@ -39,6 +39,8 @@ export class FormComponent implements OnInit {
 
 	myBook: BookDTO;
 
+	hiddenFields:string[]=[];
+
 	constructor(private formService: FormService, private authService: AuthService, private router: Router, private activatedRoute: ActivatedRoute, private authorService: AuthorService, private bookService: BookService) {
 
 	}
@@ -96,6 +98,7 @@ export class FormComponent implements OnInit {
 				console.log('init form');
 				this.setForm(res);
 				this.dataLoaded = true;
+				console.log(res);
 				if (path.includes('file-a-complaint')) {
           this.getFileAComplaintForm();
         }
@@ -136,27 +139,15 @@ export class FormComponent implements OnInit {
 		console.log(res);
 
 		res.formFieldList.forEach((element: any) => {
-			// if ((element.type.name == "multiselect" && element.id != "betaReaders") || element.type.name == "enum") {
-			// 	element.type.values = Object.values(element.type.values);
-			// }
-			// else if (element.type.name == "multiselect" && element.id == "betaReaders") {
-			// 	var values = Object.values(element.type.values);
-			// 	var keys = Object.keys(element.type.values);
-			// 	element.type.values = new Array<Value>();
-			// 	for (var i = 0; i < values.length; i++) {
-			// 		var value = new Value(keys[i], values[i].toString());
-			// 		element.type.values.push(value);
-			// 	}
-			// }
-      if (element.type.name == 'multiselect' || element.type.name == 'enum') {
-        let values = Object.values(element.type.values);
-        let keys = Object.keys(element.type.values);
-        element.type.values = new Array<Value>();
-        for (let i = 0; i < values.length; i++) {
-          let value = new Value(keys[i], values[i].toString());
-          element.type.values.push(value);
-        }
-      }
+			if (element.type.name == 'multiselect' || element.type.name == 'enum') {
+				let values = Object.values(element.type.values);
+				let keys = Object.keys(element.type.values);
+				element.type.values = new Array<Value>();
+				for (let i = 0; i < values.length; i++) {
+				let value = new Value(keys[i], values[i].toString());
+				element.type.values.push(value);
+				}
+			}
 		});
 
 		this.formFieldsDto = res;
@@ -176,6 +167,11 @@ export class FormComponent implements OnInit {
 				}
 			});
 
+			console.log(element.properties);
+			if(element.properties['hidden']){
+				this.hiddenFields.push(element.id);
+			}
+			console.log(this.hiddenFields);
 			fc.setValidators(validators);
 
 			this.form.addControl(element.id, fc);
@@ -184,66 +180,82 @@ export class FormComponent implements OnInit {
 	}
 
 	onSubmit(value: any, form: any) {
-		if (this.activatedRoute.snapshot.routeConfig.path.includes('file-a-complaint')) {
-			console.log(this.myBook);
-			console.log(value);
-			let plagiarism = this.options.find(x => x.title == value["auto-complete"]);
-			console.log(plagiarism);
-			if (plagiarism != null) {
-				this.authorService.fileComplaint(this.myBook, plagiarism, this.authService.getLoggedUser(), this.processInstanceId).subscribe((res) => {
-					alert("Success");
-					this.router.navigate(['author/books']);
-				})
-			}
-			else {
-				alert("Book doesn't exist!");
-				this.form.get('auto-complete').patchValue('');
-			}
-		}
-		else {
-			let formFields = new Array();
-			for (var property in value) {
-				formFields.push({ id: property, value: value[property] });
-			}
-
-			var data = {
-				formFields: formFields,
-			};
-
-			if (this.formFieldsDto !== null) {
-				if (formFields.find(element => element.id == "files") !== undefined) {
-					if (formFields.find(element => element.id == "files")) {
-						this.upload(this.processInstanceId, this.selectedFiles);
-					}
+			let plagiarism;
+			if (this.activatedRoute.snapshot.routeConfig.path.includes('file-a-complaint')) {
+				console.log(this.myBook);
+				console.log(value);
+				plagiarism = this.options.find(x => x.title == value["auto-complete"]);
+				console.log(plagiarism);
+				if (plagiarism != null) {
+					// this.form.get('authorBook').patchValue(this.myBook.id.toString());
+					// this.form.get('plagiarismBook').patchValue(plagiarism.id.toString());
+					this.form.patchValue({
+						'authorBook':this.myBook.id.toString(),
+						'plagiarismBook':plagiarism.id.toString()
+					})
+					console.log(this.form);
 				}
 				else {
-					this.formService.submitForm(this.processInstanceId, data).subscribe((res) => {
-
-
-						if (value["isBetaReader"] == true) {
-							this.formService.getForm(this.processInstanceId).subscribe((res: any) => {
-								this.setForm(res);
-								this.dataLoaded = true;
-							},
-								(err) => {
-									console.log(err.message);
-								});
-						}
-						else {
-							console.log(res);
-							alert('Success!');
-							this.route();
-						}
-					},
-						(err) => {
-							console.log(err);
-						});
+					alert("Book doesn't exist!");
+					this.form.get('auto-complete').patchValue('');
+				}
+			}
+				let formFields = new Array();
+				for (var property in value) {
+					formFields.push({ id: property, value: value[property] });
 				}
 
-			}
-		}
+					var data = {
+					formFields: formFields,
+					};
 
-	}
+					console.log(data);
+				if (this.formFieldsDto !== null) {
+					if (formFields.find(element => element.id == "files") !== undefined) {
+						if (formFields.find(element => element.id == "files")) {
+							this.upload(this.processInstanceId, this.selectedFiles);
+						}
+					}
+					else {
+						if (formFields.find(element => element.id == "authorBook") !== undefined && formFields.find(element => element.id == "plagiarismBook") !== undefined) {
+							let element;
+							if (formFields.find(element => element.id == "authorBook") ) {
+								element = formFields.find(element => element.id == "authorBook");
+								element.value=this.form.get('authorBook').value;
+							}
+							if (formFields.find(element => element.id == "plagiarismBook") ) {
+								element = formFields.find(element => element.id == "plagiarismBook");
+								element.value=this.form.get('plagiarismBook').value;
+							}
+						}
+						this.formService.submitForm(this.processInstanceId, data).subscribe((res) => {
+
+
+							if (value["isBetaReader"] == true) {
+								this.formService.getForm(this.processInstanceId).subscribe((res: any) => {
+									this.setForm(res);
+									this.dataLoaded = true;
+								},
+									(err) => {
+										console.log(err.message);
+									});
+							}
+							else {
+								console.log(res);
+								alert('Success!');
+								this.route();
+							}
+						},
+							(err) => {
+								console.log(err);
+							});
+					}
+
+				}
+		
+
+			}
+		
 
 
 	upload(idx, file) {
@@ -287,6 +299,9 @@ export class FormComponent implements OnInit {
 		else if(this.activatedRoute.snapshot.routeConfig.path.includes('upload-documents') && this.authService.getRole()=="ROLE_PENDING_AUTHOR"){
 			console.log('treci');
 			this.router.navigateByUrl('/review-expected');
+		}
+		else if(this.activatedRoute.snapshot.routeConfig.path.includes('file-a-complaint')){
+			this.router.navigate(['author/books']);
 		}
 	}
 }
