@@ -25,7 +25,7 @@
             U zavisnosti od statusa, moguce je prikazati jos neke informacije, ovdje dodati
         -->
         <div *ngIf = "showForm()">
-            <app-form [processInstanceId]="processInstanceId"></app-form>
+            <app-form [processInstanceId]="processInstanceId.toString()"></app-form>
         </div>
 	</div>
 </div>

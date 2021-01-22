@@ -11,7 +11,6 @@ import { FormService } from './shared/form.service';
 import { map, startWith } from 'rxjs/operators';
 import { BookService } from '../author/shared/book.service';
 import { BookDTO } from '../DTO/book-dto';
-import { Property } from '../DTO/property';
 
 @Component({
 	selector: 'app-form',
