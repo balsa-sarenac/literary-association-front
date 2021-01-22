@@ -68,31 +68,7 @@ export class FormComponent implements OnInit {
 						console.log(err.message);
 					});
 			});
-		} else if (path.includes('membership-request') || path.includes('publishing-request')) {
-			this.formService.getForm(this.processInstanceId).subscribe((res) => {
-				console.log('init form');
-				this.setForm(res);
-				this.dataLoaded = true;
-			}, (err) => {
-				console.log(err.message);
-			});
-		}
-		else if (path.includes('refusal') || path.includes('requests') || path.includes('choose-beta-readers') || path.includes('beat-books') ) {
-			console.log('entered');
-			this.formService.getRefusalProcessId(this.publishingRequestId).subscribe((res) => {
-				this.processInstanceId = res.processId;
-				console.log(this.processInstanceId);
-
-				this.formService.getForm(this.processInstanceId).subscribe((res) => {
-					console.log('init form');
-					this.setForm(res);
-					this.dataLoaded = true;
-				},
-					(err) => {
-						console.log(err.message);
-					});
-			});
-		}
+		} 
 		else {
 			this.formService.getForm(this.processInstanceId).subscribe((res) => {
 				console.log('init form');
@@ -282,20 +258,16 @@ export class FormComponent implements OnInit {
 
 	route(){
 		if(this.activatedRoute.snapshot.routeConfig.path.includes('membership-requests')){
-			console.log('cetvrti');
 			this.router.navigate(['committee']);
 		}
 		else if(this.activatedRoute.snapshot.routeConfig.path.includes('membership-payment') || this.activatedRoute.snapshot.routeConfig.path.includes('requests') || 
 		this.activatedRoute.snapshot.routeConfig.path.includes('publish-book') ){
-			console.log('prvi');
 			this.router.navigate(['author']);
 		}
 		else if(this.activatedRoute.snapshot.routeConfig.path.includes('register')){
-			console.log('drugi');
 			this.router.navigateByUrl('/welcome/login');
 		}
 		else if(this.activatedRoute.snapshot.routeConfig.path.includes('upload-documents') && this.authService.getRole()=="ROLE_PENDING_AUTHOR"){
-			console.log('treci');
 			this.router.navigateByUrl('/review-expected');
 		}
 		else if(this.activatedRoute.snapshot.routeConfig.path.includes('file-a-complaint')){
