@@ -112,6 +112,14 @@ const routes: Routes = [
 				path: 'publishing-request/:id',
 				component: PublishingRequestComponent
 			},
+			{
+				path: 'publishing-requests',
+				component: PublishingRequestsComponent
+			},
+			{
+				path: 'publishing-request/:id',
+				component: PublishingRequestComponent
+			},
 
 		],
 	},
