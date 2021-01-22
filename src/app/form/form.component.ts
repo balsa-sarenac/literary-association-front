@@ -66,7 +66,7 @@ export class FormComponent implements OnInit {
 						console.log(err.message);
 					});
 			});
-		} else if (path.includes('membership-request')) {
+		} else if (path.includes('membership-request') || path.includes('publishing-request')) {
 			this.formService.getForm(this.processInstanceId).subscribe((res) => {
 				console.log('init form');
 				this.setForm(res);
@@ -75,7 +75,7 @@ export class FormComponent implements OnInit {
 				console.log(err.message);
 			});
 		}
-		else if (path.includes('refusal') || path.includes('requests') || path.includes('choose-beta-readers') || path.includes('beat-books') || path.includes('publishing-request')) {
+		else if (path.includes('refusal') || path.includes('requests') || path.includes('choose-beta-readers') || path.includes('beat-books') ) {
 			console.log('entered');
 			this.formService.getRefusalProcessId(this.publishingRequestId).subscribe((res) => {
 				this.processInstanceId = res.processId;
@@ -136,27 +136,6 @@ export class FormComponent implements OnInit {
 		console.log(res);
 
 		res.formFieldList.forEach((element: any) => {
-			// if ((element.type.name == "multiselect" && element.id != "betaReaders") || element.type.name == "enum") {
-			// 	element.type.values = Object.values(element.type.values);
-			// }
-			// else if (element.type.name == "multiselect" && element.id == "betaReaders") {
-			// 	var values = Object.values(element.type.values);
-			// 	var keys = Object.keys(element.type.values);
-			// 	element.type.values = new Array<Value>();
-			// 	for (var i = 0; i < values.length; i++) {
-			// 		var value = new Value(keys[i], values[i].toString());
-			// 		element.type.values.push(value);
-			// 	}
-			// }
-
-			// let propValues = Object.values(element.properties.values);
-			// let propKeys = Object.keys(element.properties.values);
-			// element.properties = new Array<Property>();
-			// for (let i = 0; i < propValues.length; i++) {
-			// 	let prop = new Property(propKeys[i], propValues[i].toString());
-			// 	element.properties.push(prop);
-			// }
-
 			if (element.type.name == 'multiselect' || element.type.name == 'enum') {
 				let values = Object.values(element.type.values);
 				let keys = Object.keys(element.type.values);
