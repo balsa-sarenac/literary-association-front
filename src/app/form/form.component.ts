@@ -11,6 +11,7 @@ import { FormService } from './shared/form.service';
 import { map, startWith } from 'rxjs/operators';
 import { BookService } from '../author/shared/book.service';
 import { BookDTO } from '../DTO/book-dto';
+import { Property } from '../DTO/property';
 
 @Component({
 	selector: 'app-form',
@@ -148,6 +149,15 @@ export class FormComponent implements OnInit {
 			// 		element.type.values.push(value);
 			// 	}
 			// }
+
+			// let propValues = Object.values(element.properties.values);
+			// let propKeys = Object.keys(element.properties.values);
+			// element.properties = new Array<Property>();
+			// for (let i = 0; i < propValues.length; i++) {
+			// 	let prop = new Property(propKeys[i], propValues[i].toString());
+			// 	element.properties.push(prop);
+			// }
+
 			if (element.type.name == 'multiselect' || element.type.name == 'enum') {
 				let values = Object.values(element.type.values);
 				let keys = Object.keys(element.type.values);
