@@ -16,10 +16,6 @@ export class AuthorService {
     return this.http.get<any>(environment.api + '/form/get/'+processId);
   }
 
-  payMembershipFee(processId: string) {
-	  return this.http.post<any>(environment.api+'/membership-payment/pay/'+processId, {});
-  }
-
   getRequests(authorId:string) {
     return this.http.get<any>(environment.api + '/publish/author-requests/'+authorId);
   }
