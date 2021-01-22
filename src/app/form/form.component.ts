@@ -54,22 +54,7 @@ export class FormComponent implements OnInit {
 
 
 		let path = this.activatedRoute.snapshot.routeConfig.path;
-		if (path.includes('upload-documents') ) {
-			this.formService.getProcessId(this.authService.getLoggedUser()).subscribe((res) => {
-				this.processInstanceId = res.processId;
-				console.log(this.processInstanceId);
 
-				this.formService.getForm(this.processInstanceId).subscribe((res) => {
-					console.log('init form');
-					this.setForm(res);
-					this.dataLoaded = true;
-				},
-					(err) => {
-						console.log(err.message);
-					});
-			});
-		} 
-		else {
 			this.formService.getForm(this.processInstanceId).subscribe((res) => {
 				console.log('init form');
 				this.setForm(res);
@@ -83,7 +68,6 @@ export class FormComponent implements OnInit {
 			});
 		}
 
-	}
 
 	private getFileAComplaintForm() {
 		this.bookService.getBooksFromOtherAuthors(this.authService.getLoggedUser()).subscribe((res: BookDTO[]) => {
