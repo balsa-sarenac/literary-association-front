@@ -12,10 +12,6 @@ export class AuthorService {
   
   constructor(private http: HttpClient) { }
 
-  loadForm(processId:string){
-    return this.http.get<any>(environment.api + '/form/get/'+processId);
-  }
-
   getRequests(authorId:string) {
     return this.http.get<any>(environment.api + '/publish/author-requests/'+authorId);
   }
@@ -32,11 +28,4 @@ export class AuthorService {
     return this.http.get<string>(environment.api+'/plagiarism/start-plagiarism');
   }
 
-  fileComplaint(myBook: BookDTO, plagiarism: BookDTO, authorId:string, processId:string) {
-    let plagiarismComplaint = {
-      plagiated:myBook,
-      plagiarism:plagiarism
-    }
-	  return this.http.post<any>(environment.api+'/plagiarism/file-a-complaint/'+authorId+"/"+processId, plagiarismComplaint );
-  }
 }
