@@ -29,8 +29,8 @@ export class PublishingRequestComponent implements OnInit {
             (error) => alert(error.error)
         );
         this.chiefEditorService.getProcessId(parseInt(id)).subscribe(
-            (data: number) => {
-                this.processInstanceId = data;
+            (data) => {
+                this.processInstanceId = data.processId;
             },
             (error) => alert(error.error)
         );
