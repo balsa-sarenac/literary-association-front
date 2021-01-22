@@ -31,6 +31,8 @@ import { SendToBetaComponent } from './chief-editor/send-to-beta/send-to-beta.co
 import { ChooseBetaReadersComponent} from './chief-editor/choose-beta-readers/choose-beta-readers.component';
 import { BookListComponent } from './author/book-list/book-list.component';
 import { FileComplaintComponent } from './author/file-complaint/file-complaint.component';
+import { PublishingRequestsComponent } from './chief-editor/publishing-requests-list/publishing-requests-list.component';
+import { PublishingRequestComponent } from './chief-editor/publishing-request/publishing-request.component';
 
 const routes: Routes = [
 	{ path: '', redirectTo: 'welcome', pathMatch: 'full' },
@@ -142,6 +144,14 @@ const routes: Routes = [
 			{
 				path: 'choose-beta-readers/:id',
 				component: ChooseBetaReadersComponent
+			},
+			{
+				path: 'publishing-requests',
+				component: PublishingRequestsComponent
+			},
+			{
+				path: 'publishing-request/:id',
+				component: PublishingRequestComponent
 			},
 
 		],

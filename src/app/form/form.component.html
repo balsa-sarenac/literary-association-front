@@ -1,52 +1,63 @@
 <form *ngIf="dataLoaded" (ngSubmit)="onSubmit(form.value, form)" style="width: 40%; display: inline-block"
 	[formGroup]="form">
 	<div *ngFor="let field of formFields" class="form-group" style="text-align: left">
-		<label for="{{ field.id }}">{{ field.label }}</label> <br>
+		<label *ngIf="field.id != 'explanation' && field.id != 'betaReaders'" for="{{ field.id }}">{{ field.label }}</label> <br>
 
 		<mat-form-field *ngIf="(field.id=='auto-complete') && field.type.name=='string'">
-			<input type="text" matInput formControlName={{field.id}}
-				 [matAutocomplete]="auto" >
-			   <mat-autocomplete #auto="matAutocomplete">
-				 <mat-option *ngFor="let option of filteredOptions|async" [value]="option.title">
-				  {{option.title}}
+			<input type="text" matInput formControlName={{field.id}} [matAutocomplete]="auto">
+			<mat-autocomplete #auto="matAutocomplete">
+				<mat-option *ngFor="let option of filteredOptions|async" [value]="option.title">
+					{{option.title}}
 				</mat-option>
 			</mat-autocomplete>
-		 </mat-form-field>
+		</mat-form-field>
 
-    <textarea *ngIf="(field.id=='textarea') && field.type.name=='string'" rows="4"
-      class="form-control" formControlName={{field.id}}></textarea>
+		<textarea *ngIf="(field.id=='textarea') && field.type.name=='string'" rows="4" class="form-control"
+			formControlName={{field.id}}></textarea>
 
 		<input class="form-control" type="password" formControlName={{field.id}}
 			*ngIf="(field.id=='password') && field.type.name=='string'">
 
 		<input class="form-control" type="text" formControlName={{field.id}}
-			*ngIf="field.type.name=='string' && field.id!='password' && field.id!='auto-complete' && field.id!='textarea' && !hiddenFields.includes(field.id)">
+			*ngIf="field.type.name=='string' && field.id!='password' && field.id!='auto-complete' && field.id!='textarea' && field.id != 'explanation' && !hiddenFields.includes(field.id)">
+
+		<div *ngIf="field.id=='explanation'">
+			<label *ngIf="form.get(field.properties['controlledBy']).value == false" for="{{ field.id }}">{{ field.label }}</label> <br>
+			<input *ngIf="form.get(field.properties['controlledBy']).value == false" class="form-control" type="text" formControlName={{field.id}}>
+		</div>
+
+		<div *ngIf="field.id=='betaReaders'">
+			<label *ngIf="form.get(field.properties['controlledBy']).value == true" for="{{ field.id }}">{{ field.label }}</label> <br>
+			<div *ngIf="field.type.name=='multiselect' && field.id == 'betaReaders' && form.get(field.properties['controlledBy']).value == true" class="form-group">
+				<select multiple class="form-control" formControlName={{field.id}} multiple
+					aria-label="multiple select example">
+					<option *ngFor="let value of field.type.values" [value]="value.id">
+						{{value.value}}
+					</option>
+				</select>
+			</div>
+		</div>
 
 		<input class="form-control" type="checkbox" formControlName={{field.id}} *ngIf="field.type.name=='boolean'">
 
 		<input class="form-control" type="number" formControlName={{field.id}} *ngIf="field.type.name=='long'">
 
 		<input class="form-control-file" type="file" formControlName={{field.id}} accept="pdf/*"
-		*ngIf="field.id=='files'" (change)="handleFileInput($event)" multiple>
+			*ngIf="field.id=='files'" (change)="handleFileInput($event)" multiple>
 
 		<div *ngIf="field.type.name=='multiselect' && field.id != 'betaReaders'" class="form-group">
-			<select multiple class="form-control" formControlName={{field.id}} multiple aria-label="multiple select example">
+			<select multiple class="form-control" formControlName={{field.id}} multiple
+				aria-label="multiple select example">
 				<option *ngFor="let value of field.type.values" [value]="value.id">
 					{{value.value}}
 				</option>
 			</select>
 		</div>
 
-		<div *ngIf="field.type.name=='multiselect' && field.id == 'betaReaders'" class="form-group">
-			<select multiple class="form-control" formControlName={{field.id}} multiple aria-label="multiple select example">
-				<option *ngFor="let value of field.type.values" [value]="value.id">
-					{{value.value}}
-				</option>
-			</select>
-		</div>
+		
 
 		<div *ngIf="field.type.name=='enum'" class="form-group">
-			<select class="form-control" formControlName={{field.id}} >
+			<select class="form-control" formControlName={{field.id}}>
 				<option *ngFor="let value of field.type.values" [value]="value.id">
 					{{value.value}}
 				</option>

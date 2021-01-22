@@ -12,4 +12,8 @@ export interface IFormField {
 		name: string;
 		configuration: string;
 	}[];
+	properties: {
+		name: string;
+		value: string;
+	}[];
 }
