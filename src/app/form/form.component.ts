@@ -54,7 +54,7 @@ export class FormComponent implements OnInit {
 
 
 		let path = this.activatedRoute.snapshot.routeConfig.path;
-		if (path.includes('upload-documents') || path.includes('membership-payment')) {
+		if (path.includes('upload-documents') ) {
 			this.formService.getProcessId(this.authService.getLoggedUser()).subscribe((res) => {
 				this.processInstanceId = res.processId;
 				console.log(this.processInstanceId);
@@ -187,8 +187,6 @@ export class FormComponent implements OnInit {
 				plagiarism = this.options.find(x => x.title == value["auto-complete"]);
 				console.log(plagiarism);
 				if (plagiarism != null) {
-					// this.form.get('authorBook').patchValue(this.myBook.id.toString());
-					// this.form.get('plagiarismBook').patchValue(plagiarism.id.toString());
 					this.form.patchValue({
 						'authorBook':this.myBook.id.toString(),
 						'plagiarismBook':plagiarism.id.toString()
