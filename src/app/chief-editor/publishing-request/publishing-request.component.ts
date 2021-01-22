@@ -11,6 +11,7 @@ import { ChiefEditorService } from '../shared/chief-editor.service';
 })
 export class PublishingRequestComponent implements OnInit {
     publishingRequest: IPublishingRequest;
+    processInstanceId: number;
 
     constructor(private router: Router, private activatedRoute: ActivatedRoute, private chiefEditorService: ChiefEditorService) { }
 
@@ -24,6 +25,12 @@ export class PublishingRequestComponent implements OnInit {
         this.chiefEditorService.getRequest(id).subscribe(
             (data: IPublishingRequest) => {
                 this.publishingRequest = data;
+            },
+            (error) => alert(error.error)
+        );
+        this.chiefEditorService.getProcessId(parseInt(id)).subscribe(
+            (data: number) => {
+                this.processInstanceId = data;
             },
             (error) => alert(error.error)
         );
