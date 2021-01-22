@@ -18,7 +18,6 @@ export class FormService {
     for(var i=0; i<file.length; i++){
       formData.append('file', file[i]);
     }
-      //formData.append('file', file);
 
     const req = new HttpRequest('POST', `${environment.api}/file/upload/`+processId, formData, {
       reportProgress: true,
@@ -26,7 +25,6 @@ export class FormService {
     });
 
     return this.http.request(req);
-    //return this.http.post<any>(environment.api+'/file/upload/'+processId, formData);
   }
 
   getForm(processId:string){
@@ -37,15 +35,6 @@ export class FormService {
 
   submitForm(processId:string, data:any){
     return this.http.post<any>(environment.api+'/form/submit/'+processId, data);
-  }
-
-  getProcessId(userId:string) {
-    console.log('get process id');
-    return this.http.get<any>(environment.api+'/form/get-process-id/'+userId);
-  }
-
-  getRefusalProcessId(publishingrequestId: number) {
-	  return this.http.get<any>(environment.api+'/form/get-pub-process-id/'+ String(publishingrequestId));
   }
 
   getProcessInstanceId(id: string, type: string) {
