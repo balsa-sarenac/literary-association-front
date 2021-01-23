@@ -1,7 +1,7 @@
 <form *ngIf="dataLoaded" (ngSubmit)="onSubmit(form.value, form)" style="width: 40%; display: inline-block"
 	[formGroup]="form">
 	<div *ngFor="let field of formFields" class="form-group" style="text-align: left">
-		<label *ngIf="field.id != 'explanation' && field.id != 'betaReaders'" for="{{ field.id }}">{{ field.label }}</label> <br>
+		<label *ngIf="field.id != 'explanation' && field.id != 'betaReaders' && field.id != 'reupload'" for="{{ field.id }}">{{ field.label }}</label> <br>
 
 		<mat-form-field *ngIf="(field.id=='auto-complete') && field.type.name=='string'">
 			<input type="text" matInput formControlName={{field.id}} [matAutocomplete]="auto">
@@ -24,6 +24,12 @@
 		<div *ngIf="field.id=='explanation'">
 			<label *ngIf="form.get(field.properties['controlledBy']).value == false" for="{{ field.id }}">{{ field.label }}</label> <br>
 			<input *ngIf="form.get(field.properties['controlledBy']).value == false" class="form-control" type="text" formControlName={{field.id}}>
+		</div>
+
+		<div *ngIf="field.id=='reupload'">
+			<label *ngIf="form.get(field.properties['controlledBy']).value == true" for="{{ field.id }}">{{ field.label }}</label> <br>
+			<input class="form-control-file" type="file" formControlName={{field.id}} accept="pdf/*"
+			*ngIf="form.get(field.properties['controlledBy']).value == true" (change)="handleFileInput($event)" multiple>
 		</div>
 
 		<div *ngIf="field.id=='betaReaders'">
