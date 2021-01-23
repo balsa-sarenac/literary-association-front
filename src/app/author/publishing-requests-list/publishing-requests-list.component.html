@@ -21,7 +21,7 @@
 							<th scope="row">{{ i + 1 }}</th>
 							<td >{{ request.book.title }}</td>
 							<td  *ngIf="request.status!='Book upload requested'"> {{request.status}}</td>
-							<td *ngIf="request.status=='Book upload requested' || request.status=='Change book based on comments'"><button class="btn btn-success m-2" [routerLink]="['/author/requests', request.id]" >Upload book</button></td>
+							<td *ngIf="request.status=='Book upload requested' || request.status=='Change book based on comments' || request.status=='Editor gave suggestions'"><button class="btn btn-success m-2" [routerLink]="['/author/requests', request.id]" >Upload book</button></td>
 							
 					</tr>
 				</tbody>
