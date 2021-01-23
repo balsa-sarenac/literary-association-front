@@ -17,7 +17,7 @@
 				</li>
 			</ul>
         </div>
-        <div class="col" *ngIf="publishingRequest.status == 'Book is original'">
+        <div class="col" *ngIf="publishingRequest.status == 'Book is original' || publishingRequest.status == 'Editor review'">
             <p>Download book:</p>
             <a [href]="publishingRequest.book.bookFile.url" [download]="publishingRequest.book.bookFile.name">{{ publishingRequest.book.bookFile.name }}</a>
         </div>
