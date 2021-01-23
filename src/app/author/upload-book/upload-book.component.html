@@ -3,6 +3,6 @@
 
 <br />
 
-<div style="text-align: center; vertical-align: middle">
-	<app-form [publishingRequestId]="publishingRequestId"></app-form>
+<div style="text-align: center; vertical-align: middle" *ngIf="dataLoaded">
+	<app-form [processInstanceId]="processInstanceId"></app-form>
 </div>

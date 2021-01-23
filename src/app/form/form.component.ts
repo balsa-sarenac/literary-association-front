@@ -21,27 +21,27 @@ export class FormComponent implements OnInit {
 	dataLoaded: boolean = false;
 
 	@Input() processInstanceId: string;
-	@Input() publishingRequestId: number;
 
 	formFieldsDto = null;
 	formFields: IFormField[] = [];
 
 	form: FormGroup = new FormGroup({});
 
-	values = new Array<Value>();
-
 	selectedFiles: FileList;
-
-	fileInfos: Observable<any>;
 
 	options: BookDTO[] = [];
 	filteredOptions: Observable<BookDTO[]>;
 
 	myBook: BookDTO;
 
-	constructor(private formService: FormService, private authService: AuthService, private router: Router, private activatedRoute: ActivatedRoute, private authorService: AuthorService, private bookService: BookService) {
+	hiddenFields: string[] = [];
 
-	}
+	constructor(private formService: FormService,
+		private authService: AuthService,
+		private router: Router,
+		private activatedRoute: ActivatedRoute,
+		private authorService: AuthorService,
+		private bookService: BookService) { }
 
 	handleFileInput(event) {
 		this.selectedFiles = event.target.files;
@@ -49,62 +49,21 @@ export class FormComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
-
-
 		let path = this.activatedRoute.snapshot.routeConfig.path;
-		if (path.includes('upload-documents') || path.includes('membership-payment')) {
-			this.formService.getProcessId(this.authService.getLoggedUser()).subscribe((res) => {
-				this.processInstanceId = res.processId;
-				console.log(this.processInstanceId);
 
-				this.formService.getForm(this.processInstanceId).subscribe((res) => {
-					console.log('init form');
-					this.setForm(res);
-					this.dataLoaded = true;
-				},
-					(err) => {
-						console.log(err.message);
-					});
-			});
-		} else if (path.includes('membership-request') || path.includes('publishing-request')) {
-			this.formService.getForm(this.processInstanceId).subscribe((res) => {
-				console.log('init form');
-				this.setForm(res);
-				this.dataLoaded = true;
-			}, (err) => {
-				console.log(err.message);
-			});
-		}
-		else if (path.includes('refusal') || path.includes('requests') || path.includes('choose-beta-readers') || path.includes('beat-books') ) {
-			console.log('entered');
-			this.formService.getRefusalProcessId(this.publishingRequestId).subscribe((res) => {
-				this.processInstanceId = res.processId;
-				console.log(this.processInstanceId);
-
-				this.formService.getForm(this.processInstanceId).subscribe((res) => {
-					console.log('init form');
-					this.setForm(res);
-					this.dataLoaded = true;
-				},
-					(err) => {
-						console.log(err.message);
-					});
-			});
-		}
-		else {
-			this.formService.getForm(this.processInstanceId).subscribe((res) => {
-				console.log('init form');
-				this.setForm(res);
-				this.dataLoaded = true;
-				if (path.includes('file-a-complaint')) {
-					this.getFileAComplaintForm();
-				}
-			}, (err) => {
-				console.log(err.message);
-			});
-		}
-
+		this.formService.getForm(this.processInstanceId).subscribe((res) => {
+			console.log('init form');
+			this.setForm(res);
+			this.dataLoaded = true;
+			console.log(res);
+			if (path.includes('file-a-complaint')) {
+				this.getFileAComplaintForm();
+			}
+		}, (err) => {
+			console.log(err.message);
+		});
 	}
+
 
 	private getFileAComplaintForm() {
 		this.bookService.getBooksFromOtherAuthors(this.authService.getLoggedUser()).subscribe((res: BookDTO[]) => {
@@ -132,7 +91,6 @@ export class FormComponent implements OnInit {
 	}
 
 	setForm(res: any) {
-		console.log(this.values);
 		console.log(res);
 
 		res.formFieldList.forEach((element: any) => {
@@ -164,6 +122,11 @@ export class FormComponent implements OnInit {
 				}
 			});
 
+			console.log(element.properties);
+			if (element.properties['hidden']) {
+				this.hiddenFields.push(element.id);
+			}
+			console.log(this.hiddenFields);
 			fc.setValidators(validators);
 
 			this.form.addControl(element.id, fc);
@@ -172,66 +135,68 @@ export class FormComponent implements OnInit {
 	}
 
 	onSubmit(value: any, form: any) {
-		if (this.activatedRoute.snapshot.routeConfig.path.includes('file-a-complaint')) {
-			console.log(this.myBook);
-			console.log(value);
-			let plagiarism = this.options.find(x => x.title == value["auto-complete"]);
-			console.log(plagiarism);
-			if (plagiarism != null) {
-				this.authorService.fileComplaint(this.myBook, plagiarism, this.authService.getLoggedUser(), this.processInstanceId).subscribe((res) => {
-					alert("Success");
-					this.router.navigate(['author/books']);
-				})
+
+		let formFields = new Array();
+		for (var property in value) {
+			formFields.push({ id: property, value: value[property] });
+		}
+
+		var data = {
+			formFields: formFields,
+		};
+
+		console.log(data);
+		if (this.formFieldsDto !== null) {
+			if (formFields.find(element => element.id == "files") !== undefined) {
+				if (formFields.find(element => element.id == "files")) {
+					this.upload(this.processInstanceId, this.selectedFiles);
+				}
 			}
 			else {
-				alert("Book doesn't exist!");
-				this.form.get('auto-complete').patchValue('');
-			}
-		}
-		else {
-			let formFields = new Array();
-			for (var property in value) {
-				formFields.push({ id: property, value: value[property] });
-			}
-
-			var data = {
-				formFields: formFields,
-			};
-
-			if (this.formFieldsDto !== null) {
-				if (formFields.find(element => element.id == "files") !== undefined) {
-					if (formFields.find(element => element.id == "files")) {
-						this.upload(this.processInstanceId, this.selectedFiles);
+				if (formFields.find(element => element.id == "authorBook") !== undefined && formFields.find(element => element.id == "plagiarismBook") !== undefined) {
+					let element;
+					if (formFields.find(element => element.id == "authorBook")) {
+						element = formFields.find(element => element.id == "authorBook");
+						element.value = this.myBook.id;
+					}
+					if (formFields.find(element => element.id == "plagiarismBook")) {
+						let plagiarism: BookDTO = this.options.find(x => x.title == value["auto-complete"]);
+						if (plagiarism == null) {
+							alert("Book doesn't exist!");
+							this.form.get('auto-complete').patchValue('');
+						}
+						element = formFields.find(element => element.id == "plagiarismBook");
+						element.value = plagiarism.id;
 					}
 				}
-				else {
-					this.formService.submitForm(this.processInstanceId, data).subscribe((res) => {
+				this.formService.submitForm(this.processInstanceId, data).subscribe((res) => {
 
 
-						if (value["isBetaReader"] == true) {
-							this.formService.getForm(this.processInstanceId).subscribe((res: any) => {
-								this.setForm(res);
-								this.dataLoaded = true;
-							},
-								(err) => {
-									console.log(err.message);
-								});
-						}
-						else {
-							console.log(res);
-							alert('Success!');
-							this.route();
-						}
-					},
-						(err) => {
-							console.log(err);
-						});
-				}
-
+					if (value["isBetaReader"] == true) {
+						this.formService.getForm(this.processInstanceId).subscribe((res: any) => {
+							this.setForm(res);
+							this.dataLoaded = true;
+						},
+							(err) => {
+								console.log(err.message);
+							});
+					}
+					else {
+						console.log(res);
+						alert('Success!');
+						this.route();
+					}
+				},
+					(err) => {
+						console.log(err);
+					});
 			}
+
 		}
 
+
 	}
+
 
 
 	upload(idx, file) {
@@ -258,34 +223,33 @@ export class FormComponent implements OnInit {
 
 	}
 
-	route(){
-		if(this.activatedRoute.snapshot.routeConfig.path.includes('membership-requests')){
-			console.log('cetvrti');
+	route() {
+		if (this.activatedRoute.snapshot.routeConfig.path.includes('membership-requests')) {
 			this.router.navigate(['committee']);
 		}
-		else if(this.activatedRoute.snapshot.routeConfig.path.includes('membership-payment') || this.activatedRoute.snapshot.routeConfig.path.includes('requests') || 
-		this.activatedRoute.snapshot.routeConfig.path.includes('publish-book') ){
-			console.log('prvi');
+		else if (this.activatedRoute.snapshot.routeConfig.path.includes('membership-payment') || this.activatedRoute.snapshot.routeConfig.path.includes('requests') ||
+			this.activatedRoute.snapshot.routeConfig.path.includes('publish-book')) {
 			this.router.navigate(['author']);
 		}
-		else if(this.activatedRoute.snapshot.routeConfig.path.includes('register')){
-			console.log('drugi');
+		else if (this.activatedRoute.snapshot.routeConfig.path.includes('register')) {
 			this.router.navigateByUrl('/welcome/login');
 		}
-		else if(this.activatedRoute.snapshot.routeConfig.path.includes('upload-documents') && this.authService.getRole()=="ROLE_PENDING_AUTHOR"){
-			console.log('treci');
+		else if (this.activatedRoute.snapshot.routeConfig.path.includes('upload-documents') && this.authService.getRole() == "ROLE_PENDING_AUTHOR") {
 			this.router.navigateByUrl('/review-expected');
 		}
-		else if(this.activatedRoute.snapshot.routeConfig.path.includes('publishing-request')) {
+		else if (this.activatedRoute.snapshot.routeConfig.path.includes('file-a-complaint')) {
+			this.router.navigate(['author/books']);
+		}
+		else if (this.activatedRoute.snapshot.routeConfig.path.includes('publishing-request')) {
 			this.activatedRoute.paramMap.subscribe((params) => {
-				let path = '/editor/publishing-request/'+ params.get('id');
+				let path = '/editor/publishing-request/' + params.get('id');
 
 				this.router.navigateByUrl('/editor/publishing-requests', { skipLocationChange: true }).then(() => {
 					this.router.navigate([path]);
-				}); 
+				});
 			});
 
-			
+
 		}
 	}
 }
