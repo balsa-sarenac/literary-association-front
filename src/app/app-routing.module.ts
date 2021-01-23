@@ -24,6 +24,8 @@ import { BookListComponent } from './author/book-list/book-list.component';
 import { FileComplaintComponent } from './author/file-complaint/file-complaint.component';
 import { PublishingRequestsComponent } from './chief-editor/publishing-requests-list/publishing-requests-list.component';
 import { PublishingRequestComponent } from './chief-editor/publishing-request/publishing-request.component';
+import {ComplaintsComponent} from './chief-editor/complaints/complaints.component';
+import {ComplaintInvestigationComponent} from './chief-editor/complaint-investigation/complaint-investigation.component';
 
 const routes: Routes = [
 	{ path: '', redirectTo: 'welcome', pathMatch: 'full' },
@@ -101,7 +103,7 @@ const routes: Routes = [
 		],
 	},
 	{
-		path:'editor',
+		path:'chief-editor',
 		component:HomeChiefEditorComponent,
 		children: [
 			{
@@ -120,7 +122,14 @@ const routes: Routes = [
 				path: 'publishing-request/:id',
 				component: PublishingRequestComponent
 			},
-
+      {
+        path: 'complaints',
+        component: ComplaintsComponent
+      },
+      {
+        path: 'complaints/:id',
+        component: ComplaintInvestigationComponent
+      }
 		],
 	},
 ];

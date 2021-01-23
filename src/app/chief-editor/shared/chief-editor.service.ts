@@ -1,12 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import {IComplaint} from '../../DTO/icomplaint';
 
 @Injectable({
   providedIn: 'root'
 })
- 
-export class ChiefEditorService 
+
+export class ChiefEditorService
 {
   constructor(private http:HttpClient) { }
 
@@ -20,5 +21,9 @@ export class ChiefEditorService
 
   getDocument(url: string) {
 		return this.http.get<any>(url);
+  }
+
+  getComplaints() {
+    return this.http.get<IComplaint[]>(environment.api + '/plagiarism/complaints');
   }
 }
