@@ -12,6 +12,10 @@ export class AuthorService {
   
   constructor(private http: HttpClient) { }
 
+  getRequest(requestId:string){
+    return this.http.get<any>(environment.api + '/publish/get-request/'+requestId);
+  }
+
   getRequests(authorId:string) {
     return this.http.get<any>(environment.api + '/publish/author-requests/'+authorId);
   }
