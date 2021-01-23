@@ -251,5 +251,8 @@ export class FormComponent implements OnInit {
 
 
 		}
+		else if (this.activatedRoute.snapshot.routeConfig.path.includes('beta-books')) {
+			this.router.navigate(['reader/beta-books']);
+		}
 	}
 }
