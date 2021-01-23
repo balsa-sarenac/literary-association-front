@@ -68,6 +68,10 @@ export class PublishingRequestComponent implements OnInit {
                 return false;
             case 'Editor review':
                 return true;
+            case 'Editor gave suggestions':
+                return true;
+            case 'Book is sent to lector':
+                return true;
             default:
                 return false;
         }
