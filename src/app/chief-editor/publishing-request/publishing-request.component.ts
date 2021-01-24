@@ -50,27 +50,13 @@ export class PublishingRequestComponent implements OnInit {
         switch (this.publishingRequest.status) {
             case 'New request':
                 return true;
-            case 'Book upload requested':
-                return false;
-            case 'Reading rejected':
-                return false;
             case 'Book uploaded':
                 return true;
             case 'Book is original':
                 return true;
-            case 'Book is not original':
-                return false;
             case 'Book is approved for publishing':
                 return true;
-            case 'Book is not approved for publishing':
-                return true;
-            case 'Sent to beta readers':
-                return false;
             case 'Editor review':
-                return true;
-            case 'Editor gave suggestions':
-                return false;
-            case 'Book is sent to lector':
                 return true;
             default:
                 return false;
