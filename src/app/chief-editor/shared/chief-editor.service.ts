@@ -11,7 +11,7 @@ export class ChiefEditorService
   constructor(private http:HttpClient) { }
 
   getRequests(editorId:string) {
-    return this.http.get<any>(environment.api + '/publish/chiefEditor-requests/'+editorId);
+    return this.http.get<any>(environment.api + '/publish/all-requests/'+editorId);
   }
 
   getRequest(requestId: string){
