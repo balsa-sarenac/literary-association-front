@@ -26,4 +26,8 @@ export class ChiefEditorService
   getComplaints() {
     return this.http.get<IComplaint[]>(environment.api + '/plagiarism/complaints');
   }
+
+  getComplaint(id: string) {
+    return this.http.get<IComplaint>(environment.api + '/plagiarism/complaints/' + id);
+  }
 }

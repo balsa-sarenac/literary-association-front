@@ -14,7 +14,8 @@ export class ComplaintsComponent implements OnInit {
 
   ngOnInit(): void {
     this.chiefEditorService.getComplaints().subscribe(
-      data => this.complaints = data
+      data => this.complaints = data,
+      error => alert(error.error.message)
     );
   }
 
