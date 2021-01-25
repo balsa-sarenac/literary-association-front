@@ -6,7 +6,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
  
-export class ChiefEditorService 
+export class LectorService 
 {
   constructor(private http:HttpClient) { }
 

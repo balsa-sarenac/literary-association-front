@@ -32,6 +32,9 @@ import { BookListComponent } from './author/book-list/book-list.component';
 import { FileComplaintComponent } from './author/file-complaint/file-complaint.component';
 import { PublishingRequestComponent } from './chief-editor/publishing-request/publishing-request.component';
 import { PublishingRequestsComponent } from './chief-editor/publishing-requests-list/publishing-requests-list.component';
+import { LectorRequestsListComponent } from './lector/lector-request-list/lector-requests-list.component';
+import { LectorRequestComponent } from './lector/lector-request/lector-request.component';
+import { HomeLectorComponent } from './homepage/home-lector/home-lector.component';
 
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";    
 import 'hammerjs';   
@@ -68,6 +71,9 @@ import 'hammerjs';
 		FileComplaintComponent,
 		PublishingRequestsComponent,
 		PublishingRequestComponent,
+		LectorRequestsListComponent,
+		LectorRequestComponent,
+		HomeLectorComponent,
 	],
 	imports: [BrowserModule, AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule, BrowserAnimationsModule,MatFormFieldModule, MatInputModule, MatAutocompleteModule, ],
 	providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],

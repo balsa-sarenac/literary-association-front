@@ -3,21 +3,21 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { IFile } from 'src/app/DTO/ifile';
 import { IPublishingRequest } from 'src/app/DTO/ipublishing-request';
 import { FormService } from 'src/app/form/shared/form.service';
-import { ChiefEditorService } from '../shared/chief-editor.service';
+import { LectorService } from '../shared/lector.service';
 
 @Component({
-    selector: 'app-publishing-request',
-    templateUrl: './publishing-request.component.html',
-    styleUrls: ['./publishing-request.component.css']
+    selector: 'app-lector-request',
+    templateUrl: './lector-request.component.html',
+    styleUrls: ['./lector-request.component.css']
 })
-export class PublishingRequestComponent implements OnInit {
+export class LectorRequestComponent implements OnInit {
     publishingRequest: IPublishingRequest;
     processInstanceId: string;
     dataLoaded:boolean=false;
 
     constructor(private router: Router,
          private activatedRoute: ActivatedRoute,
-          private chiefEditorService: ChiefEditorService,
+          private lectorService: LectorService,
           private formService:FormService) { }
 
     ngOnInit(): void {
@@ -27,7 +27,7 @@ export class PublishingRequestComponent implements OnInit {
     }
 
     getRequest(id: string) {
-        this.chiefEditorService.getRequest(id).subscribe(
+        this.lectorService.getRequest(id).subscribe(
             (data: IPublishingRequest) => {
                 this.publishingRequest = data;
             },
@@ -43,20 +43,12 @@ export class PublishingRequestComponent implements OnInit {
     }
 
     download(file: IFile) {
-        this.chiefEditorService.getDocument(file.url).subscribe((data) => console.log(data));
+        this.lectorService.getDocument(file.url).subscribe((data) => console.log(data));
     }
 
     showForm() {
         switch (this.publishingRequest.status) {
-            case 'New request':
-                return true;
-            case 'Book uploaded':
-                return true;
-            case 'Book is original':
-                return true;
-            case 'Book is approved for publishing':
-                return true;
-            case 'Editor review':
+            case 'Book is sent to lector':
                 return true;
             default:
                 return false;
