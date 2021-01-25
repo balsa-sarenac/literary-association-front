@@ -117,10 +117,17 @@ export class FormComponent implements OnInit {
 			element.validationConstraints.map((validator: any) => {
 				if (validator.name == 'required') {
 					validators.push(Validators.required);
-				} else if (validator.name == 'minlength') {
+				}
+				if (validator.name == 'minlength') {
 					validators.push(Validators.minLength(<number>validator.configuration));
 				}
 			});
+			if (element.properties['minEditors'] != undefined) {
+			  validators.push(Validators.minLength(<number>element.properties['minEditors']));
+      }
+      if (element.properties['maxEditors'] != undefined) {
+        validators.push(Validators.maxLength(<number>element.properties['maxEditors']));
+      }
 
 			console.log(element.properties);
 			if (element.properties['hidden']) {
