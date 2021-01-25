@@ -12,6 +12,7 @@ import {FormService} from '../../form/shared/form.service';
 export class ComplaintInvestigationComponent implements OnInit {
   complaint: IComplaint;
   processInstanceId: string;
+  dataReady: boolean = false;
 
   constructor(private router: Router, private activatedRoute: ActivatedRoute, private chiefEditorService: ChiefEditorService,
               private formService: FormService) { }
@@ -28,7 +29,10 @@ export class ComplaintInvestigationComponent implements OnInit {
       error => alert(error.error.message)
     )
     this.formService.getProcessInstanceId(id, 'plagiarism-complaint-id').subscribe(
-      data => this.processInstanceId = String(data.processId),
+      data => {
+        this.processInstanceId = String(data.processId);
+        this.dataReady = true;
+      },
       error => alert(error.error.message)
     )
   }
