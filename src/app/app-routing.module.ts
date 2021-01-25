@@ -24,6 +24,9 @@ import { BookListComponent } from './author/book-list/book-list.component';
 import { FileComplaintComponent } from './author/file-complaint/file-complaint.component';
 import { PublishingRequestsComponent } from './chief-editor/publishing-requests-list/publishing-requests-list.component';
 import { PublishingRequestComponent } from './chief-editor/publishing-request/publishing-request.component';
+import { LectorRequestsListComponent } from './lector/lector-request-list/lector-requests-list.component';
+import { LectorRequestComponent } from './lector/lector-request/lector-request.component';
+import { HomeLectorComponent } from './homepage/home-lector/home-lector.component';
 import {ComplaintsComponent} from './chief-editor/complaints/complaints.component';
 import {ComplaintInvestigationComponent} from './chief-editor/complaint-investigation/complaint-investigation.component';
 
@@ -131,6 +134,20 @@ const routes: Routes = [
         component: ComplaintInvestigationComponent
       }
 		],
+	},
+	{
+		path: 'lector',
+		component:HomeLectorComponent,
+		children: [
+			{
+				path: 'lector-requests',
+				component: LectorRequestsListComponent
+			},
+			{
+				path: 'lector-request/:id',
+				component: LectorRequestComponent
+			}
+		]
 	},
 ];
 

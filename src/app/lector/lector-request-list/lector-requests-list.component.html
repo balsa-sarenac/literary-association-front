@@ -3,12 +3,12 @@
 		<!-- <div class="col">
 			<h1 class="h1">Check if listed requests for publishing are original books</h1>
 		</div> -->
-		<div class="col" *ngIf="requests == undefined">
-			<h3 class="h3">There are currently no requests waiting for review</h3>
+		<div class="col" *ngIf="requests.length == 0">
+			<h3 class="h3">There are currently no books waiting for review</h3>
 		</div>
 		<div class="col">
 			<table class="table table-hover">
-				<thead *ngIf="requests != undefined">
+				<thead *ngIf="requests.length != 0">
 					<tr>
 						<th scope="col">#</th>
 						<th scope="col">Book</th>
@@ -17,7 +17,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr *ngFor="let request of requests; let i = index" [routerLink]="['/chief-editor/publishing-request', request.id]">
+					<tr *ngFor="let request of requests; let i = index" [routerLink]="['/lector/lector-request', request.id]">
 						<th scope="row">{{ i + 1 }}</th>
 						<td>{{ request.book.title }}</td>
                         <td>{{ request.book.authors[0].firstName + ' ' + request.book.authors[0].lastName}}</td>
