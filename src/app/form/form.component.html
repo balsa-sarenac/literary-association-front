@@ -40,8 +40,8 @@
 		<div *ngIf="field.id=='betaReaders'">
 			<label *ngIf="form.get(field.properties['controlledBy']).value == true" for="{{ field.id }}">{{ field.label }}</label> <br>
 			<div *ngIf="field.type.name=='multiselect' && field.id == 'betaReaders' && form.get(field.properties['controlledBy']).value == true" class="form-group">
-				<select multiple class="form-control" formControlName={{field.id}} multiple
-					aria-label="multiple select example">
+				<select multiple class="form-control" formControlName={{field.id}}
+                aria-label="multiple select example">
 					<option *ngFor="let value of field.type.values" [value]="value.id">
 						{{value.value}}
 					</option>
@@ -57,8 +57,9 @@
 			*ngIf="field.id=='files'" (change)="handleFileInput($event)" multiple>
 
 		<div *ngIf="field.type.name=='multiselect' && field.id != 'betaReaders'" class="form-group">
-			<select multiple class="form-control" formControlName={{field.id}} multiple
-				aria-label="multiple select example">
+      <div *ngIf="field.properties['minEditors'] != undefined"><p>Please select minimum of {{field.properties["minEditors"]}} and maximum of {{field.properties["maxEditors"]}} editors</p></div>
+			<select multiple class="form-control" formControlName={{field.id}}
+              aria-label="multiple select example">
 				<option *ngFor="let value of field.type.values" [value]="value.id">
 					{{value.value}}
 				</option>
@@ -81,17 +82,22 @@
 						form.controls[field.id].errors?.validator &&
 						form.controls[field.id].touched
 					">
-				{{ field.id }} is required!
+        <small style="color: red">{{ field.id }} is required!</small>
 			</div>
 			<div *ngIf="
 						validator.name == 'minlength' &&
 						form.controls[field.id].errors?.minlength &&
 						form.controls[field.id].touched
 					">
-				Minimun length is {{ validator.configuration }}
+        <small style="color: red">Minimun length is {{ validator.configuration }}</small>
 			</div>
 		</div>
+    <div *ngIf="field.properties['minEditors'] != undefined && form.controls[field.id].errors?.minlength" >
+      <small style="color: red">Minimum number of selected editors must be {{field.properties['minEditors']}}</small>
+    </div>
+    <div *ngIf="field.properties['maxEditors'] != undefined && form.controls[field.id].errors?.maxlength" >
+      <small style="color: red">Maximum number of selected editors must be {{field.properties['maxEditors']}}</small>
+    </div>
 	</div>
-
 	<input class="btn btn-primary" type="submit" [disabled]="form.invalid" />
 </form>
