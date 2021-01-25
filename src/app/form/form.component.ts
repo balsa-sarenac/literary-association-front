@@ -254,9 +254,9 @@ export class FormComponent implements OnInit {
 		}
 		else if (this.activatedRoute.snapshot.routeConfig.path.includes('publishing-request')) {
 			this.activatedRoute.paramMap.subscribe((params) => {
-				let path = '/editor/publishing-request/' + params.get('id');
+				let path = '/chief-editor/publishing-request/' + params.get('id');
 
-				this.router.navigateByUrl('/editor/publishing-requests', { skipLocationChange: true }).then(() => {
+				this.router.navigateByUrl('/chief-editor/publishing-requests', { skipLocationChange: true }).then(() => {
 					this.router.navigate([path]);
 				});
 			});
