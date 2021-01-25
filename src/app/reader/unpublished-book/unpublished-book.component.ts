@@ -26,7 +26,7 @@ export class UnpublishedBookComponent implements OnInit {
     this.activatedRoute.paramMap.subscribe((params) => {
       this.getRequest(params.get('id'));
       this.id = params.get('id');
-      this.formService.getProcessInstanceId(this.id, 'publishing').subscribe((data: any) => {
+      this.formService.getProcessInstanceId(this.id, 'publishingRequestId').subscribe((data: any) => {
         this.processInstanceId = data.processId;
         this.dataLoaded = true;
       });
