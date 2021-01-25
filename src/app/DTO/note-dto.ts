@@ -5,4 +5,5 @@ export class NoteDTO {
     type : string;
     content : string; 
     user:UserDTO;
+    deleted:boolean;
 }
