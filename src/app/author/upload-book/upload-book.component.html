@@ -2,7 +2,7 @@
 <h6 style="text-align: center">Upload book:</h6>
 
 <br />
-<div *ngIf="publishingRequest.status=='Change book based on comments' || publishingRequest.status=='Editor gave suggestions' || publishingRequest.status=='Lector sent corrections'" style="text-align: center;">
+<div *ngIf="publishingRequest.status=='Change book based on comments' || publishingRequest.status=='Editor gave suggestions'" style="text-align: center;">
 	<div style="text-align: center;">
 		<div style="font-weight: bold;">Notes:</div>
 		<div *ngFor="let note of publishingRequest.notes" > 
