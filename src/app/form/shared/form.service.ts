@@ -15,8 +15,13 @@ export class FormService {
     const formData: FormData = new FormData();
 
     var files:File[] =[];
-    for(var i=0; i<file.length; i++){
-      formData.append('file', file[i]);
+    if(file!==undefined){
+      for(var i=0; i<file.length; i++){
+        formData.append('file', file[i]);
+      }
+    }
+    else{
+      formData.append('file', undefined);
     }
 
     const req = new HttpRequest('POST', `${environment.api}/file/upload/`+processId, formData, {

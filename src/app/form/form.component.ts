@@ -154,8 +154,13 @@ export class FormComponent implements OnInit {
 
 		console.log(data);
 		if (this.formFieldsDto !== null) {
-			if (formFields.find(element => element.id == "files") !== undefined) {
+			if (formFields.find(element => element.id == "files") !== undefined ) {
 				if (formFields.find(element => element.id == "files")) {
+					this.upload(this.processInstanceId, this.selectedFiles);
+				}
+			}
+			else if (formFields.find(element => element.id == "reupload") !== undefined ) {
+				if (formFields.find(element => element.id == "reupload")) {
 					this.upload(this.processInstanceId, this.selectedFiles);
 				}
 			}
@@ -257,6 +262,9 @@ export class FormComponent implements OnInit {
 			});
 
 
+		}
+		else if (this.activatedRoute.snapshot.routeConfig.path.includes('beta-books')) {
+			this.router.navigate(['reader/beta-books']);
 		}
 	}
 }
