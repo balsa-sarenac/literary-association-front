@@ -58,16 +58,16 @@ const routes: Routes = [
 		path: 'reader',
 		component: HomeReaderComponent,
 		children: [
-      { path: 'beta-books', component: BetaReaderBooksComponent },
-      { path: 'beta-books/:id', component: UnpublishedBookComponent }
-    ],
+			{ path: 'beta-books', component: BetaReaderBooksComponent },
+			{ path: 'beta-books/:id', component: UnpublishedBookComponent }
+		],
 	},
 	{
 		path: 'author',
 		component: HomeAuthorComponent,
 		children: [
 			{
-				path:'books',
+				path: 'books',
 				component: BookListComponent
 			},
 			{
@@ -80,12 +80,12 @@ const routes: Routes = [
 			},
 			{
 				path: 'requests/:id',
-			 	component: UploadBookComponent
-			 },
-			 {
+				component: UploadBookComponent
+			},
+			{
 				path: 'file-a-complaint/:id',
-			 	component: FileComplaintComponent
-			 },
+				component: FileComplaintComponent
+			},
 		],
 	},
 	{
@@ -115,8 +115,8 @@ const routes: Routes = [
 		],
 	},
 	{
-		path:'chief-editor',
-		component:HomeChiefEditorComponent,
+		path: 'chief-editor',
+		component: HomeChiefEditorComponent,
 		children: [
 			{
 				path: 'publishing-requests',
@@ -127,26 +127,18 @@ const routes: Routes = [
 				component: PublishingRequestComponent
 			},
 			{
-				path: 'publishing-requests',
-				component: PublishingRequestsComponent
+				path: 'complaints',
+				component: ComplaintsComponent
 			},
 			{
-				path: 'publishing-request/:id',
-				component: PublishingRequestComponent
-			},
-      {
-        path: 'complaints',
-        component: ComplaintsComponent
-      },
-      {
-        path: 'complaints/:id',
-        component: ComplaintInvestigationComponent
-      }
+				path: 'complaints/:id',
+				component: ComplaintInvestigationComponent
+			}
 		],
 	},
 	{
 		path: 'lector',
-		component:HomeLectorComponent,
+		component: HomeLectorComponent,
 		children: [
 			{
 				path: 'lector-requests',
@@ -178,4 +170,4 @@ const routes: Routes = [
 	imports: [RouterModule.forRoot(routes)],
 	exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
