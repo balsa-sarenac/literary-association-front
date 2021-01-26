@@ -104,6 +104,14 @@ const routes: Routes = [
 		children: [
 			{ path: 'membership-requests', component: MembershipRequestsComponent },
 			{ path: 'membership-requests/:id', component: MembershipRequestComponent },
+      {
+        path: 'complaints',
+        component: ComplaintsComponent
+      },
+      {
+        path: 'complaints/:id',
+        component: ComplaintInvestigationComponent
+      },
 		],
 	},
 	{

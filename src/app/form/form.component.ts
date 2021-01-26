@@ -275,5 +275,13 @@ export class FormComponent implements OnInit {
 				});
 			});
 		}
+    else if (this.activatedRoute.snapshot.routeConfig.path.includes('complaints')) {
+      if (localStorage.getItem('User-role') === 'ROLE_EDITOR')
+        this.router.navigate(['editor/complaints']);
+      else if (localStorage.getItem('User-role') === 'ROLE_CHIEF_EDITOR')
+        this.router.navigate(['chief-editor/complaints']);
+      else
+        this.router.navigate(['committee/complaints']);
+    }
 	}
 }
