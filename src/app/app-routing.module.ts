@@ -27,8 +27,9 @@ import { PublishingRequestComponent } from './chief-editor/publishing-request/pu
 import { LectorRequestsListComponent } from './lector/lector-request-list/lector-requests-list.component';
 import { LectorRequestComponent } from './lector/lector-request/lector-request.component';
 import { HomeLectorComponent } from './homepage/home-lector/home-lector.component';
-import { ComplaintsComponent } from './chief-editor/complaints/complaints.component';
-import { ComplaintInvestigationComponent } from './chief-editor/complaint-investigation/complaint-investigation.component';
+import {ComplaintsComponent} from './chief-editor/complaints/complaints.component';
+import {ComplaintInvestigationComponent} from './chief-editor/complaint-investigation/complaint-investigation.component';
+import {HomeEditorComponent} from './homepage/home-editor/home-editor.component';
 
 const routes: Routes = [
 	{ path: '', redirectTo: 'welcome', pathMatch: 'full' },
@@ -103,6 +104,14 @@ const routes: Routes = [
 		children: [
 			{ path: 'membership-requests', component: MembershipRequestsComponent },
 			{ path: 'membership-requests/:id', component: MembershipRequestComponent },
+      {
+        path: 'complaints',
+        component: ComplaintsComponent
+      },
+      {
+        path: 'complaints/:id',
+        component: ComplaintInvestigationComponent
+      },
 		],
 	},
 	{
@@ -141,6 +150,20 @@ const routes: Routes = [
 			}
 		]
 	},
+  {
+    path: 'editor',
+    component: HomeEditorComponent,
+    children: [
+      {
+        path: 'complaints',
+        component: ComplaintsComponent
+      },
+      {
+        path: 'complaints/:id',
+        component: ComplaintInvestigationComponent
+      },
+    ]
+  }
 ];
 
 @NgModule({

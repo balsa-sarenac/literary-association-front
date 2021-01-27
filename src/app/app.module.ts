@@ -43,7 +43,8 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';    
 import 'hammerjs';
 import { ComplaintInvestigationComponent } from './chief-editor/complaint-investigation/complaint-investigation.component';
-import { ComplaintsComponent } from './chief-editor/complaints/complaints.component';    
+import { ComplaintsComponent } from './chief-editor/complaints/complaints.component';
+import { HomeEditorComponent } from './homepage/home-editor/home-editor.component';    
 
 @NgModule({
 	declarations: [
@@ -78,6 +79,7 @@ import { ComplaintsComponent } from './chief-editor/complaints/complaints.compon
 		HomeLectorComponent,
 		ComplaintInvestigationComponent,
 		ComplaintsComponent,
+		HomeEditorComponent,
 	],
 	imports: [BrowserModule, AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule, BrowserAnimationsModule,MatFormFieldModule, MatInputModule, MatAutocompleteModule, ],
 	providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
