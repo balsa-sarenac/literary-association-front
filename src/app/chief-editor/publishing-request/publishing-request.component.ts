@@ -58,6 +58,8 @@ export class PublishingRequestComponent implements OnInit {
                 return true;
             case 'Editor review':
                 return true;
+            case 'Final editor check':
+                return true;
             default:
                 return false;
         }
