@@ -28,8 +28,8 @@
 
 		<div *ngIf="field.id=='reupload'">
 			<label *ngIf="form.get(field.properties['controlledBy']).value == true" for="{{ field.id }}">{{ field.label }}</label> <br>
-			<input class="form-control-file" type="file" formControlName={{field.id}} accept="pdf/*"
-			*ngIf="form.get(field.properties['controlledBy']).value == true" (change)="handleFileInput($event)" multiple>
+			<input class="form-control-file" type="file" formControlName={{field.id}} accept="pdf/* " multiple
+			*ngIf="form.get(field.properties['controlledBy']).value == true" (change)="handleFileInput($event)">
 		</div>
 		
 		<div *ngIf="field.id=='textareaSuggestions'">
@@ -97,7 +97,11 @@
     </div>
     <div *ngIf="field.properties['maxEditors'] != undefined && form.controls[field.id].errors?.maxlength" >
       <small style="color: red">Maximum number of selected editors must be {{field.properties['maxEditors']}}</small>
-    </div>
 	</div>
-	<input class="btn btn-primary" type="submit" [disabled]="form.invalid" />
+	
+	<div *ngIf="(field.id=='reupload' || field.id=='files') && onlyOne && selectedFiles?.length!=1 && (form.get('files')?.touched || form.get('reupload')?.touched)" >
+		<small style="color: red">Maximum number of selected files 1! </small>
+	  </div>
+	</div>
+	<input class="btn btn-primary" type="submit" [disabled]="form.invalid || (onlyOne && selectedFiles?.length!=1)" />
 </form>
