@@ -38,6 +38,7 @@ export class FormComponent implements OnInit {
 	hiddenFields: string[] = [];
 
 	onlyOne=false;
+	twoFiles = false;
 
 	constructor(private formService: FormService,
 		private authService: AuthService,
@@ -128,8 +129,11 @@ export class FormComponent implements OnInit {
 			if (element.properties['minEditors'] != undefined) {
 				validators.push(Validators.minLength(<number>element.properties['minEditors']));
 			}
-			if (element.properties['oneFile'] != undefined) {
+			if (element.properties['oneFile'] != undefined && element.properties['oneFile'] ) {
 				this.onlyOne = true;
+			}
+			if (element.properties['twoFiles'] != undefined && element.properties['twoFiles']) {
+				this.twoFiles = true;
 			}
 			if (element.properties['oneIfNeeded'] != undefined) {
 				this.form.get('change')!.valueChanges.subscribe(()=>{
