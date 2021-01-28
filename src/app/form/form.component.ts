@@ -11,6 +11,7 @@ import { FormService } from './shared/form.service';
 import { map, startWith } from 'rxjs/operators';
 import { BookService } from '../author/shared/book.service';
 import { BookDTO } from '../DTO/book-dto';
+import { file, RxwebValidators } from '@rxweb/reactive-form-validators';
 
 @Component({
 	selector: 'app-form',
@@ -35,6 +36,8 @@ export class FormComponent implements OnInit {
 	myBook: BookDTO;
 
 	hiddenFields: string[] = [];
+
+	onlyOne=false;
 
 	constructor(private formService: FormService,
 		private authService: AuthService,
@@ -123,11 +126,20 @@ export class FormComponent implements OnInit {
 				}
 			});
 			if (element.properties['minEditors'] != undefined) {
-			  validators.push(Validators.minLength(<number>element.properties['minEditors']));
-      }
-      if (element.properties['maxEditors'] != undefined) {
-        validators.push(Validators.maxLength(<number>element.properties['maxEditors']));
-      }
+				validators.push(Validators.minLength(<number>element.properties['minEditors']));
+			}
+			if (element.properties['oneFile'] != undefined) {
+				this.onlyOne = true;
+			}
+			if (element.properties['oneIfNeeded'] != undefined) {
+				this.form.get('change')!.valueChanges.subscribe(()=>{
+					this.onlyOne = this.form.get('change').value;
+					console.log(this.onlyOne);
+				})
+			}
+			if (element.properties['maxEditors'] != undefined) {
+				validators.push(Validators.maxLength(<number>element.properties['maxEditors']));
+			}
 
 			console.log(element.properties);
 			if (element.properties['hidden']) {
@@ -154,12 +166,12 @@ export class FormComponent implements OnInit {
 
 		console.log(data);
 		if (this.formFieldsDto !== null) {
-			if (formFields.find(element => element.id == "files") !== undefined ) {
+			if (formFields.find(element => element.id == "files") !== undefined) {
 				if (formFields.find(element => element.id == "files")) {
 					this.upload(this.processInstanceId, this.selectedFiles);
 				}
 			}
-			else if (formFields.find(element => element.id == "reupload") !== undefined ) {
+			else if (formFields.find(element => element.id == "reupload") !== undefined) {
 				if (formFields.find(element => element.id == "reupload")) {
 					this.upload(this.processInstanceId, this.selectedFiles);
 				}
@@ -235,6 +247,7 @@ export class FormComponent implements OnInit {
 
 	}
 
+
 	route() {
 		if (this.activatedRoute.snapshot.routeConfig.path.includes('membership-requests')) {
 			this.router.navigate(['committee']);
@@ -266,7 +279,7 @@ export class FormComponent implements OnInit {
 		else if (this.activatedRoute.snapshot.routeConfig.path.includes('beta-books')) {
 			this.router.navigate(['reader/beta-books']);
 		}
-		else if(this.activatedRoute.snapshot.routeConfig.path.includes('lector-request')) {
+		else if (this.activatedRoute.snapshot.routeConfig.path.includes('lector-request')) {
 			this.activatedRoute.paramMap.subscribe((params) => {
 				let path = '/lector/lector-request/' + params.get('id');
 
@@ -275,13 +288,13 @@ export class FormComponent implements OnInit {
 				});
 			});
 		}
-    else if (this.activatedRoute.snapshot.routeConfig.path.includes('complaints')) {
-      if (localStorage.getItem('User-role') === 'ROLE_EDITOR')
-        this.router.navigate(['editor/complaints']);
-      else if (localStorage.getItem('User-role') === 'ROLE_CHIEF_EDITOR')
-        this.router.navigate(['chief-editor/complaints']);
-      else
-        this.router.navigate(['committee/complaints']);
-    }
+		else if (this.activatedRoute.snapshot.routeConfig.path.includes('complaints')) {
+			if (localStorage.getItem('User-role') === 'ROLE_EDITOR')
+				this.router.navigate(['editor/complaints']);
+			else if (localStorage.getItem('User-role') === 'ROLE_CHIEF_EDITOR')
+				this.router.navigate(['chief-editor/complaints']);
+			else
+				this.router.navigate(['committee/complaints']);
+		}
 	}
 }
