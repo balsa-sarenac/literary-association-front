@@ -59,7 +59,6 @@ export class FormComponent implements OnInit {
 			console.log('init form');
 			this.setForm(res);
 			this.dataLoaded = true;
-			console.log(res);
 			if (path.includes('file-a-complaint')) {
 				this.getFileAComplaintForm();
 			}
@@ -136,10 +135,15 @@ export class FormComponent implements OnInit {
 				this.twoFiles = true;
 			}
 			if (element.properties['oneIfNeeded'] != undefined) {
-				this.form.get('change')!.valueChanges.subscribe(()=>{
-					this.onlyOne = this.form.get('change').value;
+				if(element.properties['oneIfNeeded']=="false"){
+					this.onlyOne=false;
 					console.log(this.onlyOne);
-				})
+				}
+				else{
+					this.onlyOne = true;
+					console.log(this.onlyOne);
+				}
+				
 			}
 			if (element.properties['maxEditors'] != undefined) {
 				validators.push(Validators.maxLength(<number>element.properties['maxEditors']));
@@ -154,6 +158,7 @@ export class FormComponent implements OnInit {
 
 			this.form.addControl(element.id, fc);
 
+			
 		});
 	}
 
