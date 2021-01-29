@@ -11,7 +11,6 @@ import { FormService } from './shared/form.service';
 import { map, startWith } from 'rxjs/operators';
 import { BookService } from '../author/shared/book.service';
 import { BookDTO } from '../DTO/book-dto';
-import { file, RxwebValidators } from '@rxweb/reactive-form-validators';
 
 @Component({
 	selector: 'app-form',
@@ -203,6 +202,7 @@ export class FormComponent implements OnInit {
 						},
 							(err) => {
 								console.log(err.message);
+								alert(err.error)
 							});
 					}
 					else {
@@ -213,6 +213,7 @@ export class FormComponent implements OnInit {
 				},
 					(err) => {
 						console.log(err);
+            alert(err.error)
 					});
 			}
 
