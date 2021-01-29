@@ -30,16 +30,22 @@ export class PublishingRequestComponent implements OnInit {
         this.chiefEditorService.getRequest(id).subscribe(
             (data: IPublishingRequest) => {
                 this.publishingRequest = data;
+                console.log(this.publishingRequest);
+                if (this.publishingRequest.status != 'Book is published' && this.publishingRequest.status != 'Editing timeout happened') {
+                  this.formService.getProcessInstanceId(id, "publishingRequestId").subscribe(
+                    (data) => {
+                      this.processInstanceId = String(data.processId);
+                      this.dataLoaded= true;
+                    },
+                    (error) => {
+                      alert(error.error)
+                    }
+                  );
+                }
             },
             (error) => alert(error.error)
         );
-        this.formService.getProcessInstanceId(id, "publishingRequestId").subscribe(
-            (data) => {
-                this.processInstanceId = String(data.processId);
-                this.dataLoaded= true;
-            },
-            (error) => alert(error.error)
-        );
+
     }
 
     download(file: IFile) {
