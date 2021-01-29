@@ -36,11 +36,11 @@ export class FormComponent implements OnInit {
 
 	hiddenFields: string[] = [];
 
-	onlyOne=false;
+	onlyOne = false;
 	twoFiles = false;
 
 	@ViewChild('myInput')
-myInputVariable: ElementRef;
+	myInputVariable: ElementRef;
 
 	constructor(private formService: FormService,
 		private authService: AuthService,
@@ -52,14 +52,14 @@ myInputVariable: ElementRef;
 	handleFileInput(event) {
 		console.log(event.target.files);
 		this.selectedFiles = event.target.files;
-		let files = Array.from(this.selectedFiles).filter( s => s.type!="application/pdf" );
+		let files = Array.from(this.selectedFiles).filter(s => s.type != "application/pdf");
 		console.log('files: ', files);
-		if(files.length!=0){
+		if (files.length != 0) {
 			alert('Only pdf supported!');
-			this.selectedFiles=undefined;
+			this.selectedFiles = undefined;
 			this.myInputVariable.nativeElement.value = "";
 		}
-		files=undefined;
+		files = undefined;
 		console.log('selected files: ', this.selectedFiles);
 	}
 
@@ -139,22 +139,22 @@ myInputVariable: ElementRef;
 			if (element.properties['minEditors'] != undefined) {
 				validators.push(Validators.minLength(<number>element.properties['minEditors']));
 			}
-			if (element.properties['oneFile'] != undefined && element.properties['oneFile'] ) {
+			if (element.properties['oneFile'] != undefined && element.properties['oneFile']) {
 				this.onlyOne = true;
 			}
 			if (element.properties['twoFiles'] != undefined && element.properties['twoFiles']) {
 				this.twoFiles = true;
 			}
 			if (element.properties['oneIfNeeded'] != undefined) {
-				if(element.properties['oneIfNeeded']=="false"){
-					this.onlyOne=false;
+				if (element.properties['oneIfNeeded'] == "false") {
+					this.onlyOne = false;
 					console.log(this.onlyOne);
 				}
-				else{
+				else {
 					this.onlyOne = true;
 					console.log(this.onlyOne);
 				}
-				
+
 			}
 			if (element.properties['maxEditors'] != undefined) {
 				validators.push(Validators.maxLength(<number>element.properties['maxEditors']));
@@ -169,7 +169,7 @@ myInputVariable: ElementRef;
 
 			this.form.addControl(element.id, fc);
 
-			
+
 		});
 	}
 
@@ -234,7 +234,7 @@ myInputVariable: ElementRef;
 				},
 					(err) => {
 						console.log(err);
-            alert(err.error)
+						alert(err.error)
 					});
 			}
 
