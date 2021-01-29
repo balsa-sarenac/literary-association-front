@@ -1,5 +1,5 @@
 import { HttpEventType, HttpResponse } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -40,6 +40,9 @@ export class FormComponent implements OnInit {
 	onlyOne=false;
 	twoFiles = false;
 
+	@ViewChild('myInput')
+myInputVariable: ElementRef;
+
 	constructor(private formService: FormService,
 		private authService: AuthService,
 		private router: Router,
@@ -48,8 +51,17 @@ export class FormComponent implements OnInit {
 		private bookService: BookService) { }
 
 	handleFileInput(event) {
+		console.log(event.target.files);
 		this.selectedFiles = event.target.files;
-		console.log(this.selectedFiles);
+		let files = Array.from(this.selectedFiles).filter( s => s.type!="application/pdf" );
+		console.log('files: ', files);
+		if(files.length!=0){
+			alert('Only pdf supported!');
+			this.selectedFiles=undefined;
+			this.myInputVariable.nativeElement.value = "";
+		}
+		files=undefined;
+		console.log('selected files: ', this.selectedFiles);
 	}
 
 	ngOnInit(): void {

@@ -33,7 +33,7 @@
 		<div *ngIf="field.id=='reupload'" style="text-align: center;">
 			<label  for="{{ field.id }}">{{ field.label
 				}}</label> <br>
-			<input class="form-control-file" type="file" formControlName={{field.id}} accept="pdf/* " multiple
+			<input class="form-control-file" type="file" formControlName={{field.id}} accept="application/pdf" #myInput multiple
 				 (change)="handleFileInput($event)">
 		</div>
 
@@ -61,8 +61,8 @@
 
 		<input class="form-control" type="number" formControlName={{field.id}} *ngIf="field.type.name=='long'">
 
-		<input class="form-control-file" type="file" formControlName={{field.id}} accept="pdf/*"
-			*ngIf="field.id=='files'" (change)="handleFileInput($event)" multiple>
+		<input class="form-control-file" type="file" formControlName={{field.id}} accept="application/pdf"
+			*ngIf="field.id=='files'" (change)="handleFileInput($event)" multiple #myInput>
 
 		<div *ngIf="field.type.name=='multiselect' && field.id != 'betaReaders'" class="form-group">
 			<div *ngIf="field.properties['minEditors'] != undefined">
