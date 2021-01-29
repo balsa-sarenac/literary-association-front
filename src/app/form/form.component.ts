@@ -202,6 +202,7 @@ export class FormComponent implements OnInit {
 						},
 							(err) => {
 								console.log(err.message);
+								alert(err.error)
 							});
 					}
 					else {
@@ -212,6 +213,7 @@ export class FormComponent implements OnInit {
 				},
 					(err) => {
 						console.log(err);
+            alert(err.error)
 					});
 			}
 
