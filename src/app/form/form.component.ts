@@ -1,5 +1,5 @@
 import { HttpEventType, HttpResponse } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -36,7 +36,11 @@ export class FormComponent implements OnInit {
 
 	hiddenFields: string[] = [];
 
-	onlyOne=false;
+	onlyOne = false;
+	twoFiles = false;
+
+	@ViewChild('myInput')
+	myInputVariable: ElementRef;
 
 	constructor(private formService: FormService,
 		private authService: AuthService,
@@ -46,8 +50,17 @@ export class FormComponent implements OnInit {
 		private bookService: BookService) { }
 
 	handleFileInput(event) {
+		console.log(event.target.files);
 		this.selectedFiles = event.target.files;
-		console.log(this.selectedFiles);
+		let files = Array.from(this.selectedFiles).filter(s => s.type != "application/pdf");
+		console.log('files: ', files);
+		if (files.length != 0) {
+			alert('Only pdf supported!');
+			this.selectedFiles = undefined;
+			this.myInputVariable.nativeElement.value = "";
+		}
+		files = undefined;
+		console.log('selected files: ', this.selectedFiles);
 	}
 
 	ngOnInit(): void {
@@ -57,7 +70,6 @@ export class FormComponent implements OnInit {
 			console.log('init form');
 			this.setForm(res);
 			this.dataLoaded = true;
-			console.log(res);
 			if (path.includes('file-a-complaint')) {
 				this.getFileAComplaintForm();
 			}
@@ -127,14 +139,22 @@ export class FormComponent implements OnInit {
 			if (element.properties['minEditors'] != undefined) {
 				validators.push(Validators.minLength(<number>element.properties['minEditors']));
 			}
-			if (element.properties['oneFile'] != undefined) {
+			if (element.properties['oneFile'] != undefined && element.properties['oneFile']) {
 				this.onlyOne = true;
 			}
+			if (element.properties['twoFiles'] != undefined && element.properties['twoFiles']) {
+				this.twoFiles = true;
+			}
 			if (element.properties['oneIfNeeded'] != undefined) {
-				this.form.get('change')!.valueChanges.subscribe(()=>{
-					this.onlyOne = this.form.get('change').value;
+				if (element.properties['oneIfNeeded'] == "false") {
+					this.onlyOne = false;
 					console.log(this.onlyOne);
-				})
+				}
+				else {
+					this.onlyOne = true;
+					console.log(this.onlyOne);
+				}
+
 			}
 			if (element.properties['maxEditors'] != undefined) {
 				validators.push(Validators.maxLength(<number>element.properties['maxEditors']));
@@ -148,6 +168,7 @@ export class FormComponent implements OnInit {
 			fc.setValidators(validators);
 
 			this.form.addControl(element.id, fc);
+
 
 		});
 	}
@@ -213,7 +234,7 @@ export class FormComponent implements OnInit {
 				},
 					(err) => {
 						console.log(err);
-            alert(err.error)
+						alert(err.error)
 					});
 			}
 
