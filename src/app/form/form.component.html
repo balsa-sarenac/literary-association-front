@@ -30,26 +30,32 @@
 		</div>
 	
 		<div *ngIf="field.id=='explanation'">
-			<label *ngIf="form.get(field.properties['controlledBy']).value == false" for="{{ field.id }}">{{ field.label }}</label> <br>
-			<input *ngIf="form.get(field.properties['controlledBy']).value == false" class="form-control" type="text" formControlName={{field.id}}>
+			<label *ngIf="form.get(field.properties['controlledBy']).value == false" for="{{ field.id }}">{{ field.label
+				}}</label> <br>
+			<input *ngIf="form.get(field.properties['controlledBy']).value == false" class="form-control" type="text"
+				formControlName={{field.id}}>
 		</div>
 
-		<div *ngIf="field.id=='reupload'">
-			<label *ngIf="form.get(field.properties['controlledBy']).value == true" for="{{ field.id }}">{{ field.label }}</label> <br>
-			<input class="form-control-file" type="file" formControlName={{field.id}} accept="pdf/* " multiple
-			*ngIf="form.get(field.properties['controlledBy']).value == true" (change)="handleFileInput($event)">
+		<div *ngIf="field.id=='reupload'" style="text-align: center;">
+			<label  for="{{ field.id }}">{{ field.label
+				}}</label> <br>
+			<input class="form-control-file" type="file" formControlName={{field.id}} accept="application/pdf" #myInput multiple
+				 (change)="handleFileInput($event)">
 		</div>
-		
+
 		<div *ngIf="field.id=='textareaSuggestions'">
-			<label *ngIf="form.get(field.properties['controlledBy']).value == true" for="{{ field.id }}">{{ field.label }}</label> <br>
-			<textarea *ngIf="form.get(field.properties['controlledBy']).value == true" class="form-control" rows="5" formControlName={{field.id}}></textarea>
+			<label *ngIf="form.get(field.properties['controlledBy']).value == true" for="{{ field.id }}">{{ field.label
+				}}</label> <br>
+			<textarea *ngIf="form.get(field.properties['controlledBy']).value == true" class="form-control" rows="5"
+				formControlName={{field.id}}></textarea>
 		</div>
 
 		<div *ngIf="field.id=='betaReaders'">
-			<label *ngIf="form.get(field.properties['controlledBy']).value == true" for="{{ field.id }}">{{ field.label }}</label> <br>
-			<div *ngIf="field.type.name=='multiselect' && field.id == 'betaReaders' && form.get(field.properties['controlledBy']).value == true" class="form-group">
-				<select multiple class="form-control" formControlName={{field.id}}
-                aria-label="multiple select example">
+			<label *ngIf="form.get(field.properties['controlledBy']).value == true" for="{{ field.id }}">{{ field.label
+				}}</label> <br>
+			<div *ngIf="field.type.name=='multiselect' && field.id == 'betaReaders' && form.get(field.properties['controlledBy']).value == true"
+				class="form-group">
+				<select multiple class="form-control" formControlName={{field.id}} aria-label="multiple select example">
 					<option *ngFor="let value of field.type.values" [value]="value.id">
 						{{value.value}}
 					</option>
@@ -61,20 +67,22 @@
 
 		<input class="form-control" type="number" formControlName={{field.id}} *ngIf="field.type.name=='long'">
 
-		<input class="form-control-file" type="file" formControlName={{field.id}} accept="pdf/*"
-			*ngIf="field.id=='files'" (change)="handleFileInput($event)" multiple>
+		<input class="form-control-file" type="file" formControlName={{field.id}} accept="application/pdf"
+			*ngIf="field.id=='files'" (change)="handleFileInput($event)" multiple #myInput>
 
 		<div *ngIf="field.type.name=='multiselect' && field.id != 'betaReaders'" class="form-group">
-      <div *ngIf="field.properties['minEditors'] != undefined"><p>Please select minimum of {{field.properties["minEditors"]}} and maximum of {{field.properties["maxEditors"]}} editors</p></div>
-			<select multiple class="form-control" formControlName={{field.id}}
-              aria-label="multiple select example">
+			<div *ngIf="field.properties['minEditors'] != undefined">
+				<p>Please select minimum of {{field.properties["minEditors"]}} and maximum of
+					{{field.properties["maxEditors"]}} editors</p>
+			</div>
+			<select multiple class="form-control" formControlName={{field.id}} aria-label="multiple select example">
 				<option *ngFor="let value of field.type.values" [value]="value.id">
 					{{value.value}}
 				</option>
 			</select>
 		</div>
 
-		
+
 
 		<div *ngIf="field.type.name=='enum' && field.properties['links']==undefined" class="form-group">
 			<select class="form-control" formControlName={{field.id}}>
@@ -87,29 +95,35 @@
 		<div *ngFor="let validator of field.validationConstraints">
 			<div *ngIf="
 						validator.name == 'required' &&
-						form.controls[field.id].errors?.validator &&
+						form.controls[field.id].errors?.required &&
 						form.controls[field.id].touched
 					">
-        <small style="color: red">{{ field.id }} is required!</small>
+				<small style="color: red">{{ field.id }} is required!</small>
 			</div>
 			<div *ngIf="
 						validator.name == 'minlength' &&
 						form.controls[field.id].errors?.minlength &&
 						form.controls[field.id].touched
 					">
-        <small style="color: red">Minimun length is {{ validator.configuration }}</small>
+				<small style="color: red">Minimun length is {{ validator.configuration }}</small>
 			</div>
 		</div>
-    <div *ngIf="field.properties['minEditors'] != undefined && form.controls[field.id].errors?.minlength" >
-      <small style="color: red">Minimum number of selected editors must be {{field.properties['minEditors']}}</small>
-    </div>
-    <div *ngIf="field.properties['maxEditors'] != undefined && form.controls[field.id].errors?.maxlength" >
-      <small style="color: red">Maximum number of selected editors must be {{field.properties['maxEditors']}}</small>
+		<div *ngIf="field.properties['minEditors'] != undefined && form.controls[field.id].errors?.minlength">
+			<small style="color: red">Minimum number of selected editors must be
+				{{field.properties['minEditors']}}</small>				
+		</div>
+		<div *ngIf="field.properties['maxEditors'] != undefined && form.controls[field.id].errors?.maxlength">
+			<small style="color: red">Maximum number of selected editors must be
+				{{field.properties['maxEditors']}}</small>
+		</div>
+		<div *ngIf="field.id=='files' && twoFiles && !(selectedFiles?.length >=2) && form.get('files')?.touched ">
+			<small style="color: red">Minimum number of selected files is 2! </small>
+		</div>
+		<div
+			*ngIf="(field.id=='reupload' || field.id=='files') && onlyOne && selectedFiles?.length!=1 && (form.get('files')?.touched || form.get('reupload')?.touched)">
+			<small style="color: red">Maximum number of selected files is 1! </small>
+		</div>
 	</div>
-	
-	<div *ngIf="(field.id=='reupload' || field.id=='files') && onlyOne && selectedFiles?.length!=1 && (form.get('files')?.touched || form.get('reupload')?.touched)" >
-		<small style="color: red">Maximum number of selected files 1! </small>
-	  </div>
-	</div>
-	<input class="btn btn-primary" type="submit" [disabled]="form.invalid || (onlyOne && selectedFiles?.length!=1)" />
+	<input class="btn btn-primary" type="submit"
+		[disabled]="form.invalid || ( onlyOne && selectedFiles?.length!=1) || ( twoFiles && !(selectedFiles?.length>=2))" />
 </form>
