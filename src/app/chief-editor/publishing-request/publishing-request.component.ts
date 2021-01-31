@@ -1,5 +1,7 @@
+import { ElementSchemaRegistry } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from 'src/app/auth/shared/auth.service';
 import { IFile } from 'src/app/DTO/ifile';
 import { IPublishingRequest } from 'src/app/DTO/ipublishing-request';
 import { FormService } from 'src/app/form/shared/form.service';
@@ -18,7 +20,8 @@ export class PublishingRequestComponent implements OnInit {
     constructor(private router: Router,
          private activatedRoute: ActivatedRoute,
           private chiefEditorService: ChiefEditorService,
-          private formService:FormService) { }
+          private formService:FormService,
+          private authService:AuthService) { }
 
     ngOnInit(): void {
         this.activatedRoute.paramMap.subscribe((params) => {
@@ -53,22 +56,29 @@ export class PublishingRequestComponent implements OnInit {
     }
 
     showForm() {
-        switch (this.publishingRequest.status) {
-            case 'New request':
-                return true;
-            case 'Book uploaded':
-                return true;
-            case 'Book is original':
-                return true;
-            case 'Book is approved for publishing':
-                return true;
-            case 'Editor review':
-                return true;
-            case 'Final editor check':
-                return true;
-            default:
-                return false;
+        let role = this.authService.getRole();
+        if(role == "ROLE_CHIEF_EDITOR"){
+            switch (this.publishingRequest.status) {
+                case 'New request':
+                    return true;
+                case 'Book uploaded':
+                    return true;
+                case 'Book is original':
+                    return true;
+                case 'Book is approved for publishing':
+                    return true;
+                case 'Editor review':
+                    return true;
+                case 'Final editor check':
+                    return true;
+                default:
+                    return false;
+            }
         }
+        else if(role == "ROLE_LECTOR" && this.publishingRequest.status == "Book is sent to lector")
+            return true;
+        else 
+        return false;
     }
 
 }
