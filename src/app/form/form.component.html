@@ -28,6 +28,12 @@
 				<a [href]="file.id" [download]="file.value">{{ file.value }}</a>
 			</li>
 		</div>
+
+		<div *ngIf="field.properties['comments']!=undefined">
+			<li *ngFor="let value of field.type.values">
+				{{value.value}}
+			</li>
+		</div>
 	
 		<div *ngIf="field.id=='explanation'">
 			<label *ngIf="form.get(field.properties['controlledBy']).value == false" for="{{ field.id }}">{{ field.label
@@ -41,6 +47,7 @@
 				}}</label> <br>
 			<input class="form-control-file" type="file" formControlName={{field.id}} accept="application/pdf" #myInput multiple
 				 (change)="handleFileInput($event)">
+				 <br>
 		</div>
 
 		<div *ngIf="field.id=='textareaSuggestions'">
@@ -84,7 +91,7 @@
 
 
 
-		<div *ngIf="field.type.name=='enum' && field.properties['links']==undefined" class="form-group">
+		<div *ngIf="field.type.name=='enum' && field.properties['links']==undefined && field.properties['comments']==undefined" class="form-group">
 			<select class="form-control" formControlName={{field.id}}>
 				<option *ngFor="let value of field.type.values" [value]="value.id">
 					{{value.value}}
