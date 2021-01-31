@@ -24,15 +24,20 @@
 		<p *ngIf="field.properties['readonly']!=undefined && field.properties['links']==undefined">{{field.value.value}}</p>
 
 		<div *ngIf="field.properties['links']!=undefined">
-			<li *ngFor="let file of field.type.values">
-				<a [href]="file.id" [download]="file.value">{{ file.value }}</a>
-			</li>
+			<un>
+				<li *ngFor="let file of field.type.values">
+					<a [href]="file.id" [download]="file.value">{{ file.value }}</a>
+				</li>
+			</un>
+			
 		</div>
 
 		<div *ngIf="field.properties['comments']!=undefined">
-			<li *ngFor="let value of field.type.values">
-				{{value.value}}
-			</li>
+			<ul>
+				<li *ngFor="let value of field.type.values">
+					{{value.value}}
+				</li>
+			</ul>
 		</div>
 	
 		<div *ngIf="field.id=='explanation'">
