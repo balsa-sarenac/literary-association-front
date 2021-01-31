@@ -34,7 +34,7 @@ export class PublishingRequestComponent implements OnInit {
             (data: IPublishingRequest) => {
                 this.publishingRequest = data;
                 console.log(this.publishingRequest);
-                if (this.publishingRequest.status != 'Book is published' && this.publishingRequest.status != 'Editing timeout happened' && this.publishingRequest.status != 'Rejected') {
+                if (this.publishingRequest.status !== "Book is published" && this.publishingRequest.status != "Editing timeout happened" && this.publishingRequest.status != "Rejected") {
                   this.formService.getProcessInstanceId(id, "publishingRequestId").subscribe(
                     (data) => {
                       this.processInstanceId = String(data.processId);
@@ -57,7 +57,7 @@ export class PublishingRequestComponent implements OnInit {
 
     showForm() {
         let role = this.authService.getRole();
-        if(role == "ROLE_CHIEF_EDITOR"){
+        if(role === "ROLE_CHIEF_EDITOR"){
             switch (this.publishingRequest.status) {
                 case 'New request':
                     return true;
@@ -75,10 +75,12 @@ export class PublishingRequestComponent implements OnInit {
                     return false;
             }
         }
-        else if(role == "ROLE_LECTOR" && this.publishingRequest.status == "Book is sent to lector")
+        else if(role === "ROLE_LECTOR" && this.publishingRequest.status === "Book is sent to lector") {
             return true;
-        else 
-        return false;
+        }
+        else {
+            return false;
+        }
     }
 
 }
