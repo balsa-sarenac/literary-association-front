@@ -142,11 +142,11 @@ const routes: Routes = [
 		children: [
 			{
 				path: 'lector-requests',
-				component: LectorRequestsListComponent
+				component: PublishingRequestsComponent
 			},
 			{
 				path: 'lector-request/:id',
-				component: LectorRequestComponent
+				component: PublishingRequestComponent
 			}
 		]
 	},
