@@ -58,6 +58,7 @@ const routes: Routes = [
 		path: 'reader',
 		component: HomeReaderComponent,
 		children: [
+			{ path:'books', component:BookListComponent},
 			{ path: 'beta-books', component: BetaReaderBooksComponent },
 			{ path: 'beta-books/:id', component: UnpublishedBookComponent }
 		],

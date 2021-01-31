@@ -6,8 +6,8 @@
 		<mat-form-field *ngIf="(field.id=='auto-complete') && field.type.name=='string'">
 			<input type="text" matInput formControlName={{field.id}} [matAutocomplete]="auto">
 			<mat-autocomplete #auto="matAutocomplete">
-				<mat-option *ngFor="let option of filteredOptions|async" [value]="option.title">
-					{{option.title}}
+				<mat-option *ngFor="let option of filteredOptions|async" [value]="option">
+					{{option}}
 				</mat-option>
 			</mat-autocomplete>
 		</mat-form-field>
@@ -24,11 +24,11 @@
 		<p *ngIf="field.properties['readonly']!=undefined && field.properties['links']==undefined">{{field.value.value}}</p>
 
 		<div *ngIf="field.properties['links']!=undefined">
-			<un>
+			<ul>
 				<li *ngFor="let file of field.type.values">
 					<a [href]="file.id" [download]="file.value">{{ file.value }}</a>
 				</li>
-			</un>
+			</ul>
 			
 		</div>
 
@@ -96,7 +96,7 @@
 
 
 
-		<div *ngIf="field.type.name=='enum' && field.properties['links']==undefined && field.properties['comments']==undefined" class="form-group">
+		<div *ngIf="field.type.name=='enum' && field.properties['links']==undefined && field.properties['comments']==undefined && field.properties['hidden']==undefined" class="form-group">
 			<select class="form-control" formControlName={{field.id}}>
 				<option *ngFor="let value of field.type.values" [value]="value.id">
 					{{value.value}}
