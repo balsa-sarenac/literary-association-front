@@ -3,7 +3,7 @@
 		<div class="col">
 			<h1 class="h1">Publishing request</h1>
 		</div>
-		<div class="col">
+		<!-- <div class="col">
             <p><b>Title:&nbsp;</b> {{ publishingRequest.book.title }}</p>
             <p><b>Author:&nbsp;</b> {{ publishingRequest.book.authors[0].firstName + ' ' + publishingRequest.book.authors[0].lastName}}</p>
             <p><b>Synopsis:&nbsp;</b> {{ publishingRequest.book.synopsis }}</p>
@@ -20,7 +20,7 @@
         <div class="col" *ngIf="publishingRequest.status == 'Book is original' || publishingRequest.status == 'Editor review'">
             <p>Download book:</p>
             <a [href]="publishingRequest.book.bookFile.url" [download]="publishingRequest.book.bookFile.name">{{ publishingRequest.book.bookFile.name }}</a>
-        </div>
+        </div> -->
         <!--
             U zavisnosti od statusa, moguce je prikazati jos neke informacije, ovdje dodati
         -->
