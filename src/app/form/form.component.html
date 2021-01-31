@@ -1,9 +1,7 @@
 <form *ngIf="dataLoaded" (ngSubmit)="onSubmit(form.value, form)" style="width: 40%; display: inline-block"
 	[formGroup]="form">
 	<div *ngFor="let field of formFields" class="form-group" style="text-align: left">
-		<label
-			*ngIf="field.id != 'explanation' && field.id != 'betaReaders' && field.id != 'textareaSuggestions' && field.id != 'reupload'"
-			for="{{ field.id }}">{{ field.label }}</label> <br>
+		<label style="font-weight: bold;" *ngIf="field.properties['controlledBy']==undefined && field.id != 'reupload'" for="{{ field.id }}">{{ field.label }}</label> <br>
 
 		<mat-form-field *ngIf="(field.id=='auto-complete') && field.type.name=='string'">
 			<input type="text" matInput formControlName={{field.id}} [matAutocomplete]="auto">
@@ -21,8 +19,27 @@
 			*ngIf="(field.id=='password') && field.type.name=='string'">
 
 		<input class="form-control" type="text" formControlName={{field.id}}
-			*ngIf="field.type.name=='string' && field.id!='password' && field.id!='auto-complete' && field.id!='textarea' && field.id != 'explanation' && field.id!='textareaSuggestions' && !hiddenFields.includes(field.id)">
+			*ngIf="field.properties['readonly']==undefined && field.type.name=='string' && field.id!='password' && field.id!='auto-complete' && field.id!='textarea' && field.id != 'explanation' && field.id!='textareaSuggestions' && !hiddenFields.includes(field.id)">
 
+		<p *ngIf="field.properties['readonly']!=undefined && field.properties['links']==undefined">{{field.value.value}}</p>
+
+		<div *ngIf="field.properties['links']!=undefined">
+			<un>
+				<li *ngFor="let file of field.type.values">
+					<a [href]="file.id" [download]="file.value">{{ file.value }}</a>
+				</li>
+			</un>
+			
+		</div>
+
+		<div *ngIf="field.properties['comments']!=undefined">
+			<ul>
+				<li *ngFor="let value of field.type.values">
+					{{value.value}}
+				</li>
+			</ul>
+		</div>
+	
 		<div *ngIf="field.id=='explanation'">
 			<label *ngIf="form.get(field.properties['controlledBy']).value == false" for="{{ field.id }}">{{ field.label
 				}}</label> <br>
@@ -35,6 +52,7 @@
 				}}</label> <br>
 			<input class="form-control-file" type="file" formControlName={{field.id}} accept="application/pdf" #myInput multiple
 				 (change)="handleFileInput($event)">
+				 <br>
 		</div>
 
 		<div *ngIf="field.id=='textareaSuggestions'">
@@ -78,7 +96,7 @@
 
 
 
-		<div *ngIf="field.type.name=='enum'" class="form-group">
+		<div *ngIf="field.type.name=='enum' && field.properties['links']==undefined && field.properties['comments']==undefined" class="form-group">
 			<select class="form-control" formControlName={{field.id}}>
 				<option *ngFor="let value of field.type.values" [value]="value.id">
 					{{value.value}}
