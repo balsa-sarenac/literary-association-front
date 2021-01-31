@@ -24,11 +24,11 @@
 		<p *ngIf="field.properties['readonly']!=undefined && field.properties['links']==undefined">{{field.value.value}}</p>
 
 		<div *ngIf="field.properties['links']!=undefined">
-			<un>
+			<ul>
 				<li *ngFor="let file of field.type.values">
 					<a [href]="file.id" [download]="file.value">{{ file.value }}</a>
 				</li>
-			</un>
+			</ul>
 			
 		</div>
 
