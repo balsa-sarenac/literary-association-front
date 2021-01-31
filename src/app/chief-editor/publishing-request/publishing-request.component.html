@@ -27,5 +27,6 @@
         <div *ngIf = "showForm()">
             <app-form [processInstanceId]="processInstanceId" *ngIf="dataLoaded" ></app-form>
         </div>
+        <h5 *ngIf="!showForm()">Status of publishing: {{publishingRequest.status}}</h5>
 	</div>
 </div>

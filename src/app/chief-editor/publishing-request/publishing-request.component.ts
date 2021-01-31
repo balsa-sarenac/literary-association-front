@@ -31,7 +31,7 @@ export class PublishingRequestComponent implements OnInit {
             (data: IPublishingRequest) => {
                 this.publishingRequest = data;
                 console.log(this.publishingRequest);
-                if (this.publishingRequest.status != 'Book is published' && this.publishingRequest.status != 'Editing timeout happened') {
+                if (this.publishingRequest.status != 'Book is published' && this.publishingRequest.status != 'Editing timeout happened' && this.publishingRequest.status != 'Rejected') {
                   this.formService.getProcessInstanceId(id, "publishingRequestId").subscribe(
                     (data) => {
                       this.processInstanceId = String(data.processId);
