@@ -11,7 +11,6 @@ import { FormService } from './shared/form.service';
 import { map, startWith } from 'rxjs/operators';
 import { BookService } from '../author/shared/book.service';
 import { BookDTO } from '../DTO/book-dto';
-import { file, RxwebValidators } from '@rxweb/reactive-form-validators';
 
 @Component({
 	selector: 'app-form',
@@ -37,7 +36,7 @@ export class FormComponent implements OnInit {
 
 	hiddenFields: string[] = [];
 
-	onlyOne=false;
+	onlyOne = false;
 
 	constructor(private formService: FormService,
 		private authService: AuthService,
@@ -116,6 +115,10 @@ export class FormComponent implements OnInit {
 		this.formFields.forEach((element: any) => {
 			let fc = new FormControl('');
 
+			let val = element.value.value;
+
+			fc.patchValue(element.value.value);
+
 			let validators: any[] = [];
 			element.validationConstraints.map((validator: any) => {
 				if (validator.name == 'required') {
@@ -132,7 +135,7 @@ export class FormComponent implements OnInit {
 				this.onlyOne = true;
 			}
 			if (element.properties['oneIfNeeded'] != undefined) {
-				this.form.get('change')!.valueChanges.subscribe(()=>{
+				this.form.get('change')!.valueChanges.subscribe(() => {
 					this.onlyOne = this.form.get('change').value;
 					console.log(this.onlyOne);
 				})
