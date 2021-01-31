@@ -293,11 +293,22 @@ export class FormComponent implements OnInit {
 		}
 		else if (this.activatedRoute.snapshot.routeConfig.path.includes('publishing-request')) {
 			this.activatedRoute.paramMap.subscribe((params) => {
-				let path = '/chief-editor/publishing-request/' + params.get('id');
+				let role = this.authService.getRole();
+				if(role == "ROLE_CHIEF_EDITOR"){
+					let path = '/chief-editor/publishing-request/' + params.get('id');
 
 				this.router.navigateByUrl('/chief-editor/publishing-requests', { skipLocationChange: true }).then(() => {
 					this.router.navigate([path]);
 				});
+				}
+				else if(role = "ROLE_LECTOR") {
+					let path = '/lector/lector-request/' + params.get('id');
+
+				this.router.navigateByUrl('/lector/lector-requests', { skipLocationChange: true }).then(() => {
+					this.router.navigate([path]);
+				});
+				}
+				
 			});
 
 
