@@ -21,6 +21,7 @@ export class FormComponent implements OnInit {
 	dataLoaded: boolean = false;
 
 	@Input() processInstanceId: string;
+	@Input() bookId: number;
 
 	formFieldsDto = null;
 	formFields: IFormField[] = [];
@@ -29,8 +30,9 @@ export class FormComponent implements OnInit {
 
 	selectedFiles: FileList;
 
-	options: BookDTO[] = [];
-	filteredOptions: Observable<BookDTO[]>;
+	fullOptions : {id:string, value:string}[]=[]
+	options: string[] = [];
+	filteredOptions: Observable<string[]>;
 
 	myBook: BookDTO;
 
@@ -45,9 +47,7 @@ export class FormComponent implements OnInit {
 	constructor(private formService: FormService,
 		private authService: AuthService,
 		private router: Router,
-		private activatedRoute: ActivatedRoute,
-		private authorService: AuthorService,
-		private bookService: BookService) { }
+		private activatedRoute: ActivatedRoute,) { }
 
 	handleFileInput(event) {
 		console.log(event.target.files);
@@ -70,38 +70,18 @@ export class FormComponent implements OnInit {
 			console.log('init form');
 			this.setForm(res);
 			this.dataLoaded = true;
-			if (path.includes('file-a-complaint')) {
-				this.getFileAComplaintForm();
+			
+			if(this.form.get('auto-complete')!=undefined){
+				this.filteredOptions = this.form
+				.get('auto-complete')!.valueChanges.pipe(
+					startWith(''),
+					map((value) => this._filter(value))
+			);
 			}
+
 		}, (err) => {
 			console.log(err.message);
 		});
-	}
-
-
-	private getFileAComplaintForm() {
-		this.bookService.getBooksFromOtherAuthors(this.authService.getLoggedUser()).subscribe((res: BookDTO[]) => {
-			this.options = res;
-			console.log(this.options);
-		},
-			(error) => {
-				alert(error.message);
-			});
-
-		this.activatedRoute.paramMap.subscribe((params) => {
-			this.bookService.getBook(+params.get('id')).subscribe((res) => {
-				this.myBook = res;
-			},
-				(error) => {
-					console.log(error.message);
-				});
-		});
-
-		this.filteredOptions = this.form
-			.get('auto-complete')!.valueChanges.pipe(
-				startWith(''),
-				map((value) => this._filter(value))
-			);
 	}
 
 	setForm(res: any) {
@@ -127,6 +107,14 @@ export class FormComponent implements OnInit {
 		this.formFields.forEach((element: any) => {
 			let fc = new FormControl('');
 
+			if(element.id == 'values'){
+				this.options = element.type.values.map((data:{key:string, value:string})=>data.value);
+				this.fullOptions = element.type.values;
+					
+				console.log(this.options);
+				console.log('full options: ', this.fullOptions);
+			}
+
 			let validators: any[] = [];
 			element.validationConstraints.map((validator: any) => {
 				if (validator.name == 'required') {
@@ -136,6 +124,7 @@ export class FormComponent implements OnInit {
 					validators.push(Validators.minLength(<number>validator.configuration));
 				}
 			});
+			
 			if (element.properties['minEditors'] != undefined) {
 				validators.push(Validators.minLength(<number>element.properties['minEditors']));
 			}
@@ -201,17 +190,23 @@ export class FormComponent implements OnInit {
 					let element;
 					if (formFields.find(element => element.id == "authorBook")) {
 						element = formFields.find(element => element.id == "authorBook");
-						element.value = this.myBook.id;
+						element.value = this.bookId;
 					}
 					if (formFields.find(element => element.id == "plagiarismBook")) {
-						let plagiarism: BookDTO = this.options.find(x => x.title == value["auto-complete"]);
+						let plagiarism: {id:string, value:string} = this.fullOptions.find(x => x.value == value["auto-complete"]);
 						if (plagiarism == null) {
 							alert("Book doesn't exist!");
 							this.form.get('auto-complete').patchValue('');
 						}
 						element = formFields.find(element => element.id == "plagiarismBook");
 						element.value = plagiarism.id;
+						let enumfield;
+						if (formFields.find(element => element.id == "values")) {
+							enumfield = formFields.find(x=>x.id=='values');
+							enumfield.value = plagiarism.id;
+						}
 					}
+					
 				}
 				this.formService.submitForm(this.processInstanceId, data).subscribe((res) => {
 
@@ -259,12 +254,12 @@ export class FormComponent implements OnInit {
 			});
 	}
 
-	private _filter(value: string): BookDTO[] {
+	private _filter(value: string): string[] {
 		const filterValue = value.toLowerCase();
 		console.log(filterValue);
 
 		return this.options.filter((option) =>
-			option.title.toLowerCase().includes(filterValue)
+			option.toLowerCase().includes(filterValue)
 		);
 
 	}
@@ -284,8 +279,13 @@ export class FormComponent implements OnInit {
 		else if (this.activatedRoute.snapshot.routeConfig.path.includes('upload-documents') && this.authService.getRole() == "ROLE_PENDING_AUTHOR") {
 			this.router.navigateByUrl('/review-expected');
 		}
-		else if (this.activatedRoute.snapshot.routeConfig.path.includes('file-a-complaint')) {
-			this.router.navigate(['author/books']);
+		else if (this.activatedRoute.snapshot.routeConfig.path.includes('books')) {
+			let path = '/author/books/';
+
+				this.router.navigateByUrl('/author/publishing-requests', { skipLocationChange: true }).then(() => {
+					this.router.navigate([path]);
+				});
+			//this.router.navigate(['author/books']);
 		}
 		else if (this.activatedRoute.snapshot.routeConfig.path.includes('publishing-request')) {
 			this.activatedRoute.paramMap.subscribe((params) => {

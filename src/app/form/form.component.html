@@ -8,8 +8,8 @@
 		<mat-form-field *ngIf="(field.id=='auto-complete') && field.type.name=='string'">
 			<input type="text" matInput formControlName={{field.id}} [matAutocomplete]="auto">
 			<mat-autocomplete #auto="matAutocomplete">
-				<mat-option *ngFor="let option of filteredOptions|async" [value]="option.title">
-					{{option.title}}
+				<mat-option *ngFor="let option of filteredOptions|async" [value]="option">
+					{{option}}
 				</mat-option>
 			</mat-autocomplete>
 		</mat-form-field>
@@ -78,7 +78,7 @@
 
 
 
-		<div *ngIf="field.type.name=='enum'" class="form-group">
+		<div *ngIf="field.type.name=='enum' && field.properties['hidden']==undefined" class="form-group">
 			<select class="form-control" formControlName={{field.id}}>
 				<option *ngFor="let value of field.type.values" [value]="value.id">
 					{{value.value}}
