@@ -31,7 +31,9 @@ export class UploadBookComponent implements OnInit {
     this.authorService.getRequest(id).subscribe(
         (data: IPublishingRequest) => {
             this.publishingRequest = data;
-            this.getProcessInstanceId();
+            if(this.publishingRequest.status !== 'Editing timeout happened'){
+              this.getProcessInstanceId();
+            }
         },
         (error) => alert(error.error)
     );

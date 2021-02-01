@@ -1,6 +1,14 @@
 
-<h6 style="text-align: center">Upload book:</h6>
 
-<div style="text-align: center; vertical-align: middle" *ngIf="dataLoaded">
-	<app-form [processInstanceId]="processInstanceId"></app-form>
+<div *ngIf="publishingRequest?.status === 'Editing timeout happened'">
+	<br>
+	<h4 style="text-align: center;">We are sorry, your time to upload book is expired!</h4>
+	
 </div>
+<div *ngIf="publishingRequest?.status !== 'Editing timeout happened'">
+	<h6 style="text-align: center">Upload book:</h6>
+	<div style="text-align: center; vertical-align: middle" *ngIf="dataLoaded">
+		<app-form [processInstanceId]="processInstanceId"></app-form>
+	</div>
+</div>
+
