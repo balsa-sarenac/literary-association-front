@@ -297,7 +297,6 @@ export class FormComponent implements OnInit {
 				this.router.navigateByUrl('/author/publishing-requests', { skipLocationChange: true }).then(() => {
 					this.router.navigate([path]);
 				});
-			//this.router.navigate(['author/books']);
 		}
 		else if (this.activatedRoute.snapshot.routeConfig.path.includes('publishing-request')) {
 			this.activatedRoute.paramMap.subscribe((params) => {
@@ -354,6 +353,29 @@ export class FormComponent implements OnInit {
 		else if (this.activatedRoute.snapshot.routeConfig.path.includes('membership-payment') && this.authService.getRole() == "ROLE_PENDING_AUTHOR") {
 			this.logOut();
 			this.router.navigateByUrl('/welcome/login');
+		}
+		else if (this.activatedRoute.snapshot.routeConfig.path.includes('requests')) {
+			this.router.navigate(['author']);
+		}
+		else if (this.activatedRoute.snapshot.routeConfig.path.includes('publishing-request')) {
+			this.activatedRoute.paramMap.subscribe((params) => {
+				let role = this.authService.getRole();
+				if (role === "ROLE_CHIEF_EDITOR") {
+					this.router.navigateByUrl('/chief-editor/publishing-requests');
+				}
+				else if (role === "ROLE_LECTOR") {
+					this.router.navigateByUrl('/lector/lector-requests');
+				}
+
+			});
+		}
+		else if (this.activatedRoute.snapshot.routeConfig.path.includes('lector-request')) {
+			this.activatedRoute.paramMap.subscribe((params) => {
+				this.router.navigateByUrl('/lector/lector-requests');
+			});
+		}
+		else if (this.activatedRoute.snapshot.routeConfig.path.includes('beta-books')) {
+			this.router.navigate(['reader/beta-books']);
 		}
 	}
 
