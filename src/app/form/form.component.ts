@@ -231,7 +231,9 @@ export class FormComponent implements OnInit {
 					(err) => {
 						console.log(err);
 						alert(err.error);
-						this.routeAfterError();
+						if(err.error === 'Process instance no longer exists') {
+							this.routeAfterError();
+						}
 					});
 			}
 
@@ -252,7 +254,15 @@ export class FormComponent implements OnInit {
 				}
 			},
 			err => {
-				alert('Could not upload the file:' + file.name);
+				console.log(err.error);
+				if(err.error==='Process instance no longer exists')	{			
+					alert(err.error);
+					this.routeAfterError();
+				}
+				else {
+					alert('Could not upload the file');
+				}
+
 			});
 	}
 
