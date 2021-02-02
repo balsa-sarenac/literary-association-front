@@ -70,7 +70,7 @@ export class FormComponent implements OnInit {
 			console.log('init form');
 			this.setForm(res);
 			this.dataLoaded = true;
-			
+
 			if(this.form.get('auto-complete')!=undefined){
 				this.filteredOptions = this.form
 				.get('auto-complete')!.valueChanges.pipe(
@@ -110,7 +110,7 @@ export class FormComponent implements OnInit {
 			if(element.id == 'values'){
 				this.options = element.type.values.map((data:{key:string, value:string})=>data.value);
 				this.fullOptions = element.type.values;
-					
+
 				console.log(this.options);
 				console.log('full options: ', this.fullOptions);
 			}
@@ -125,7 +125,7 @@ export class FormComponent implements OnInit {
 					validators.push(Validators.minLength(<number>validator.configuration));
 				}
 			});
-			
+
 			if (element.properties['minEditors'] != undefined) {
 				validators.push(Validators.minLength(<number>element.properties['minEditors']));
 			}
@@ -207,7 +207,7 @@ export class FormComponent implements OnInit {
 							enumfield.value = plagiarism.id;
 						}
 					}
-					
+
 				}
 				this.formService.submitForm(this.processInstanceId, data).subscribe((res) => {
 
@@ -291,6 +291,9 @@ export class FormComponent implements OnInit {
 		else if (this.activatedRoute.snapshot.routeConfig.path.includes('upload-documents') && this.authService.getRole() == "ROLE_PENDING_AUTHOR") {
 			this.router.navigateByUrl('/review-expected');
 		}
+    else if (this.activatedRoute.snapshot.routeConfig.path.includes('beta-books')) {
+      this.router.navigate(['reader/beta-books']);
+    }
 		else if (this.activatedRoute.snapshot.routeConfig.path.includes('books')) {
 			let path = '/author/books/';
 
@@ -319,9 +322,6 @@ export class FormComponent implements OnInit {
 			});
 
 
-		}
-		else if (this.activatedRoute.snapshot.routeConfig.path.includes('beta-books')) {
-			this.router.navigate(['reader/beta-books']);
 		}
 		else if (this.activatedRoute.snapshot.routeConfig.path.includes('lector-request')) {
 			this.activatedRoute.paramMap.subscribe((params) => {
