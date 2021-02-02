@@ -2,6 +2,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BookDTO } from 'src/app/DTO/book-dto';
+import { IMembershipRequest } from 'src/app/DTO/imembership-request';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -20,8 +21,8 @@ export class AuthorService {
     return this.http.get<any>(environment.api + '/publish/author-requests/'+authorId);
   }
 
-  getMembershipRequestId(authorId: string) {
-    return this.http.get<number>(environment.api+'/membership-requests/author-request/'+authorId);
+  getMembershipRequest(authorId: string) {
+    return this.http.get<IMembershipRequest>(environment.api+'/membership-requests/author-request/'+authorId);
   }
   
   startBookPublishingProcess(){

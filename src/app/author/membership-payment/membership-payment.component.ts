@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/auth/shared/auth.service';
+import { IMembershipRequest } from 'src/app/DTO/imembership-request';
 import { FormService } from 'src/app/form/shared/form.service';
 import { AuthorService } from '../shared/author.service';
 
@@ -11,6 +12,7 @@ import { AuthorService } from '../shared/author.service';
 export class MembershipPaymentComponent implements OnInit {
   processInstanceId: string;
   membershipRequestId: number;
+  membershipRequest: IMembershipRequest;
   dataLoaded:boolean = false;
 
   constructor(private authService:AuthService, private authorService:AuthorService, private formService:FormService) { }
@@ -21,11 +23,13 @@ export class MembershipPaymentComponent implements OnInit {
   }
 
   getRequest() {
-    this.authorService.getMembershipRequestId(this.authService.getLoggedUser()).subscribe(
-        (data: number) => {
-            this.membershipRequestId = data;
+    this.authorService.getMembershipRequest(this.authService.getLoggedUser()).subscribe(
+        (data: IMembershipRequest) => {
+            this.membershipRequest = data;
+            this.membershipRequestId = data.id;
             console.log(this.membershipRequestId);
-            this.getProcessInstanceId();
+            if(this.membershipRequest.active)
+              this.getProcessInstanceId();
         },
         (error) => alert(error.error)
     );

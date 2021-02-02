@@ -230,7 +230,10 @@ export class FormComponent implements OnInit {
 				},
 					(err) => {
 						console.log(err);
-						alert(err.error)
+						alert(err.error);
+						if(err.error === 'Process instance no longer exists') {
+							this.routeAfterError();
+						}
 					});
 			}
 
@@ -251,7 +254,15 @@ export class FormComponent implements OnInit {
 				}
 			},
 			err => {
-				alert('Could not upload the file:' + file.name);
+				console.log(err.error);
+				if(err.error==='Process instance no longer exists')	{			
+					alert(err.error);
+					this.routeAfterError();
+				}
+				else {
+					alert('Could not upload the file');
+				}
+
 			});
 	}
 
@@ -289,7 +300,6 @@ export class FormComponent implements OnInit {
 				this.router.navigateByUrl('/author/publishing-requests', { skipLocationChange: true }).then(() => {
 					this.router.navigate([path]);
 				});
-			//this.router.navigate(['author/books']);
 		}
 		else if (this.activatedRoute.snapshot.routeConfig.path.includes('publishing-request')) {
 			this.activatedRoute.paramMap.subscribe((params) => {
@@ -330,5 +340,46 @@ export class FormComponent implements OnInit {
 			else
 				this.router.navigate(['committee/complaints']);
 		}
+	}
+
+	routeAfterError(){
+		if (this.activatedRoute.snapshot.routeConfig.path.includes('membership-requests')) {
+			this.router.navigate(['committee']);
+		}
+		else if (this.activatedRoute.snapshot.routeConfig.path.includes('upload-documents') && this.authService.getRole() == "ROLE_PENDING_AUTHOR") {
+			this.logOut();
+			this.router.navigateByUrl('/welcome/login');
+		}
+		else if (this.activatedRoute.snapshot.routeConfig.path.includes('membership-payment') && this.authService.getRole() == "ROLE_PENDING_AUTHOR") {
+			this.logOut();
+			this.router.navigateByUrl('/welcome/login');
+		}
+		else if (this.activatedRoute.snapshot.routeConfig.path.includes('requests')) {
+			this.router.navigate(['author']);
+		}
+		else if (this.activatedRoute.snapshot.routeConfig.path.includes('publishing-request')) {
+			this.activatedRoute.paramMap.subscribe((params) => {
+				let role = this.authService.getRole();
+				if (role === "ROLE_CHIEF_EDITOR") {
+					this.router.navigateByUrl('/chief-editor/publishing-requests');
+				}
+				else if (role === "ROLE_LECTOR") {
+					this.router.navigateByUrl('/lector/lector-requests');
+				}
+
+			});
+		}
+		else if (this.activatedRoute.snapshot.routeConfig.path.includes('lector-request')) {
+			this.activatedRoute.paramMap.subscribe((params) => {
+				this.router.navigateByUrl('/lector/lector-requests');
+			});
+		}
+		else if (this.activatedRoute.snapshot.routeConfig.path.includes('beta-books')) {
+			this.router.navigate(['reader/beta-books']);
+		}
+	}
+
+	logOut() {
+		this.authService.logOut();
 	}
 }
