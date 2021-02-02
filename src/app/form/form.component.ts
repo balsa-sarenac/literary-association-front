@@ -30,7 +30,7 @@ export class FormComponent implements OnInit {
 
 	selectedFiles: FileList;
 
-	fullOptions : {id:string, value:string}[]=[]
+	fullOptions: { id: string, value: string }[] = []
 	options: string[] = [];
 	filteredOptions: Observable<string[]>;
 
@@ -71,12 +71,12 @@ export class FormComponent implements OnInit {
 			this.setForm(res);
 			this.dataLoaded = true;
 
-			if(this.form.get('auto-complete')!=undefined){
+			if (this.form.get('auto-complete') != undefined) {
 				this.filteredOptions = this.form
-				.get('auto-complete')!.valueChanges.pipe(
-					startWith(''),
-					map((value) => this._filter(value))
-			);
+					.get('auto-complete')!.valueChanges.pipe(
+						startWith(''),
+						map((value) => this._filter(value))
+					);
 			}
 
 		}, (err) => {
@@ -107,8 +107,8 @@ export class FormComponent implements OnInit {
 		this.formFields.forEach((element: any) => {
 			let fc = new FormControl('');
 
-			if(element.id == 'values'){
-				this.options = element.type.values.map((data:{key:string, value:string})=>data.value);
+			if (element.id == 'values') {
+				this.options = element.type.values.map((data: { key: string, value: string }) => data.value);
 				this.fullOptions = element.type.values;
 
 				console.log(this.options);
@@ -164,7 +164,7 @@ export class FormComponent implements OnInit {
 	}
 
 	onSubmit(value: any, form: any) {
-
+		this.dataLoaded = false;
 		let formFields = new Array();
 		for (var property in value) {
 			formFields.push({ id: property, value: value[property] });
@@ -194,7 +194,7 @@ export class FormComponent implements OnInit {
 						element.value = this.bookId;
 					}
 					if (formFields.find(element => element.id == "plagiarismBook")) {
-						let plagiarism: {id:string, value:string} = this.fullOptions.find(x => x.value == value["auto-complete"]);
+						let plagiarism: { id: string, value: string } = this.fullOptions.find(x => x.value == value["auto-complete"]);
 						if (plagiarism == null) {
 							alert("Book doesn't exist!");
 							this.form.get('auto-complete').patchValue('');
@@ -203,35 +203,36 @@ export class FormComponent implements OnInit {
 						element.value = plagiarism.id;
 						let enumfield;
 						if (formFields.find(element => element.id == "values")) {
-							enumfield = formFields.find(x=>x.id=='values');
+							enumfield = formFields.find(x => x.id == 'values');
 							enumfield.value = plagiarism.id;
 						}
 					}
 
 				}
 				this.formService.submitForm(this.processInstanceId, data).subscribe((res) => {
-
-
 					if (value["isBetaReader"] == true) {
 						this.formService.getForm(this.processInstanceId).subscribe((res: any) => {
 							this.setForm(res);
 							this.dataLoaded = true;
 						},
-							(err) => {
-								console.log(err.message);
-								alert(err.error)
-							});
+						(err) => {
+							console.log(err.message);
+							this.dataLoaded = true;
+							alert(err.error)
+						});
 					}
 					else {
 						console.log(res);
+						this.dataLoaded = true;
 						alert('Success!');
 						this.route();
 					}
 				},
 					(err) => {
 						console.log(err);
+						this.dataLoaded = true;
 						alert(err.error);
-						if(err.error === 'Process instance no longer exists') {
+						if (err.error === 'Process instance no longer exists') {
 							this.routeAfterError();
 						}
 					});
@@ -248,14 +249,15 @@ export class FormComponent implements OnInit {
 		this.formService.upload(this.processInstanceId, this.selectedFiles).subscribe(
 			event => {
 				if (event instanceof HttpResponse) {
-
+					this.dataLoaded = true;
 					alert("Uploaded successfully!");
 					this.route();
 				}
 			},
 			err => {
 				console.log(err.error);
-				if(err.error==='Process instance no longer exists')	{			
+				this.dataLoaded = true;
+				if (err.error === 'Process instance no longer exists') {
 					alert(err.error);
 					this.routeAfterError();
 				}
@@ -291,15 +293,15 @@ export class FormComponent implements OnInit {
 		else if (this.activatedRoute.snapshot.routeConfig.path.includes('upload-documents') && this.authService.getRole() == "ROLE_PENDING_AUTHOR") {
 			this.router.navigateByUrl('/review-expected');
 		}
-    else if (this.activatedRoute.snapshot.routeConfig.path.includes('beta-books')) {
-      this.router.navigate(['reader/beta-books']);
-    }
+		else if (this.activatedRoute.snapshot.routeConfig.path.includes('beta-books')) {
+			this.router.navigate(['reader/beta-books']);
+		}
 		else if (this.activatedRoute.snapshot.routeConfig.path.includes('books')) {
 			let path = '/author/books/';
 
-				this.router.navigateByUrl('/author/publishing-requests', { skipLocationChange: true }).then(() => {
-					this.router.navigate([path]);
-				});
+			this.router.navigateByUrl('/author/publishing-requests', { skipLocationChange: true }).then(() => {
+				this.router.navigate([path]);
+			});
 		}
 		else if (this.activatedRoute.snapshot.routeConfig.path.includes('publishing-request')) {
 			this.activatedRoute.paramMap.subscribe((params) => {
@@ -342,7 +344,7 @@ export class FormComponent implements OnInit {
 		}
 	}
 
-	routeAfterError(){
+	routeAfterError() {
 		if (this.activatedRoute.snapshot.routeConfig.path.includes('membership-requests')) {
 			this.router.navigate(['committee']);
 		}
@@ -376,6 +378,14 @@ export class FormComponent implements OnInit {
 		}
 		else if (this.activatedRoute.snapshot.routeConfig.path.includes('beta-books')) {
 			this.router.navigate(['reader/beta-books']);
+		}
+		else if (this.activatedRoute.snapshot.routeConfig.path.includes('complaints')) {
+			if (localStorage.getItem('User-role') === 'ROLE_EDITOR')
+				this.router.navigate(['editor/complaints']);
+			else if (localStorage.getItem('User-role') === 'ROLE_CHIEF_EDITOR')
+				this.router.navigate(['chief-editor/complaints']);
+			else
+				this.router.navigate(['committee/complaints']);
 		}
 	}
 
