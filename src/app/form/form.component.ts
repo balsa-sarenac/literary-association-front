@@ -230,7 +230,8 @@ export class FormComponent implements OnInit {
 				},
 					(err) => {
 						console.log(err);
-						alert(err.error)
+						alert(err.error);
+						this.routeAfterError();
 					});
 			}
 
@@ -330,5 +331,23 @@ export class FormComponent implements OnInit {
 			else
 				this.router.navigate(['committee/complaints']);
 		}
+	}
+
+	routeAfterError(){
+		if (this.activatedRoute.snapshot.routeConfig.path.includes('membership-requests')) {
+			this.router.navigate(['committee']);
+		}
+		else if (this.activatedRoute.snapshot.routeConfig.path.includes('upload-documents') && this.authService.getRole() == "ROLE_PENDING_AUTHOR") {
+			this.logOut();
+			this.router.navigateByUrl('/welcome/login');
+		}
+		else if (this.activatedRoute.snapshot.routeConfig.path.includes('membership-payment') && this.authService.getRole() == "ROLE_PENDING_AUTHOR") {
+			this.logOut();
+			this.router.navigateByUrl('/welcome/login');
+		}
+	}
+
+	logOut() {
+		this.authService.logOut();
 	}
 }
