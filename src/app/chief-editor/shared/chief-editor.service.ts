@@ -1,49 +1,33 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import {IComplaint} from '../../DTO/icomplaint';
 
 @Injectable({
   providedIn: 'root'
 })
- 
-export class ChiefEditorService 
+
+export class ChiefEditorService
 {
   constructor(private http:HttpClient) { }
 
   getRequests(editorId:string) {
-    return this.http.get<any>(environment.api + '/publish/chiefEditor-requests/'+editorId);
+    return this.http.get<any>(environment.api + '/publish/all-requests/'+editorId);
   }
 
   getRequest(requestId: string){
     return this.http.get<any>(environment.api + '/publish/get-request/'+requestId);
   }
 
-  read(body:{}) {
-    return this.http.post<any>(environment.api+'/publish/read', body);
-  }
-
-  getListOfPossibleSources(logged: string) {
-    return this.http.get<any>(environment.api + '/publish/get-requests-plagiarism-check/' + logged);
-  }
-
-  originalBook(body: any) {
-    return this.http.post<any>(environment.api + '/publish/original-book', body);
-  }
-
   getDocument(url: string) {
 		return this.http.get<any>(url);
   }
-  
-  acceptBook(body: { publishingRequestId: number; response: boolean; }) {
-    return this.http.post<any>(environment.api + '/publish/accept-book', body);
+
+  getComplaints() {
+    return this.http.get<IComplaint[]>(environment.api + '/plagiarism/complaints');
   }
 
-  getListOfBooksToRead(logged: string) {
-    return this.http.get<any>(environment.api + '/publish/get-requests-read-books/' + logged);
+  getComplaint(id: string) {
+    return this.http.get<IComplaint>(environment.api + '/plagiarism/complaints/' + id);
   }
-
-  sendToBeta(body: { publishingRequestId: number; response: boolean; }) {
-    return this.http.post<any>(environment.api + '/publish/sent-to-beta', body);
-  }
-	
 }

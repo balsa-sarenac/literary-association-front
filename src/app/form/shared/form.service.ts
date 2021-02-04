@@ -6,7 +6,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class FormService {
- 
+
 
   constructor(private http:HttpClient) { }
 
@@ -14,11 +14,15 @@ export class FormService {
     console.log('upload in');
     const formData: FormData = new FormData();
 
-    var files:File[] =[]; 
-    for(var i=0; i<file.length; i++){
-      formData.append('file', file[i]);
+    var files:File[] =[];
+    if(file!==undefined){
+      for(var i=0; i<file.length; i++){
+        formData.append('file', file[i]);
+      }
     }
-      //formData.append('file', file);
+    else{
+      formData.append('file', undefined);
+    }
 
     const req = new HttpRequest('POST', `${environment.api}/file/upload/`+processId, formData, {
       reportProgress: true,
@@ -26,12 +30,11 @@ export class FormService {
     });
 
     return this.http.request(req);
-    //return this.http.post<any>(environment.api+'/file/upload/'+processId, formData);
   }
 
   getForm(processId:string){
     console.log('http get');
- 
+
       return this.http.get<any>(environment.api+'/form/get/'+processId);
   }
 
@@ -39,12 +42,7 @@ export class FormService {
     return this.http.post<any>(environment.api+'/form/submit/'+processId, data);
   }
 
-  getProcessId(userId:string) {
-    console.log('get process id');
-    return this.http.get<any>(environment.api+'/form/get-process-id/'+userId);
-  }
-
-  getRefusalProcessId(publishingrequestId: number) {
-	  return this.http.get<any>(environment.api+'/form/get-pub-process-id/'+publishingrequestId.toString());
+  getProcessInstanceId(id: string, type: string) {
+    return this.http.get<any>(environment.api + '/processInstanceId/' + type + "/" + id);
   }
 }

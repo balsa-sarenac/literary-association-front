@@ -7,10 +7,16 @@
 	</ul>
 </nav>
 <br />
+
+<div *ngIf="membershipRequest.active">
 <h6 style="text-align: center">Upload documents to submit your application:</h6>
 
 <br />
 
-<div style="text-align: center; vertical-align: middle">
-	<app-form></app-form>
+<div style="text-align: center; vertical-align: middle" *ngIf="dataLoaded">
+	<app-form [processInstanceId]="processInstanceId"></app-form>
+</div>
+</div>
+<div *ngIf="!membershipRequest.active">
+	<h4>Time to finish memberhip application has passed.</h4>
 </div>

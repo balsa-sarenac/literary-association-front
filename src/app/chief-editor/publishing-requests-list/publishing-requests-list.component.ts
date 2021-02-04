@@ -4,13 +4,12 @@ import { IPublishingRequest } from 'src/app/DTO/ipublishing-request';
 import { ChiefEditorService } from '../shared/chief-editor.service';
 
 @Component({
-  selector: 'app-chief-editor-pub-req-list',
-  templateUrl: './chief-editor-pub-req-list.component.html',
-  styleUrls: ['./chief-editor-pub-req-list.component.css']
+  selector: 'app-publishing-requests-list',
+  templateUrl: './publishing-requests-list.component.html',
+  styleUrls: ['./publishing-requests-list.component.css']
 })
-export class ChiefEditorPubReqListComponent implements OnInit {
+export class PublishingRequestsComponent implements OnInit {
   requests: IPublishingRequest[] = [];
-  
 
   constructor(private authService:AuthService, private chiefEditorService:ChiefEditorService) { }
 

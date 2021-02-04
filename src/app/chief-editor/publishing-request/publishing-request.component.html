@@ -1,0 +1,11 @@
+<div class="container" *ngIf="publishingRequest!==undefined">
+	<div class="justify-content-center">
+		<div class="col">
+			<h1 class="h1">Publishing request</h1>
+		</div>
+        <div *ngIf = "showForm()">
+            <app-form [processInstanceId]="processInstanceId" *ngIf="dataLoaded" ></app-form>
+        </div>
+        <h5 *ngIf="!showForm()">Status of publishing: {{publishingRequest.status}}</h5>
+	</div>
+</div>

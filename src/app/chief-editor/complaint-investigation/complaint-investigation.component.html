@@ -1,0 +1,50 @@
+<div class="container" *ngIf="complaint!==undefined">
+  <div class="justify-content-center" *ngIf="dataReady">
+    <h4>Plagiarism complaint
+    </h4>
+    <div class="col">
+      <p><b>Complainants book:</b></p>
+      <p><b>Title:&nbsp;</b> {{ complaint.complainantBook.title }}</p>
+      <p><b>Author:&nbsp;</b> {{ complaint.complainantBook.authors[0].firstName + ' ' + complaint.complainantBook.authors[0].lastName}}</p>
+      <p><b>Synopsis:&nbsp;</b> {{ complaint.complainantBook.synopsis }}</p>
+      <div class="col" *ngIf="complaint.complainantBook.bookFile != null">
+        <p>Downloadable link:</p>
+        <ul>
+          <li>
+            <a [href]="complaint.complainantBook.bookFile.url" [download]="complaint.complainantBook.bookFile.name">
+              {{ complaint.complainantBook.bookFile.name }}
+            </a>
+          </li>
+        </ul>
+      </div>
+      <hr>
+      <p><b>Accused plagiarism book:</b></p>
+      <p><b>Title:&nbsp;</b> {{ complaint.plagiarism.title }}</p>
+      <p><b>Author:&nbsp;</b> {{ complaint.plagiarism.authors[0].firstName + ' ' + complaint.plagiarism.authors[0].lastName}}</p>
+      <p><b>Synopsis:&nbsp;</b> {{ complaint.plagiarism.synopsis }}</p>
+      <div class="col" *ngIf="complaint.plagiarism.bookFile != null">
+        <p>Downloadable link:</p>
+        <ul>
+          <li>
+            <a [href]="complaint.plagiarism.bookFile.url" [download]="complaint.plagiarism.bookFile.name">
+              {{ complaint.plagiarism.bookFile.name }}
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <hr>
+    <div class="col" *ngIf="complaint.notes != null || complaint.notes.length != 0 || complaint.notes === []">
+      <h4>Notes:</h4>
+      <ul>
+        <li *ngFor="let note of complaint.notes">
+          <p>{{note.user.firstName}} {{note.user.lastName}}</p>
+          <p>{{note.content}}</p>
+        </li>
+      </ul>
+    </div>
+    <div class="col">
+        <app-form [processInstanceId]="processInstanceId"></app-form>
+    </div>
+  </div>
+</div>

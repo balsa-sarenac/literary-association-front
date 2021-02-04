@@ -17,20 +17,17 @@ import { PublishBookComponent } from './author/publish-book/publish-book.compone
 import { MembershipPaymentComponent } from './author/membership-payment/membership-payment.component';
 import { ReviewExpectedComponent } from './author/review-expected/review-expected.component';
 import { HomeChiefEditorComponent } from './homepage/home-chief-editor/home-chief-editor.component';
-import { ChiefEditorPubReqListComponent } from './chief-editor/chief-editor-pub-req-list/chief-editor-pub-req-list.component';
-import { PubReqDetailComponent } from './chief-editor/pub-req-detail/pub-req-detail.component';
-import { RefuseReasonComponent } from './chief-editor/refuse-reason/refuse-reason.component';
 import { BetaReaderBooksComponent } from './reader/beta-reader-books/beta-reader-books.component';
 import { UnpublishedBookComponent } from './reader/unpublished-book/unpublished-book.component';
-import { ReadBooksListComponent } from './chief-editor/read-books-list/read-books-list.component';
-import { ReadBookComponent } from './chief-editor/read-book/read-book.component';
-import { CheckIfOriginalListComponent } from './chief-editor/check-if-original-list/check-if-original-list.component';
-import { PubReqPotentialSourcesComponent } from './chief-editor/pub-req-potential-sources/pub-req-potential-sources.component';
 import { UploadBookComponent } from './author/upload-book/upload-book.component';
-import { SendToBetaComponent } from './chief-editor/send-to-beta/send-to-beta.component';
-import { ChooseBetaReadersComponent} from './chief-editor/choose-beta-readers/choose-beta-readers.component';
 import { BookListComponent } from './author/book-list/book-list.component';
 import { FileComplaintComponent } from './author/file-complaint/file-complaint.component';
+import { PublishingRequestsComponent } from './chief-editor/publishing-requests-list/publishing-requests-list.component';
+import { PublishingRequestComponent } from './chief-editor/publishing-request/publishing-request.component';
+import { HomeLectorComponent } from './homepage/home-lector/home-lector.component';
+import {ComplaintsComponent} from './chief-editor/complaints/complaints.component';
+import {ComplaintInvestigationComponent} from './chief-editor/complaint-investigation/complaint-investigation.component';
+import {HomeEditorComponent} from './homepage/home-editor/home-editor.component';
 
 const routes: Routes = [
 	{ path: '', redirectTo: 'welcome', pathMatch: 'full' },
@@ -59,16 +56,17 @@ const routes: Routes = [
 		path: 'reader',
 		component: HomeReaderComponent,
 		children: [
-      { path: 'beta-books', component: BetaReaderBooksComponent },
-      { path: 'beta-books/:id', component: UnpublishedBookComponent }
-    ],
+			{ path:'books', component:BookListComponent},
+			{ path: 'beta-books', component: BetaReaderBooksComponent },
+			{ path: 'beta-books/:id', component: UnpublishedBookComponent }
+		],
 	},
 	{
 		path: 'author',
 		component: HomeAuthorComponent,
 		children: [
 			{
-				path:'books',
+				path: 'books',
 				component: BookListComponent
 			},
 			{
@@ -81,12 +79,12 @@ const routes: Routes = [
 			},
 			{
 				path: 'requests/:id',
-			 	component: UploadBookComponent
-			 },
-			 {
+				component: UploadBookComponent
+			},
+			{
 				path: 'file-a-complaint/:id',
-			 	component: FileComplaintComponent
-			 },
+				component: FileComplaintComponent
+			},
 		],
 	},
 	{
@@ -103,57 +101,72 @@ const routes: Routes = [
 		path: 'committee',
 		component: HomeCommitteeComponent,
 		children: [
-			{ path: 'requests', component: MembershipRequestsComponent },
-			{ path: 'requests/:id', component: MembershipRequestComponent },
+			{ path: 'membership-requests', component: MembershipRequestsComponent },
+			{ path: 'membership-requests/:id', component: MembershipRequestComponent },
+      {
+        path: 'complaints',
+        component: ComplaintsComponent
+      },
+      {
+        path: 'complaints/:id',
+        component: ComplaintInvestigationComponent
+      },
 		],
 	},
 	{
-		path:'editor',
-		component:HomeChiefEditorComponent,
+		path: 'chief-editor',
+		component: HomeChiefEditorComponent,
 		children: [
 			{
-				path: 'chief-editor-requests',
-				component: ChiefEditorPubReqListComponent,
+				path: 'publishing-requests',
+				component: PublishingRequestsComponent
 			},
 			{
-				path: 'requests/:id',
-			 	component: PubReqDetailComponent
+				path: 'publishing-request/:id',
+				component: PublishingRequestComponent
 			},
 			{
-				path: 'read-books',
-				component: ReadBooksListComponent
+				path: 'complaints',
+				component: ComplaintsComponent
 			},
 			{
-				path: 'read-books/:id',
-				component: ReadBookComponent
-			},
-			{
-				path: 'chief-editor-plagiarism-requests',
-				component: CheckIfOriginalListComponent
-			},
-			{
-				path: 'original-request/:id',
-				component: PubReqPotentialSourcesComponent
-			},
-			{
-				path: 'send-to-beta-readers/:id',
-				component: SendToBetaComponent
-			},
-			{
-				path: 'choose-beta-readers/:id',
-				component: ChooseBetaReadersComponent
-			},
-
+				path: 'complaints/:id',
+				component: ComplaintInvestigationComponent
+			}
 		],
 	},
 	{
-		path:'refusal/:id',
-		component:RefuseReasonComponent
-	}
+		path: 'lector',
+		component: HomeLectorComponent,
+		children: [
+			{
+				path: 'lector-requests',
+				component: PublishingRequestsComponent
+			},
+			{
+				path: 'lector-request/:id',
+				component: PublishingRequestComponent
+			}
+		]
+	},
+  {
+    path: 'editor',
+    component: HomeEditorComponent,
+    children: [
+      {
+        path: 'complaints',
+        component: ComplaintsComponent
+      },
+      {
+        path: 'complaints/:id',
+        component: ComplaintInvestigationComponent
+      },
+    ]
+  }
 ];
 
 @NgModule({
 	imports: [RouterModule.forRoot(routes)],
 	exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

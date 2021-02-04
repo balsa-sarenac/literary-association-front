@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RefuseReasonComponent } from './refuse-reason.component';
+import { HomeEditorComponent } from './home-editor.component';
 
-describe('RefuseReasonComponent', () => {
-  let component: RefuseReasonComponent;
-  let fixture: ComponentFixture<RefuseReasonComponent>;
+describe('HomeEditorComponent', () => {
+  let component: HomeEditorComponent;
+  let fixture: ComponentFixture<HomeEditorComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ RefuseReasonComponent ]
+      declarations: [ HomeEditorComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(RefuseReasonComponent);
+    fixture = TestBed.createComponent(HomeEditorComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

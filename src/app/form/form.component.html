@@ -1,84 +1,156 @@
-<form *ngIf="dataLoaded" (ngSubmit)="onSubmit(form.value, form)" style="width: 40%; display: inline-block"
-	[formGroup]="form">
-	<div *ngFor="let field of formFields" class="form-group" style="text-align: left">
-		<label for="{{ field.id }}">{{ field.label }}</label> <br>
+<div>
+	<form *ngIf="dataLoaded" (ngSubmit)="onSubmit(form.value, form)" style="width: 40%; display: inline-block"
+		[formGroup]="form">
+		<div *ngFor="let field of formFields" class="form-group" style="text-align: left">
+			<label style="font-weight: bold;"
+				*ngIf="field.properties['controlledBy']==undefined && field.id != 'reupload'" for="{{ field.id }}">{{
+				field.label }}</label> <br>
+
+			<mat-form-field *ngIf="(field.id=='auto-complete') && field.type.name=='string'">
+				<input type="text" matInput formControlName={{field.id}} [matAutocomplete]="auto">
+				<mat-autocomplete #auto="matAutocomplete">
+					<mat-option *ngFor="let option of filteredOptions|async" [value]="option">
+						{{option}}
+					</mat-option>
+				</mat-autocomplete>
+			</mat-form-field>
+
+			<textarea *ngIf="(field.id=='textarea') && field.type.name=='string'" rows="4" class="form-control"
+				formControlName={{field.id}}></textarea>
+
+			<input class="form-control" type="password" formControlName={{field.id}}
+				*ngIf="(field.id=='password') && field.type.name=='string'">
+
+			<input class="form-control" type="text" formControlName={{field.id}}
+				*ngIf="field.properties['readonly']==undefined && field.type.name=='string' && field.id!='password' && field.id!='auto-complete' && field.id!='textarea' && field.id != 'explanation' && field.id!='textareaSuggestions' && !hiddenFields.includes(field.id)">
+
+			<p *ngIf="field.properties['readonly']!=undefined && field.properties['links']==undefined">
+				{{field.value.value}}</p>
+
+			<div *ngIf="field.properties['links']!=undefined">
+				<ul>
+					<li *ngFor="let file of field.type.values">
+						<a [href]="file.id" [download]="file.value">{{ file.value }}</a>
+					</li>
+				</ul>
+
+			</div>
+
+			<div *ngIf="field.properties['comments']!=undefined">
+				<ul>
+					<li *ngFor="let value of field.type.values">
+						{{value.value}}
+					</li>
+				</ul>
+			</div>
+
+			<div *ngIf="field.id=='explanation'">
+				<label *ngIf="form.get(field.properties['controlledBy']).value == false" for="{{ field.id }}">{{
+					field.label
+					}}</label> <br>
+				<input *ngIf="form.get(field.properties['controlledBy']).value == false" class="form-control"
+					type="text" formControlName={{field.id}}>
+			</div>
+
+			<div *ngIf="field.id=='reupload'" style="text-align: center;">
+				<label for="{{ field.id }}">{{ field.label
+					}}</label> <br>
+				<input class="form-control-file" type="file" formControlName={{field.id}} accept="application/pdf"
+					#myInput multiple (change)="handleFileInput($event)">
+				<br>
+			</div>
+
+			<div *ngIf="field.id=='textareaSuggestions'">
+				<label *ngIf="form.get(field.properties['controlledBy']).value == true" for="{{ field.id }}">{{
+					field.label
+					}}</label> <br>
+				<textarea *ngIf="form.get(field.properties['controlledBy']).value == true" class="form-control" rows="5"
+					formControlName={{field.id}}></textarea>
+			</div>
+
+			<div *ngIf="field.id=='betaReaders'">
+				<label *ngIf="form.get(field.properties['controlledBy']).value == true" for="{{ field.id }}">{{
+					field.label
+					}}</label> <br>
+				<div *ngIf="field.type.name=='multiselect' && field.id == 'betaReaders' && form.get(field.properties['controlledBy']).value == true"
+					class="form-group">
+					<select multiple class="form-control" formControlName={{field.id}}
+						aria-label="multiple select example">
+						<option *ngFor="let value of field.type.values" [value]="value.id">
+							{{value.value}}
+						</option>
+					</select>
+				</div>
+			</div>
+
+			<input class="form-control" type="checkbox" formControlName={{field.id}} *ngIf="field.type.name=='boolean'">
+
+			<input class="form-control" type="number" formControlName={{field.id}} *ngIf="field.type.name=='long'">
+
+			<input class="form-control-file" type="file" formControlName={{field.id}} accept="application/pdf"
+				*ngIf="field.id=='files'" (change)="handleFileInput($event)" multiple #myInput>
+
+			<div *ngIf="field.type.name=='multiselect' && field.id != 'betaReaders'" class="form-group">
+				<div *ngIf="field.properties['minEditors'] != undefined">
+					<p>Please select minimum of {{field.properties["minEditors"]}} and maximum of
+						{{field.properties["maxEditors"]}} editors</p>
+				</div>
+				<select multiple class="form-control" formControlName={{field.id}} aria-label="multiple select example">
+					<option *ngFor="let value of field.type.values" [value]="value.id">
+						{{value.value}}
+					</option>
+				</select>
+			</div>
 
 
-		<!-- <input  formControlName={{field.id}} type="text"
-			   type="text" matInput [matAutocomplete]="auto">
-		<mat-autocomplete #auto="matAutocomplete">
-			<mat-option style="height: fit-content;"
-				*ngFor="let option of filteredOptions|async"
-					 [value]="option">
-				  <span>{{option}}</span>
-			</mat-option>
-		</mat-autocomplete>	    -->
 
-		<mat-form-field *ngIf="(field.id=='auto-complete') && field.type.name=='string'">
-			<input type="text" matInput formControlName={{field.id}}
-				 [matAutocomplete]="auto" >
-			   <mat-autocomplete #auto="matAutocomplete">
-				 <mat-option *ngFor="let option of filteredOptions|async" [value]="option.title">
-				  {{option.title}}
-				</mat-option>
-			</mat-autocomplete>
-		 </mat-form-field>
+			<div *ngIf="field.type.name=='enum' && field.properties['links']==undefined && field.properties['comments']==undefined && field.properties['hidden']==undefined"
+				class="form-group">
+				<select class="form-control" formControlName={{field.id}}>
+					<option *ngFor="let value of field.type.values" [value]="value.id">
+						{{value.value}}
+					</option>
+				</select>
+			</div>
 
-
-		<input class="form-control" type="password" formControlName={{field.id}}
-			*ngIf="(field.id=='password') && field.type.name=='string'">
-
-		<input class="form-control" type="text" formControlName={{field.id}}
-			*ngIf="field.type.name=='string' && field.id!='password' && field.id!='auto-complete'">
-
-		<input class="form-control" type="checkbox" formControlName={{field.id}} *ngIf="field.type.name=='boolean'">
-
-		<input class="form-control" type="number" formControlName={{field.id}} *ngIf="field.type.name=='long'">
-
-		<input class="form-control-file" type="file" formControlName={{field.id}} accept="pdf/*"
-		*ngIf="field.id=='files'" (change)="handleFileInput($event)" multiple>
-
-		<div *ngIf="field.type.name=='multiselect' && field.id != 'betaReaders'" class="form-group">
-			<select multiple class="form-control" formControlName={{field.id}} multiple aria-label="multiple select example">
-				<option *ngFor="let value of field.type.values" [value]="value">
-					{{value}}
-				</option>
-			</select>
-		</div>
-
-		<div *ngIf="field.type.name=='multiselect' && field.id == 'betaReaders'" class="form-group">
-			<select multiple class="form-control" formControlName={{field.id}} multiple aria-label="multiple select example">
-				<option *ngFor="let value of field.type.values" [value]="value.id">
-					{{value.value}}
-				</option>
-			</select>
-		</div>
-
-		<div *ngIf="field.type.name=='enum'" class="form-group">
-			<select class="form-control" formControlName={{field.id}} >
-				<option *ngFor="let value of field.type.values" [value]="value">
-					{{value}}
-				</option>
-			</select>
-		</div>
-
-		<div *ngFor="let validator of field.validationConstraints">
-			<div *ngIf="
+			<div *ngFor="let validator of field.validationConstraints">
+				<div *ngIf="
 						validator.name == 'required' &&
-						form.controls[field.id].errors?.validator &&
+						form.controls[field.id].errors?.required &&
 						form.controls[field.id].touched
 					">
-				{{ field.id }} is required!
-			</div>
-			<div *ngIf="
+					<small style="color: red">{{ field.id }} is required!</small>
+				</div>
+				<div *ngIf="
 						validator.name == 'minlength' &&
 						form.controls[field.id].errors?.minlength &&
 						form.controls[field.id].touched
 					">
-				Minimun length is {{ validator.configuration }}
+					<small style="color: red">Minimun length is {{ validator.configuration }}</small>
+				</div>
+			</div>
+			<div *ngIf="field.properties['minEditors'] != undefined && form.controls[field.id].errors?.minlength">
+				<small style="color: red">Minimum number of selected editors must be
+					{{field.properties['minEditors']}}</small>
+			</div>
+			<div *ngIf="field.properties['maxEditors'] != undefined && form.controls[field.id].errors?.maxlength">
+				<small style="color: red">Maximum number of selected editors must be
+					{{field.properties['maxEditors']}}</small>
+			</div>
+			<div *ngIf="field.id=='files' && twoFiles && !(selectedFiles?.length >=2) && form.get('files')?.touched ">
+				<small style="color: red">Minimum number of selected files is 2! </small>
+			</div>
+			<div
+				*ngIf="(field.id=='reupload' || field.id=='files') && onlyOne && selectedFiles?.length!=1 && (form.get('files')?.touched || form.get('reupload')?.touched)">
+				<small style="color: red">Maximum number of selected files is 1! </small>
 			</div>
 		</div>
-	</div>
-
-	<input class="btn btn-primary" type="submit" [disabled]="form.invalid" />
-</form>
+		<input class="btn btn-primary" type="submit"
+			[disabled]="form.invalid || ( onlyOne && selectedFiles?.length!=1) || ( twoFiles && !(selectedFiles?.length>=2))" />
+	</form>
+</div>
+<div *ngIf="!dataLoaded">
+	<div class="spinner-border" role="status">
+		<span class="sr-only">Loading...</span>
+	  </div>
+</div>

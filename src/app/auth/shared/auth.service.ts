@@ -8,6 +8,9 @@ import { environment } from 'src/environments/environment';
 	providedIn: 'root',
 })
 export class AuthService {
+	getRole() {
+		return localStorage.getItem('User-role');
+	}
 	constructor(private http: HttpClient, private router: Router) {
 		console.log('new instance of service');
 	}

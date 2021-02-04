@@ -13,18 +13,37 @@ export class BookListComponent implements OnInit {
 
   books:BookDTO[]=[];
 
-  constructor(private bookService:BookService, private authService:AuthService) { 
+  processInstanceId:string="";
+  show=false;
+  public choice:string;
+  bookId:number;
+  role:string;
+
+  constructor(private bookService:BookService, private authService:AuthService, private authorService:AuthorService) { 
     this.refreshTable();
   }
 
   ngOnInit(): void {
-
+    this.role = this.authService.getRole();
     this.refreshTable();
   }
 
   refreshTable() {
     var logged=this.authService.getLoggedUser();
-		this.bookService.getBooks(logged).subscribe((data: BookDTO[]) =>{this.books = data; console.log(this.books)} );
-	}
+    if(this.role==='ROLE_AUTHOR'){
+      this.bookService.getBooks(logged).subscribe((data: BookDTO[]) =>{this.books = data; console.log(this.books)} );
+    }
+		else if(this.role=='ROLE_BETA_READER'){
+      this.bookService.getAllBooks().subscribe((data: BookDTO[]) =>{this.books = data; console.log(this.books)} );
+    }
+  }
+  
+  fileComplaint(bookId:number){
+    this.authorService.startPlagiarismProcess().subscribe((res:any)=>{
+      this.processInstanceId=res.processId;
+      this.show =true;
+      this.bookId = bookId;
+    })
+  }
 
 }
